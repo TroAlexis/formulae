@@ -4,9 +4,9 @@
   "display": "fullscreen",
   "scope": "/",
   "start_url": "/",
-  "name": "Next Typescript PWA",
-  "short_name": "Next Typescript PWA",
-  "description": "Unofficial Next.js   Typescript starter with a latest package",
+  "name": "Formulae",
+  "short_name": "Formulae",
+  "description": "Variable formulae creator",
   "icons": [
     {
       "src": "/icons/icon-192x192.png",

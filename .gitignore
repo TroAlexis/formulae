@@ -39,3 +39,6 @@ package-lock.json
 # PWA
 public/sw.js
 public/workbox-*.js
+
+# idea
+.idea
