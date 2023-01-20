@@ -1,16 +1,9 @@
 {
-  "env": {
-    "browser": true,
-    "es2021": true
-  },
-  "extends": ["next", "prettier"],
+  "plugins": ["simple-import-sort"],
+  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
   "rules": {
-    "import/extensions": 0,
-    "import/no-unresolved": 0,
-    "no-console": 2,
-    "no-unused-vars": 2,
-    "react/jsx-filename-extension": 0,
-    "react/jsx-props-no-spreading": 0,
-    "react/react-in-jsx-scope": 0
+    // increase the severity of rules so they are auto-fixable
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error"
   }
 }
