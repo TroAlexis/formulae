@@ -1,6 +1,6 @@
-import { AppProps } from 'next/app';
-import { MantineProvider } from '@mantine/core';
-import Head from 'next/head';
+import { MantineProvider } from "@mantine/core";
+import { AppProps } from "next/app";
+import Head from "next/head";
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -97,7 +97,7 @@ function App({ Component, pageProps }: AppProps) {
         withGlobalStyles
         withNormalizeCSS
         theme={{
-          colorScheme: 'light',
+          colorScheme: "light",
         }}
       >
         <Component {...pageProps} />
