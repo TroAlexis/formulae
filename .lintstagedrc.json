@@ -1,7 +1,4 @@
 {
   "*.{css,scss,json,md,html}": "prettier --ignore-path .gitignore --write",
-  "*.{js,ts,tsx}": [
-    "prettier --ignore-path .gitignore --write",
-    "eslint --ignore-path .gitignore --quiet --fix"
-  ]
+  "*.{js,ts,tsx}": ["eslint --ignore-path .gitignore --quiet --fix"]
 }
