@@ -13,7 +13,11 @@ export interface FormulaBase {
   id: string;
 }
 
-export interface FormulaValue extends FormulaBase {
+export interface FormulaComputableBase extends FormulaBase {
+  name?: string;
+}
+
+export interface FormulaValue extends FormulaComputableBase {
   type: FormulaType.VALUE;
   value: FormulaValueType;
 }
@@ -24,7 +28,7 @@ export interface FormulaOperator extends FormulaBase {
   label: string;
 }
 
-export interface FormulaExpression extends FormulaBase {
+export interface FormulaExpression extends FormulaComputableBase {
   type: FormulaType.EXPRESSION;
   value: Formula[];
 }
