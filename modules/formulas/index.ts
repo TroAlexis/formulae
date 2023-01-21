@@ -1,7 +1,8 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-import { Formula, FormulasState, FormulasStore } from "./models";
+import { FormulasState, FormulasStore } from "./models";
+import { selectFormulas } from "./selectors";
 
 const initialState: FormulasState = {
   formulas: [],
@@ -10,9 +11,15 @@ const initialState: FormulasState = {
 export const useFormulasStore = create<FormulasStore>()(
   immer((set) => ({
     ...initialState,
-    addFormula: (formula: Formula) =>
-      set(({ formulas }) => {
+    addFormula: (formula) =>
+      set((state) => {
+        const formulas = selectFormulas(state);
         formulas.push(formula);
+      }),
+    editFormula: (index, formula) =>
+      set((state) => {
+        const formulas = selectFormulas(state);
+        formulas[index] = Object.assign(formulas[index], formula);
       }),
   }))
 );

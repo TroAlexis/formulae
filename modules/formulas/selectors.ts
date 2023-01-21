@@ -15,6 +15,10 @@ export const selectAddFormula = (state: FormulasStore) => {
   return state.addFormula;
 };
 
+export const selectEditFormula = (state: FormulasStore) => {
+  return state.editFormula;
+};
+
 export const selectFormulasResult = createSelector(
   [selectFormulas],
   (formulas) => {

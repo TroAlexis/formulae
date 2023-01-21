@@ -7,6 +7,7 @@ export interface FormulasState {
 
 export interface FormulasStore extends FormulasState {
   addFormula: (formula: Formula) => void;
+  editFormula: (index: number, formula: Partial<Formula>) => void;
 }
 
 export interface FormulaBase {
