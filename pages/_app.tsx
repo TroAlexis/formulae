@@ -1,3 +1,5 @@
+import "../styles/globals.css";
+
 import { MantineProvider } from "@mantine/core";
 import { AppProps } from "next/app";
 import Head from "next/head";

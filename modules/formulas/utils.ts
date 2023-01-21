@@ -32,7 +32,7 @@ export const getFormulasValue = (formulas: Formula[]): FormulaValue => {
 
     if (isValue && isPreviousOperator) {
       const operator = previous;
-      const [firstValue, secondValue] = [current, result].map(getFormulaValue);
+      const [firstValue, secondValue] = [result, current].map(getFormulaValue);
 
       return operator.value(firstValue, secondValue);
     }
