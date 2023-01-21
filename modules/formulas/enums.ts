@@ -3,3 +3,10 @@ export enum FormulaType {
   EXPRESSION,
   OPERATOR,
 }
+
+export enum FormulaOperatorType {
+  ADDITION,
+  SUBTRACTION,
+  DIVISION,
+  MULTIPLICATION,
+}
