@@ -5,8 +5,8 @@ export enum FormulaType {
 }
 
 export enum FormulaOperatorType {
-  ADDITION,
-  SUBTRACTION,
-  DIVISION,
-  MULTIPLICATION,
+  ADDITION = "+",
+  SUBTRACTION = "-",
+  DIVISION = "/",
+  MULTIPLICATION = "*",
 }

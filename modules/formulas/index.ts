@@ -1,25 +1,40 @@
+import produce from "immer";
 import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
+import { devtools } from "zustand/middleware";
 
-import { FormulasState, FormulasStore } from "./models";
-import { selectFormulas } from "./selectors";
+import { uuid } from "../../utils/uuid";
+import { FormulaType } from "./enums";
+import { Formula, FormulasState, FormulasStore } from "./models";
+import { selectActiveExpression, selectFormulas } from "./selectors";
+import { getBasicFormulaValue, getFormulaByIndex } from "./utils";
 
 const initialState: FormulasState = {
-  formulas: [],
+  formulas: {
+    id: "root-formula",
+    type: FormulaType.EXPRESSION,
+    value: [{ ...getBasicFormulaValue(), id: "base" }],
+    name: "Root",
+  },
 };
 
 export const useFormulasStore = create<FormulasStore>()(
-  immer((set) => ({
+  devtools((set) => ({
     ...initialState,
     addFormula: (formula) =>
-      set((state) => {
-        const formulas = selectFormulas(state);
-        formulas.push(formula);
-      }),
+      set(
+        produce((state) => {
+          const currentExpression = selectActiveExpression(state);
+          const newFormula = { ...formula, id: uuid() } as Formula;
+          currentExpression.value.push(newFormula);
+        })
+      ),
     editFormula: (index, formula) =>
-      set((state) => {
-        const formulas = selectFormulas(state);
-        formulas[index] = Object.assign(formulas[index], formula);
-      }),
+      set(
+        produce((state) => {
+          const formulas = selectFormulas(state);
+          const editedFormula = getFormulaByIndex(formulas, index);
+          Object.assign(editedFormula, formula);
+        })
+      ),
   }))
 );

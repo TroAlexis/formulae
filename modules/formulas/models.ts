@@ -1,13 +1,15 @@
+import { PartialBy } from "../../types/types";
 import { FormulaType } from "./enums";
-import { FormulaValueType } from "./types";
+import { FormulaIndex, FormulaValueType } from "./types";
 
 export interface FormulasState {
-  formulas: Formula[];
+  formulas: FormulaExpression;
+  currentExpressionIndex?: FormulaIndex;
 }
 
 export interface FormulasStore extends FormulasState {
-  addFormula: (formula: Formula) => void;
-  editFormula: (index: number, formula: Partial<Formula>) => void;
+  addFormula: (formula: PartialBy<Formula, "id">) => void;
+  editFormula: (index: FormulaIndex, formula: Partial<Formula>) => void;
 }
 
 export interface FormulaBase {
@@ -25,7 +27,7 @@ export interface FormulaValue extends FormulaComputableBase {
 
 export interface FormulaOperator extends FormulaBase {
   type: FormulaType.OPERATOR;
-  value: (a: FormulaValue, b: FormulaValue) => FormulaValue;
+  computer: (a: FormulaValue, b: FormulaValue) => FormulaValue;
   label: string;
 }
 
