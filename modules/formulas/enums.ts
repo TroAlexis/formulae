@@ -8,5 +8,5 @@ export enum FormulaOperatorType {
   ADDITION = "+",
   SUBTRACTION = "-",
   DIVISION = "/",
-  MULTIPLICATION = "*",
+  MULTIPLICATION = "x",
 }
