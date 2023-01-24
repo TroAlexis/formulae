@@ -1,6 +1,7 @@
 import { VariableIcon } from "@heroicons/react/24/outline";
 import {
   ActionIcon,
+  CopyButton,
   Flex,
   FlexProps,
   Text,
@@ -38,31 +39,37 @@ export const FormulaValueNameControl: FC<Props> = ({
   };
 
   return (
-    <Flex gap={"xs"} align={"center"} {...props}>
-      <Tooltip
-        label={
-          <Text fw={500} size={"xs"}>
-            variable name
-          </Text>
-        }
-        position={"right"}
-      >
-        <ActionIcon
-          size={"lg"}
-          className={classes.iconWrapper}
-          variant={"transparent"}
-          color={"lime"}
-        >
-          <ThemeIcon
-            variant={"gradient"}
-            radius={"xl"}
-            size={"xs"}
-            gradient={{ from: "teal", to: "lime" }}
+    <Flex gap={"xs"} pb={"xs"} align={"center"} {...props}>
+      <CopyButton value={inputValue}>
+        {({ copied, copy }) => (
+          <Tooltip
+            label={
+              <Text fw={500} size={"xs"}>
+                {copied ? "copied" : "variable name"}
+              </Text>
+            }
+            position={"right"}
+            withArrow
           >
-            <VariableIcon className={classes.icon} />
-          </ThemeIcon>
-        </ActionIcon>
-      </Tooltip>
+            <ActionIcon
+              size={"lg"}
+              className={classes.iconWrapper}
+              variant={"transparent"}
+              color={"lime"}
+              onClick={copy}
+            >
+              <ThemeIcon
+                variant={"gradient"}
+                radius={"xl"}
+                size={"xs"}
+                gradient={{ from: "teal", to: "lime" }}
+              >
+                <VariableIcon className={classes.icon} />
+              </ThemeIcon>
+            </ActionIcon>
+          </Tooltip>
+        )}
+      </CopyButton>
       <TextInput
         size={"xs"}
         value={inputValue}

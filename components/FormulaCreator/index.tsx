@@ -1,12 +1,5 @@
 import { CalculatorIcon, HashtagIcon } from "@heroicons/react/24/outline";
-import {
-  ActionIcon,
-  Container,
-  Divider,
-  Flex,
-  Text,
-  Title,
-} from "@mantine/core";
+import { ActionIcon, Container, Divider, Flex, Text } from "@mantine/core";
 import React, { FC } from "react";
 
 import { useFormulasStore } from "../../modules/formulas";
@@ -15,7 +8,6 @@ import { Formula } from "../../modules/formulas/models";
 import {
   selectAddFormula,
   selectFormulas,
-  selectFormulasResult,
   selectIsComputableAddable,
   selectIsExpressionCloseable,
   selectIsExpressionOpenable,
@@ -29,6 +21,7 @@ import {
   getBasicFormulaValue,
 } from "../../modules/formulas/utils";
 import FormulaOperator from "../FormulaOperator";
+import { FormulaResult } from "../FormulaResult";
 import FormulaValue from "../FormulaValue";
 
 interface Props {}
@@ -36,7 +29,6 @@ interface Props {}
 export const FormulaCreator: FC<Props> = ({}) => {
   const formulas = useFormulasStore(selectFormulas);
   const addFormula = useFormulasStore(selectAddFormula);
-  const result = useFormulasStore(selectFormulasResult);
   const isOperatorAddable = useFormulasStore(selectIsOperatorAddable);
   const isComputableAddable = useFormulasStore(selectIsComputableAddable);
   const isExpressionOpenable = useFormulasStore(selectIsExpressionOpenable);
@@ -95,9 +87,7 @@ export const FormulaCreator: FC<Props> = ({}) => {
       <Flex direction={"column"}>{renderFormulas(formulas)}</Flex>
 
       <Divider label={"Result: "} my={"lg"} />
-      <Title align={"center"} size={"h1"}>
-        {result.value}
-      </Title>
+      <FormulaResult />
       <Divider label={"Add: "} my={"lg"} />
 
       <Flex direction={"row"} gap={"xs"}>

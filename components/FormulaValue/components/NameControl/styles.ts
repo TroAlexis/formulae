@@ -1,6 +1,6 @@
 import { createStyles } from "@mantine/core";
 
-const CONTROL_HEIGHT = 16;
+const CONTROL_HEIGHT = 14;
 
 export const useStyles = createStyles(() => ({
   nameInput: {
