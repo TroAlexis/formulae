@@ -4,6 +4,8 @@ import { MantineProvider } from "@mantine/core";
 import { AppProps } from "next/app";
 import Head from "next/head";
 
+import { mantineThemeOverrides } from "../config/mantine/theme";
+
 function App({ Component, pageProps }: AppProps) {
   return (
     <>
@@ -98,9 +100,7 @@ function App({ Component, pageProps }: AppProps) {
       <MantineProvider
         withGlobalStyles
         withNormalizeCSS
-        theme={{
-          colorScheme: "light",
-        }}
+        theme={mantineThemeOverrides}
       >
         <Component {...pageProps} />
       </MantineProvider>
