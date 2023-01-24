@@ -1,44 +1,27 @@
 import {
   ActionIcon,
-  createStyles,
   Flex,
   NumberInput,
   NumberInputHandlers,
   NumberInputProps,
-  Text,
-  Title,
 } from "@mantine/core";
 import React, { FC, useRef } from "react";
 
 import { useFormulasStore } from "../../modules/formulas";
-import { FormulaValue } from "../../modules/formulas/models";
 import { selectEditFormula } from "../../modules/formulas/selectors";
-import { FormulaIndex } from "../../modules/formulas/types";
 import { DEFAULT_FORMULA_VALUE, DEFAULT_PRECISION } from "../../types/consts";
+import { FormulaValueNameControl } from "./components/NameControl";
+import { FormulaValueProps } from "./models";
+import { useStyles } from "./styles";
 
-interface Props {
-  index: FormulaIndex;
-  formulaValue: FormulaValue;
-}
-
-const useStyles = createStyles(() => ({
-  root: {
-    flexGrow: 1,
-  },
-  input: {
-    textAlign: "center",
-  },
-}));
-
-const FormulaValue: FC<Props> = ({ formulaValue, index }) => {
+const FormulaValue: FC<FormulaValueProps> = ({ formulaValue, index }) => {
   const editFormula = useFormulasStore(selectEditFormula);
   const { classes } = useStyles();
   const handlers = useRef<NumberInputHandlers>();
 
-  const { value, name, id } = formulaValue;
-  const [shortId] = id.split("-");
+  const { value } = formulaValue;
 
-  const handleChange: NumberInputProps["onChange"] = (num) => {
+  const handleNumberChange: NumberInputProps["onChange"] = (num) => {
     const value = num ?? DEFAULT_FORMULA_VALUE;
     return editFormula(index, { value });
   };
@@ -52,15 +35,15 @@ const FormulaValue: FC<Props> = ({ formulaValue, index }) => {
 
   return (
     <Flex direction={"column"}>
-      <Title size={"h6"}>
-        <Text span color={"dimmed"}>
-          VARIABLE:
-        </Text>{" "}
-        {name || `#${shortId}`}
-      </Title>
+      <FormulaValueNameControl index={index} formulaValue={formulaValue} />
 
       <Flex gap={"xs"} align={"center"}>
-        <ActionIcon size={"lg"} variant="default" onClick={handleDecrement}>
+        <ActionIcon
+          size={"lg"}
+          color={"indigo"}
+          variant="subtle"
+          onClick={handleDecrement}
+        >
           –
         </ActionIcon>
 
@@ -68,7 +51,7 @@ const FormulaValue: FC<Props> = ({ formulaValue, index }) => {
           size={"sm"}
           value={value}
           handlersRef={handlers}
-          onChange={handleChange}
+          onChange={handleNumberChange}
           precision={DEFAULT_PRECISION}
           placeholder={"Enter value"}
           removeTrailingZeros
@@ -78,7 +61,12 @@ const FormulaValue: FC<Props> = ({ formulaValue, index }) => {
           hideControls
         />
 
-        <ActionIcon size={"lg"} variant="default" onClick={handleIncrement}>
+        <ActionIcon
+          size={"lg"}
+          variant="subtle"
+          color={"indigo"}
+          onClick={handleIncrement}
+        >
           +
         </ActionIcon>
       </Flex>
