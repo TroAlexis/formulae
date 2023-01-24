@@ -1,5 +1,5 @@
-import { CalculatorIcon, HashtagIcon } from "@heroicons/react/24/outline";
 import { ActionIcon, Flex, Text } from "@mantine/core";
+import { IconCalculator, IconHash } from "@tabler/icons-react";
 import React, { FC } from "react";
 
 import { useFormulasStore } from "../../../modules/formulas";
@@ -41,7 +41,7 @@ const FormulaCreatorControls: FC<Props> = ({}) => {
         onClick={addOne}
         disabled={!isComputableAddable}
       >
-        <HashtagIcon />
+        <IconHash />
       </ActionIcon>
       <ActionIcon
         size={"lg"}
@@ -49,7 +49,7 @@ const FormulaCreatorControls: FC<Props> = ({}) => {
         onClick={addPlus}
         disabled={!isOperatorAddable}
       >
-        <CalculatorIcon />
+        <IconCalculator />
       </ActionIcon>
       <ActionIcon size={"lg"} disabled={!isExpressionOpenable}>
         <Text span ml={-2}>

@@ -1,4 +1,3 @@
-import { VariableIcon } from "@heroicons/react/24/outline";
 import {
   ActionIcon,
   CopyButton,
@@ -10,6 +9,7 @@ import {
   ThemeIcon,
   Tooltip,
 } from "@mantine/core";
+import { IconBallpen } from "@tabler/icons-react";
 import React, { FC } from "react";
 
 import { useFormulasStore } from "../../../../modules/formulas";
@@ -45,7 +45,7 @@ export const FormulaValueNameControl: FC<Props> = ({
           <Tooltip
             label={
               <Text fw={500} size={"xs"}>
-                {copied ? "copied" : "variable name"}
+                {copied ? "copied" : "copy variable name"}
               </Text>
             }
             position={"right"}
@@ -64,7 +64,7 @@ export const FormulaValueNameControl: FC<Props> = ({
                 size={"xs"}
                 gradient={{ from: "teal", to: "lime" }}
               >
-                <VariableIcon className={classes.icon} />
+                <IconBallpen className={classes.icon} />
               </ThemeIcon>
             </ActionIcon>
           </Tooltip>
