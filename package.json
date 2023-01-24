@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "telemetry": "next telemetry",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "tsc --noEmit --watch",
     "lint": "next lint",
     "lint-fix": "next lint --fix",
     "prepare": "husky install"
