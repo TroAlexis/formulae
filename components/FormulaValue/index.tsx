@@ -59,6 +59,7 @@ const FormulaValue: FC<FormulaValueProps> = ({ formulaValue, index }) => {
           autoFocus
           classNames={{ root: classes.root, input: classes.input }}
           hideControls
+          type={"number"}
         />
 
         <ActionIcon

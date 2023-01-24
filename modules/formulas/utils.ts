@@ -1,5 +1,5 @@
 import { uuid } from "../../utils/uuid";
-import { OPERATORS_ORDER } from "./consts";
+import { OPERATORS, OPERATORS_ORDER } from "./consts";
 import { FormulaType } from "./enums";
 import {
   Formula,
@@ -39,16 +39,18 @@ export const getOperatorComputed = (
 ) => {
   const indexOfA = operatorIndex - 1;
   const indexOfB = operatorIndex + 1;
-  const operator = formulas[operatorIndex];
+  const formulaOperator = formulas[operatorIndex];
   const a = formulas[indexOfA];
   const b = formulas[indexOfB];
 
   if (
-    checkIsFormulaOperator(operator) &&
+    checkIsFormulaOperator(formulaOperator) &&
     checkIsFormulaComputable(a) &&
     checkIsFormulaComputable(b)
   ) {
-    return operator.computer(getComputableValue(a), getComputableValue(b));
+    const operator = OPERATORS.get(formulaOperator.value);
+
+    return operator?.computer(getComputableValue(a), getComputableValue(b));
   }
 
   return undefined;

@@ -1,6 +1,5 @@
-import { PartialBy } from "../../types/types";
 import { FormulaOperatorType } from "./enums";
-import { FormulaOperator, FormulaValue } from "./models";
+import { FormulaOperator, FormulaValue, Operator } from "./models";
 import { FormulaValueType, OperatorOrderChecker } from "./types";
 import { getBasicFormulaValue } from "./utils";
 
@@ -11,27 +10,36 @@ const createOperatorComputer =
     value: computer(a.value, b.value),
   });
 
-export const OPERATORS: Record<
-  FormulaOperatorType,
-  PartialBy<FormulaOperator, "id" | "type">
-> = {
-  [FormulaOperatorType.MULTIPLICATION]: {
-    label: FormulaOperatorType.MULTIPLICATION,
-    computer: createOperatorComputer((a, b) => a * b),
-  },
-  [FormulaOperatorType.DIVISION]: {
-    label: FormulaOperatorType.DIVISION,
-    computer: createOperatorComputer((a, b) => a / b),
-  },
-  [FormulaOperatorType.ADDITION]: {
-    label: FormulaOperatorType.ADDITION,
-    computer: createOperatorComputer((a, b) => a + b),
-  },
-  [FormulaOperatorType.SUBTRACTION]: {
-    label: FormulaOperatorType.SUBTRACTION,
-    computer: createOperatorComputer((a, b) => a - b),
-  },
-};
+export const OPERATORS: Map<FormulaOperatorType, Operator> = new Map([
+  [
+    FormulaOperatorType.MULTIPLICATION,
+    {
+      label: FormulaOperatorType.MULTIPLICATION,
+      computer: createOperatorComputer((a, b) => a * b),
+    },
+  ],
+  [
+    FormulaOperatorType.DIVISION,
+    {
+      label: FormulaOperatorType.DIVISION,
+      computer: createOperatorComputer((a, b) => a / b),
+    },
+  ],
+  [
+    FormulaOperatorType.ADDITION,
+    {
+      label: FormulaOperatorType.ADDITION,
+      computer: createOperatorComputer((a, b) => a + b),
+    },
+  ],
+  [
+    FormulaOperatorType.SUBTRACTION,
+    {
+      label: FormulaOperatorType.SUBTRACTION,
+      computer: createOperatorComputer((a, b) => a - b),
+    },
+  ],
+]);
 
 const FIRST_PRIORITY_OPERATORS: string[] = [
   FormulaOperatorType.DIVISION,
@@ -40,6 +48,6 @@ const FIRST_PRIORITY_OPERATORS: string[] = [
 
 export const OPERATORS_ORDER: OperatorOrderChecker[] = [
   (operator: FormulaOperator) =>
-    FIRST_PRIORITY_OPERATORS.includes(operator.label),
+    FIRST_PRIORITY_OPERATORS.includes(operator.value),
   () => true,
 ];

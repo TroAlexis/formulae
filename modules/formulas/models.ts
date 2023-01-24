@@ -1,5 +1,5 @@
 import { PartialBy } from "../../types/types";
-import { FormulaType } from "./enums";
+import { FormulaOperatorType, FormulaType } from "./enums";
 import { FormulaIndex, FormulaValueType } from "./types";
 
 export interface FormulasState {
@@ -27,8 +27,7 @@ export interface FormulaValue extends FormulaComputableBase {
 
 export interface FormulaOperator extends FormulaBase {
   type: FormulaType.OPERATOR;
-  computer: (a: FormulaValue, b: FormulaValue) => FormulaValue;
-  label: string;
+  value: FormulaOperatorType;
 }
 
 export interface FormulaExpression extends FormulaComputableBase {
@@ -39,3 +38,8 @@ export interface FormulaExpression extends FormulaComputableBase {
 export type Formula = FormulaValue | FormulaOperator | FormulaExpression;
 
 export type FormulaComputable = Exclude<Formula, FormulaOperator>;
+
+export interface Operator {
+  label: string;
+  computer: (a: FormulaValue, b: FormulaValue) => FormulaValue;
+}

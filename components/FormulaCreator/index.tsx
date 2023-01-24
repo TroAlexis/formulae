@@ -10,7 +10,6 @@ import {
 import React, { FC } from "react";
 
 import { useFormulasStore } from "../../modules/formulas";
-import { OPERATORS } from "../../modules/formulas/consts";
 import { FormulaOperatorType, FormulaType } from "../../modules/formulas/enums";
 import { Formula } from "../../modules/formulas/models";
 import {
@@ -46,7 +45,7 @@ export const FormulaCreator: FC<Props> = ({}) => {
   const addPlus = () =>
     addFormula({
       type: FormulaType.OPERATOR,
-      ...OPERATORS[FormulaOperatorType.ADDITION],
+      value: FormulaOperatorType.ADDITION,
     });
 
   const addOne = () => addFormula(getBasicFormulaValue());

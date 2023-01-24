@@ -13,19 +13,22 @@ interface Props {
   operator: FormulaOperator;
 }
 
-const operators = Object.values(OPERATORS).map((operator) => ({
-  value: operator.label,
+const operators = [...OPERATORS.entries()].map(([type, operator]) => ({
+  value: type,
   label: operator.label,
 }));
 
 const FormulaOperator: FC<Props> = ({ operator, index }) => {
   const editFormula = useFormulasStore(selectEditFormula);
-  const { label } = operator;
+  const { value } = operator;
 
-  const handleChange: AutocompleteProps["onChange"] = (value) => {
-    const newOperator = OPERATORS[value as FormulaOperatorType];
-    if (newOperator) {
-      editFormula(index, newOperator);
+  const { label } = OPERATORS.get(value) || {};
+
+  const handleChange: AutocompleteProps["onChange"] = (
+    value: FormulaOperatorType
+  ) => {
+    if (OPERATORS.has(value)) {
+      editFormula(index, { value: value });
     }
   };
 
@@ -34,7 +37,6 @@ const FormulaOperator: FC<Props> = ({ operator, index }) => {
       searchable
       size={"sm"}
       value={label}
-      autoFocus
       onChange={handleChange}
       placeholder={"Select operator"}
       data={operators}
