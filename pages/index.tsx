@@ -13,7 +13,12 @@ export default function Home() {
           display={"flex"}
           sx={{ alignItems: "center", justifyContent: "center" }}
         >
-          <Title size={"h1"} lts={-2} color={"blue"}>
+          <Title
+            size={"h1"}
+            lts={-2}
+            variant={"gradient"}
+            gradient={{ from: "blue", to: "indigo" }}
+          >
             formulae
           </Title>
         </Header>
