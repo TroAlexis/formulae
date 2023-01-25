@@ -1,3 +1,4 @@
+import { PartialBy } from "../../types/types";
 import { uuid } from "../../utils/uuid";
 import { OPERATORS, OPERATORS_ORDER } from "./consts";
 import { FormulaType } from "./enums";
@@ -10,12 +11,31 @@ import {
 } from "./models";
 import { FormulaIndex, OperatorOrderChecker } from "./types";
 
-/* Formula value factory */
-export const getBasicFormulaValue = (): FormulaValue => ({
-  value: 0,
+/* Formula factory */
+
+export const createFormulaFactory =
+  <T extends Formula>() =>
+  <K extends keyof T>(base: Pick<T, K>) =>
+  (formula: PartialBy<T, K | "id">): T =>
+    ({
+      id: uuid(),
+      ...base,
+      ...formula,
+    } as T);
+
+export const createFormulaValue = createFormulaFactory<FormulaValue>()({
   type: FormulaType.VALUE,
-  id: uuid(),
 });
+
+export const createFormulaExpression =
+  createFormulaFactory<FormulaExpression>()({ type: FormulaType.EXPRESSION });
+
+export const createFormulaOperator = createFormulaFactory<FormulaOperator>()({
+  type: FormulaType.OPERATOR,
+});
+
+export const getBasicFormulaValue = (): FormulaValue =>
+  createFormulaValue({ value: 0 });
 
 export const getFormulaInitialValue = (formulas: Formula[]): FormulaValue => {
   const [firstFormula] = formulas;
@@ -89,6 +109,11 @@ export const getExpressionResult = (
     return getAppliedOperator(result, operator);
   }, expression.value);
 
+  const [value] = result;
+  if (value.type === FormulaType.EXPRESSION) {
+    return getExpressionResult(value);
+  }
+
   return getFormulaInitialValue(result);
 };
 
@@ -119,12 +144,14 @@ export const getFormulaByIndexArray = (
 ) => {
   const [currentIndex] = index;
   const currentFormula = formulas[currentIndex];
-  if (checkIsFormulaExpression(currentFormula)) {
-    const nextIndex = index.slice(1);
+  const nextIndex = index.slice(1);
+  const hasIndex = !!nextIndex.length;
+
+  if (checkIsFormulaExpression(currentFormula) && hasIndex) {
     return getFormulaByIndex(currentFormula.value, nextIndex);
-  } else {
-    return currentFormula;
   }
+
+  return currentFormula;
 };
 
 export const getFormulaByIndex = (

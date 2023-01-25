@@ -1,14 +1,14 @@
 import { FormulaOperatorType } from "./enums";
 import { FormulaOperator, FormulaValue, Operator } from "./models";
 import { FormulaValueType, OperatorOrderChecker } from "./types";
-import { getBasicFormulaValue } from "./utils";
+import { createFormulaValue } from "./utils";
 
 const createOperatorComputer =
   (computer: (a: FormulaValueType, b: FormulaValueType) => FormulaValueType) =>
-  (a: FormulaValue, b: FormulaValue) => ({
-    ...getBasicFormulaValue(),
-    value: computer(a.value, b.value),
-  });
+  (a: FormulaValue, b: FormulaValue) =>
+    createFormulaValue({
+      value: computer(a.value, b.value),
+    });
 
 export const OPERATORS: Map<FormulaOperatorType, Operator> = new Map([
   [

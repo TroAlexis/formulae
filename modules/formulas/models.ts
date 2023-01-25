@@ -1,4 +1,3 @@
-import { PartialBy } from "../../types/types";
 import { FormulaOperatorType, FormulaType } from "./enums";
 import { FormulaIndex, FormulaValueType } from "./types";
 
@@ -7,10 +6,15 @@ export interface FormulasState {
   currentExpressionIndex?: FormulaIndex;
 }
 
-export interface FormulasStore extends FormulasState {
-  addFormula: (formula: PartialBy<Formula, "id">) => void;
+export interface FormulasActions {
+  addFormula: (formula: Formula) => void;
   editFormula: (index: FormulaIndex, formula: Partial<Formula>) => void;
+  openExpression: () => void;
+  closeExpression: () => void;
+  pushCurrentExpressionIndex: (index: number) => void;
 }
+
+export interface FormulasStore extends FormulasState, FormulasActions {}
 
 export interface FormulaBase {
   id: string;

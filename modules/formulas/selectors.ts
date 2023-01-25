@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 
+import { getLast } from "../../utils/array";
 import { FormulasStore } from "./models";
-import { FormulaIndex } from "./types";
 import {
   checkIsFormulaComputable,
   checkIsFormulaExpression,
@@ -25,11 +25,6 @@ export const selectFormulas = createSelector(
   (expression) => expression.value
 );
 
-export const selectFormulaByIndex = createSelector(
-  [selectFormulas, (_, index: FormulaIndex) => index],
-  (formulas, index) => getFormulaByIndex(formulas, index)
-);
-
 /* Actions */
 
 export const selectAddFormula = (state: FormulasStore) => {
@@ -38,6 +33,14 @@ export const selectAddFormula = (state: FormulasStore) => {
 
 export const selectEditFormula = (state: FormulasStore) => {
   return state.editFormula;
+};
+
+export const selectOpenExpression = (state: FormulasStore) => {
+  return state.openExpression;
+};
+
+export const selectCloseExpression = (state: FormulasStore) => {
+  return state.closeExpression;
 };
 
 /* Computed */
@@ -71,10 +74,9 @@ export const selectFormulasResult = createSelector(
 
 export const selectLastFormula = createSelector(
   [selectActiveExpression],
-  (currentExpression) => {
-    const { value: formulas } = currentExpression;
-    const lastIndex = formulas.length - 1;
-    return formulas[lastIndex];
+  (activeExpression) => {
+    const { value: formulas } = activeExpression;
+    return getLast(formulas);
   }
 );
 
@@ -93,12 +95,9 @@ export const selectIsComputableAddable = createSelector(
 );
 
 export const selectIsExpressionOpenable = createSelector(
-  [selectCurrentExpression, selectLastFormula],
-  (expression, formula) => {
-    return (
-      !expression &&
-      (checkIsFormulaValue(formula) || checkIsFormulaOperator(formula))
-    );
+  [selectLastFormula],
+  (formula) => {
+    return checkIsFormulaValue(formula) || checkIsFormulaOperator(formula);
   }
 );
 
