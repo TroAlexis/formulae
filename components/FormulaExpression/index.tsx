@@ -1,4 +1,4 @@
-import { Flex } from "@mantine/core";
+import { Flex, Paper } from "@mantine/core";
 import React, { FC } from "react";
 
 import { FormulaExpression } from "../../modules/formulas/models";
@@ -20,7 +20,14 @@ const FormulaExpression: FC<Props> = ({ expression, parentIndex = [] }) => {
   const formulas = expression.value;
 
   return (
-    <Flex direction={"column"}>
+    <Paper
+      component={Flex}
+      shadow={"xs"}
+      withBorder
+      p={"sm"}
+      radius={"lg"}
+      direction={"column"}
+    >
       {formulas.map((formula, index) => {
         const parentIndexArray = Array.isArray(parentIndex)
           ? parentIndex
@@ -57,7 +64,7 @@ const FormulaExpression: FC<Props> = ({ expression, parentIndex = [] }) => {
 
         return null;
       })}
-    </Flex>
+    </Paper>
   );
 };
 
