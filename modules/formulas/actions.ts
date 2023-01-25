@@ -1,5 +1,5 @@
 import { getLast, spliceLast } from "../../utils/array";
-import { FormulasActions } from "./models";
+import { Formula, FormulasActions, FormulaValue } from "./models";
 import {
   selectActiveExpression,
   selectCurrentExpressionIndex,
@@ -43,19 +43,32 @@ export const pushCurrentExpressionIndex =
     }
   });
 
+const openExpressionForValue = (formulas: Formula[], value: FormulaValue) => {
+  return spliceLast(
+    formulas,
+    createFormulaExpression({
+      value: [value],
+    })
+  );
+};
+
+const openEmptyExpression = (formulas: Formula[]) => {
+  const expression = createFormulaExpression({
+    value: [getBasicFormulaValue()],
+  });
+  return formulas.push(expression);
+};
+
 export const openExpression = createAction<"openExpression">()((state) => {
   const { value } = selectActiveExpression(state);
   const lastFormula = getLast(value);
+
   if (checkIsFormulaValue(lastFormula)) {
-    spliceLast(
-      value,
-      createFormulaExpression({
-        value: [lastFormula],
-      })
-    );
+    openExpressionForValue(value, lastFormula);
   }
+
   if (checkIsFormulaOperator(lastFormula)) {
-    value.push(createFormulaExpression({ value: [getBasicFormulaValue()] }));
+    openEmptyExpression(value);
   }
 
   pushCurrentExpressionIndex(state, value.length - 1);
