@@ -1,11 +1,16 @@
 import { getLast, spliceLast } from "../../utils/array";
-import { Formula, FormulasActions, FormulaValue } from "./models";
+import { createStoreMutationFactory } from "../utils/actions";
+import {
+  Formula,
+  FormulasActions,
+  FormulasStore,
+  FormulaValue,
+} from "./models";
 import {
   selectActiveExpression,
   selectCurrentExpressionIndex,
   selectFormulas,
 } from "./selectors";
-import { StoreAction } from "./types";
 import {
   checkIsFormulaOperator,
   checkIsFormulaValue,
@@ -14,18 +19,17 @@ import {
   getFormulaByIndex,
 } from "./utils";
 
-// Use _name for better auto-completion
-const createAction =
-  <T extends keyof FormulasActions>(_name: T) =>
-  <R>(fn: StoreAction<T, R>) =>
-    fn;
+const createMutation = createStoreMutationFactory<
+  FormulasActions,
+  FormulasStore
+>();
 
-export const addFormula = createAction("addFormula")((state, formula) => {
+export const addFormula = createMutation("addFormula")((state, formula) => {
   const activeExpression = selectActiveExpression(state);
   activeExpression.value.push(formula);
 });
 
-export const editFormula = createAction("editFormula")(
+export const editFormula = createMutation("editFormula")(
   (state, index, formula) => {
     const formulas = selectFormulas(state);
     const editedFormula = getFormulaByIndex(formulas, index);
@@ -33,7 +37,7 @@ export const editFormula = createAction("editFormula")(
   }
 );
 
-export const pushCurrentExpressionIndex = createAction(
+export const pushCurrentExpressionIndex = createMutation(
   "pushCurrentExpressionIndex"
 )((state, index) => {
   const currentExpressionIndex = selectCurrentExpressionIndex(state);
@@ -61,7 +65,7 @@ const openEmptyExpression = (formulas: Formula[]) => {
   return formulas.push(expression);
 };
 
-export const openExpression = createAction("openExpression")((state) => {
+export const openExpression = createMutation("openExpression")((state) => {
   const { value } = selectActiveExpression(state);
   const lastFormula = getLast(value);
 
@@ -76,7 +80,7 @@ export const openExpression = createAction("openExpression")((state) => {
   pushCurrentExpressionIndex(state, value.length - 1);
 });
 
-export const closeExpression = createAction("closeExpression")((state) => {
+export const closeExpression = createMutation("closeExpression")((state) => {
   const currentExpressionIndex = selectCurrentExpressionIndex(state);
 
   if (currentExpressionIndex && Array.isArray(currentExpressionIndex)) {
