@@ -1,4 +1,4 @@
-import { Container, Divider } from "@mantine/core";
+import { Center, Container, Divider } from "@mantine/core";
 import React, { FC } from "react";
 
 import { useFormulasStore } from "../../modules/formulas";
@@ -14,15 +14,19 @@ export const FormulaCreator: FC<Props> = ({}) => {
 
   return (
     <Container size={"xs"}>
-      <FormulaExpression expression={expression} />
+      <Center>
+        <FormulaCreatorControls />
+      </Center>
+
+      <Divider label={"Add: "} my={"sm"} />
+
+      <div>
+        <FormulaExpression expression={expression} />
+      </div>
 
       <Divider label={"Result: "} my={"lg"} />
 
       <FormulaResult />
-
-      <Divider label={"Add: "} my={"lg"} />
-
-      <FormulaCreatorControls />
     </Container>
   );
 };
