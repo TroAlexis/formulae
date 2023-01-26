@@ -10,7 +10,6 @@ import React, { FC, useRef } from "react";
 import { useFormulasStore } from "../../modules/formulas";
 import { selectEditFormula } from "../../modules/formulas/selectors";
 import { DEFAULT_FORMULA_VALUE, DEFAULT_PRECISION } from "../../types/consts";
-import { FormulaValueNameControl } from "./components/NameControl";
 import { FormulaValueProps } from "./models";
 import { useStyles } from "./styles";
 
@@ -35,8 +34,6 @@ const FormulaValue: FC<FormulaValueProps> = ({ formulaValue, index }) => {
 
   return (
     <Flex direction={"column"}>
-      <FormulaValueNameControl index={index} formulaValue={formulaValue} />
-
       <Flex gap={"xs"} align={"center"}>
         <ActionIcon
           size={"lg"}

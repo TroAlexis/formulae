@@ -8,6 +8,7 @@ import {
   checkIsFormulaOperator,
   checkIsFormulaValue,
 } from "../../modules/formulas/utils";
+import { FormulaNameControl } from "../FormulaNameControl";
 import FormulaOperator from "../FormulaOperator";
 import FormulaValue from "../FormulaValue";
 
@@ -24,10 +25,12 @@ const FormulaExpression: FC<Props> = ({ expression, parentIndex = [] }) => {
       component={Flex}
       shadow={"xs"}
       withBorder
-      p={"sm"}
+      p={"xs"}
       radius={"lg"}
       direction={"column"}
     >
+      <FormulaNameControl index={parentIndex} computable={expression} />
+
       {formulas.map((formula, index) => {
         const parentIndexArray = Array.isArray(parentIndex)
           ? parentIndex

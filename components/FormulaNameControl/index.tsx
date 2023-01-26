@@ -12,22 +12,26 @@ import {
 import { IconBallpen } from "@tabler/icons-react";
 import React, { FC } from "react";
 
-import { useFormulasStore } from "../../../../modules/formulas";
-import { selectEditFormula } from "../../../../modules/formulas/selectors";
-import { FormulaValueProps } from "../../models";
+import { useFormulasStore } from "../../modules/formulas";
+import { FormulaComputable } from "../../modules/formulas/models";
+import { selectEditFormula } from "../../modules/formulas/selectors";
+import { FormulaIndex } from "../../modules/formulas/types";
 import { useStyles } from "./styles";
 
-interface Props extends FormulaValueProps, FlexProps {}
+interface Props extends FlexProps {
+  index: FormulaIndex;
+  computable: FormulaComputable;
+}
 
-export const FormulaValueNameControl: FC<Props> = ({
-  formulaValue,
+export const FormulaNameControl: FC<Props> = ({
+  computable,
   index,
   ...props
 }) => {
   const editFormula = useFormulasStore(selectEditFormula);
   const { classes } = useStyles();
 
-  const { name, id } = formulaValue;
+  const { name, id } = computable;
   const [shortId] = id.split("-");
 
   const inputValue = name ?? shortId;
