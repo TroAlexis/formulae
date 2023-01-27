@@ -9,6 +9,7 @@ import {
 import { IconMoonStars } from "@tabler/icons-react";
 import React, { FC } from "react";
 
+import { ACTION_COLOR } from "../../config/mantine/theme";
 import { useShellStore } from "../../modules/shell";
 import {
   selectIsNavbarOpen,
@@ -43,14 +44,14 @@ export const Header: FC<Props> = ({}) => {
         lts={-2}
         variant={"gradient"}
         className={classes.title}
-        gradient={{ from: "blue", to: "indigo" }}
+        gradient={{ from: "blue", to: ACTION_COLOR }}
       >
         formulae
       </Title>
 
       <ActionIcon
         size={"md"}
-        color={"indigo"}
+        color={ACTION_COLOR}
         variant={"outline"}
         className={classes.theme}
         onClick={toggleTheme}

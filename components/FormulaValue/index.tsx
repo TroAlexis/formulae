@@ -7,6 +7,7 @@ import {
 } from "@mantine/core";
 import React, { FC, useRef } from "react";
 
+import { ACTION_COLOR } from "../../config/mantine/theme";
 import { useFormulasStore } from "../../modules/formulas";
 import { selectEditFormula } from "../../modules/formulas/selectors";
 import { DEFAULT_FORMULA_VALUE, DEFAULT_PRECISION } from "../../types/consts";
@@ -37,7 +38,7 @@ const FormulaValue: FC<FormulaValueProps> = ({ formulaValue, index }) => {
       <Flex gap={"xs"} align={"center"}>
         <ActionIcon
           size={"lg"}
-          color={"indigo"}
+          color={ACTION_COLOR}
           variant="subtle"
           onClick={handleDecrement}
         >
@@ -62,7 +63,7 @@ const FormulaValue: FC<FormulaValueProps> = ({ formulaValue, index }) => {
         <ActionIcon
           size={"lg"}
           variant="subtle"
-          color={"indigo"}
+          color={ACTION_COLOR}
           onClick={handleIncrement}
         >
           +

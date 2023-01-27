@@ -1,5 +1,7 @@
 import { MantineThemeOverride } from "@mantine/core";
 
+export const ACTION_COLOR = "indigo";
+
 export const mantineThemeOverrides: MantineThemeOverride = {
   spacing: {
     xs: 8,
