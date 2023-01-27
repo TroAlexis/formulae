@@ -1,12 +1,10 @@
 import {
-  ActionIcon,
   Burger,
   Header as MantineHeader,
   MediaQuery,
   Title,
   useMantineTheme,
 } from "@mantine/core";
-import { IconMoonStars } from "@tabler/icons-react";
 import React, { FC } from "react";
 
 import { ACTION_COLOR } from "../../../config/mantine/theme";
@@ -14,8 +12,8 @@ import { useShellStore } from "../../../modules/shell";
 import {
   selectIsNavbarOpen,
   selectToggleNavbar,
-  selectToggleTheme,
 } from "../../../modules/shell/selectors";
+import { ThemeToggle } from "../ThemeToggle";
 import { useStyles } from "./styles";
 
 interface Props {}
@@ -23,7 +21,6 @@ interface Props {}
 export const Header: FC<Props> = ({}) => {
   const isNavbarOpened = useShellStore(selectIsNavbarOpen);
   const toggleNavbar = useShellStore(selectToggleNavbar);
-  const toggleTheme = useShellStore(selectToggleTheme);
   const theme = useMantineTheme();
 
   const { classes } = useStyles();
@@ -49,15 +46,7 @@ export const Header: FC<Props> = ({}) => {
         formulae
       </Title>
 
-      <ActionIcon
-        size={"md"}
-        color={ACTION_COLOR}
-        variant={"outline"}
-        className={classes.theme}
-        onClick={toggleTheme}
-      >
-        <IconMoonStars size={theme.spacing.sm} />
-      </ActionIcon>
+      <ThemeToggle className={classes.theme} />
     </MantineHeader>
   );
 };
