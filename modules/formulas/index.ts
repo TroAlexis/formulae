@@ -14,13 +14,16 @@ import { FormulaType } from "./enums";
 import { FormulasActions, FormulasState, FormulasStore } from "./models";
 import { getBasicFormulaValue } from "./utils";
 
+export const STATIC_FORMULA_ID = "new-formula";
+export const STATIC_VALUE_ID = "new-value";
+
 const initialState: FormulasState = {
   formulas: {
-    id: "root-formula",
+    id: STATIC_FORMULA_ID,
     type: FormulaType.EXPRESSION,
     // Set id to static value to prevent hydration errors
-    value: [{ ...getBasicFormulaValue(), id: "base" }],
-    name: "Root",
+    value: [{ ...getBasicFormulaValue(), id: STATIC_VALUE_ID }],
+    name: "New formula",
   },
 };
 
