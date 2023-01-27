@@ -6,25 +6,25 @@ import { selectRootExpression } from "../../modules/formulas/selectors";
 import FormulaExpression from "../FormulaExpression";
 import { FormulaResult } from "../FormulaResult";
 import FormulaCreatorControls from "./Controls";
+import { useStyles } from "./styles";
 
 interface Props {}
 
 export const FormulaCreator: FC<Props> = ({}) => {
   const expression = useFormulasStore(selectRootExpression);
+  const { classes } = useStyles();
 
   return (
-    <Container size={"xs"}>
-      <Center>
+    <Container size={"xs"} className={classes.container}>
+      <Center component={"section"}>
         <FormulaCreatorControls />
       </Center>
 
-      <Divider label={"Add: "} my={"sm"} />
+      <Divider my={"xs"} />
 
-      <div>
-        <FormulaExpression expression={expression} />
-      </div>
+      <FormulaExpression className={classes.scroll} expression={expression} />
 
-      <Divider label={"Result: "} my={"lg"} />
+      <Divider label={"="} labelPosition={"center"} my={"sm"} />
 
       <FormulaResult />
     </Container>

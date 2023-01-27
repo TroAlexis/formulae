@@ -1,4 +1,4 @@
-import { AppShell } from "@mantine/core";
+import { AppShell, createStyles } from "@mantine/core";
 import { CSSProperties } from "react";
 
 import { FormulaCreator } from "../components/FormulaCreator";
@@ -10,9 +10,18 @@ const navbarReset = {
   "--mantine-navbar-width": "0px",
 } as CSSProperties;
 
+const useStyles = createStyles(() => ({
+  main: {
+    display: "flex",
+    flexDirection: "column",
+  },
+}));
+
 export default function Home() {
+  const { classes } = useStyles();
   return (
     <AppShell
+      classNames={{ main: classes.main }}
       padding={"sm"}
       header={<Header />}
       navbar={<Navbar />}

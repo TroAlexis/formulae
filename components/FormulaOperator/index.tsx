@@ -35,6 +35,7 @@ const FormulaOperator: FC<Props> = ({ operator, index }) => {
   return (
     <Select
       searchable
+      withinPortal
       size={"sm"}
       value={label}
       onChange={handleChange}
