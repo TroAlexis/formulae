@@ -1,12 +1,25 @@
 import "../styles/globals.css";
 
-import { MantineProvider } from "@mantine/core";
+import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 import { AppProps } from "next/app";
 import Head from "next/head";
+import { useMemo } from "react";
 
 import { mantineThemeOverrides } from "../config/mantine/theme";
+import { useShellStore } from "../modules/shell";
+import { selectTheme } from "../modules/shell/selectors";
 
 function App({ Component, pageProps }: AppProps) {
+  const theme = useShellStore(selectTheme);
+
+  const themeOverrides = useMemo<MantineThemeOverride>(
+    () => ({
+      colorScheme: theme,
+      ...mantineThemeOverrides,
+    }),
+    [theme]
+  );
+
   return (
     <>
       <Head>
@@ -97,11 +110,7 @@ function App({ Component, pageProps }: AppProps) {
         <link href="manifest.json" rel="manifest" />
       </Head>
 
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={mantineThemeOverrides}
-      >
+      <MantineProvider withGlobalStyles withNormalizeCSS theme={themeOverrides}>
         <Component {...pageProps} />
       </MantineProvider>
     </>

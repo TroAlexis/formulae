@@ -1,9 +1,12 @@
+import { createStoreSelector } from "../utils/selectors";
 import { ShellStore } from "./models";
 
-export const selectIsNavbarOpen = (state: ShellStore) => {
-  return state.isNavBarOpen;
-};
+const createShellSelector = createStoreSelector<ShellStore>();
 
-export const selectToggleNavbar = (state: ShellStore) => {
-  return state.toggleNavbar;
-};
+export const selectIsNavbarOpen = createShellSelector("isNavBarOpen");
+
+export const selectTheme = createShellSelector("theme");
+
+export const selectToggleNavbar = createShellSelector("toggleNavbar");
+
+export const selectToggleTheme = createShellSelector("toggleTheme");
