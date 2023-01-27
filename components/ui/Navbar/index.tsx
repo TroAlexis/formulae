@@ -1,8 +1,8 @@
 import { Navbar as MantineNavbar, ScrollArea } from "@mantine/core";
 import React, { FC } from "react";
 
-import { useShellStore } from "../../modules/shell";
-import { selectIsNavbarOpen } from "../../modules/shell/selectors";
+import { useShellStore } from "../../../modules/shell";
+import { selectIsNavbarOpen } from "../../../modules/shell/selectors";
 
 interface Props {}
 

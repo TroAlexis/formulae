@@ -9,13 +9,13 @@ import {
 import { IconMoonStars } from "@tabler/icons-react";
 import React, { FC } from "react";
 
-import { ACTION_COLOR } from "../../config/mantine/theme";
-import { useShellStore } from "../../modules/shell";
+import { ACTION_COLOR } from "../../../config/mantine/theme";
+import { useShellStore } from "../../../modules/shell";
 import {
   selectIsNavbarOpen,
   selectToggleNavbar,
   selectToggleTheme,
-} from "../../modules/shell/selectors";
+} from "../../../modules/shell/selectors";
 import { useStyles } from "./styles";
 
 interface Props {}
