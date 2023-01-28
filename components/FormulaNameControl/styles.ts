@@ -13,8 +13,4 @@ export const useStyles = createStyles(() => ({
     height: CONTROL_HEIGHT,
     minHeight: CONTROL_HEIGHT,
   },
-  icon: {
-    width: `70%`,
-    height: `70%`,
-  },
 }));

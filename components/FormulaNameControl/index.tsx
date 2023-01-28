@@ -1,21 +1,11 @@
-import {
-  ActionIcon,
-  CopyButton,
-  Flex,
-  FlexProps,
-  Text,
-  TextInput,
-  TextInputProps,
-  ThemeIcon,
-  Tooltip,
-} from "@mantine/core";
-import { IconBallpen } from "@tabler/icons-react";
+import { Flex, FlexProps, TextInput, TextInputProps } from "@mantine/core";
 import React, { FC } from "react";
 
 import { useFormulasStore } from "../../modules/formulas";
 import { FormulaComputable } from "../../modules/formulas/models";
 import { selectEditFormula } from "../../modules/formulas/selectors";
 import { FormulaIndex } from "../../modules/formulas/types";
+import { FormulaFavoriteToggle } from "../FormulaFavoriteToggle";
 import { useStyles } from "./styles";
 
 interface Props extends FlexProps {
@@ -44,36 +34,10 @@ export const FormulaNameControl: FC<Props> = ({
 
   return (
     <Flex gap={"xs"} pb={"xs"} align={"center"} {...props}>
-      <CopyButton value={inputValue}>
-        {({ copied, copy }) => (
-          <Tooltip
-            label={
-              <Text fw={500} size={"xs"}>
-                {copied ? "copied" : "copy variable name"}
-              </Text>
-            }
-            position={"right"}
-            withArrow
-          >
-            <ActionIcon
-              size={"lg"}
-              className={classes.iconWrapper}
-              variant={"transparent"}
-              color={"lime"}
-              onClick={copy}
-            >
-              <ThemeIcon
-                variant={"gradient"}
-                radius={"xl"}
-                size={"xs"}
-                gradient={{ from: "teal", to: "lime" }}
-              >
-                <IconBallpen className={classes.icon} />
-              </ThemeIcon>
-            </ActionIcon>
-          </Tooltip>
-        )}
-      </CopyButton>
+      <FormulaFavoriteToggle
+        computable={computable}
+        className={classes.iconWrapper}
+      />
       <TextInput
         size={"xs"}
         value={inputValue}
