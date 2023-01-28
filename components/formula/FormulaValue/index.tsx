@@ -7,10 +7,13 @@ import {
 } from "@mantine/core";
 import React, { FC, useRef } from "react";
 
-import { ACTION_COLOR } from "../../config/mantine/theme";
-import { useFormulasStore } from "../../modules/formulas";
-import { selectEditFormula } from "../../modules/formulas/selectors";
-import { DEFAULT_FORMULA_VALUE, DEFAULT_PRECISION } from "../../types/consts";
+import { ACTION_COLOR } from "../../../config/mantine/theme";
+import { useFormulasStore } from "../../../modules/formulas";
+import { selectEditFormula } from "../../../modules/formulas/selectors";
+import {
+  DEFAULT_FORMULA_VALUE,
+  DEFAULT_PRECISION,
+} from "../../../types/consts";
 import { FormulaValueProps } from "./models";
 import { useStyles } from "./styles";
 

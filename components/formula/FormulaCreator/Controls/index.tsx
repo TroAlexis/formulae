@@ -2,8 +2,8 @@ import { ActionIcon, Flex, Text } from "@mantine/core";
 import { IconCalculator, IconHash } from "@tabler/icons-react";
 import React, { FC } from "react";
 
-import { useFormulasStore } from "../../../modules/formulas";
-import { FormulaOperatorType } from "../../../modules/formulas/enums";
+import { useFormulasStore } from "../../../../modules/formulas";
+import { FormulaOperatorType } from "../../../../modules/formulas/enums";
 import {
   selectAddFormula,
   selectCloseExpression,
@@ -12,11 +12,11 @@ import {
   selectIsExpressionOpenable,
   selectIsOperatorAddable,
   selectOpenExpression,
-} from "../../../modules/formulas/selectors";
+} from "../../../../modules/formulas/selectors";
 import {
   createFormulaOperator,
   getBasicFormulaValue,
-} from "../../../modules/formulas/utils";
+} from "../../../../modules/formulas/utils";
 
 interface Props {}
 

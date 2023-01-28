@@ -1,7 +1,7 @@
 import { AppShell, createStyles } from "@mantine/core";
 import { CSSProperties } from "react";
 
-import { FormulaCreator } from "../components/FormulaCreator";
+import { FormulaCreator } from "../components/formula/FormulaCreator";
 import { Header } from "../components/ui/Header";
 import { Navbar } from "../components/ui/Navbar";
 

@@ -1,13 +1,13 @@
 import { Flex, Paper, PaperProps, ScrollArea } from "@mantine/core";
 import React, { FC } from "react";
 
-import { FormulaExpression } from "../../modules/formulas/models";
-import { FormulaIndex } from "../../modules/formulas/types";
+import { FormulaExpression } from "../../../modules/formulas/models";
+import { FormulaIndex } from "../../../modules/formulas/types";
 import {
   checkIsFormulaExpression,
   checkIsFormulaOperator,
   checkIsFormulaValue,
-} from "../../modules/formulas/utils";
+} from "../../../modules/formulas/utils";
 import { FormulaNameControl } from "../FormulaNameControl";
 import FormulaOperator from "../FormulaOperator";
 import FormulaValue from "../FormulaValue";
