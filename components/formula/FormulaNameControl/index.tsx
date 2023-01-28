@@ -1,10 +1,10 @@
 import { Flex, FlexProps, TextInput, TextInputProps } from "@mantine/core";
+import { useFormulasStore } from "modules/formulas";
+import { FormulaComputable } from "modules/formulas/models";
+import { selectEditFormula } from "modules/formulas/selectors";
+import { FormulaIndex } from "modules/formulas/types";
 import React, { FC } from "react";
 
-import { useFormulasStore } from "../../../modules/formulas";
-import { FormulaComputable } from "../../../modules/formulas/models";
-import { selectEditFormula } from "../../../modules/formulas/selectors";
-import { FormulaIndex } from "../../../modules/formulas/types";
 import { FormulaFavoriteToggle } from "../FormulaFavoriteToggle";
 import { useStyles } from "./styles";
 

@@ -1,12 +1,11 @@
 import { AutocompleteProps, Select } from "@mantine/core";
+import { useFormulasStore } from "modules/formulas";
+import { OPERATORS } from "modules/formulas/consts";
+import { FormulaOperatorType } from "modules/formulas/enums";
+import { FormulaOperator } from "modules/formulas/models";
+import { selectEditFormula } from "modules/formulas/selectors";
+import { FormulaIndex } from "modules/formulas/types";
 import React, { FC } from "react";
-
-import { useFormulasStore } from "../../../modules/formulas";
-import { OPERATORS } from "../../../modules/formulas/consts";
-import { FormulaOperatorType } from "../../../modules/formulas/enums";
-import { FormulaOperator } from "../../../modules/formulas/models";
-import { selectEditFormula } from "../../../modules/formulas/selectors";
-import { FormulaIndex } from "../../../modules/formulas/types";
 
 interface Props {
   index: FormulaIndex;

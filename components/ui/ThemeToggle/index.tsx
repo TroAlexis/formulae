@@ -1,13 +1,9 @@
 import { ActionIcon, ActionIconProps, useMantineTheme } from "@mantine/core";
 import { IconMoonStars, IconSunFilled } from "@tabler/icons-react";
+import { ACTION_COLOR } from "config/mantine/theme";
+import { useShellStore } from "modules/shell";
+import { selectTheme, selectToggleTheme } from "modules/shell/selectors";
 import React, { FC } from "react";
-
-import { ACTION_COLOR } from "../../../config/mantine/theme";
-import { useShellStore } from "../../../modules/shell";
-import {
-  selectTheme,
-  selectToggleTheme,
-} from "../../../modules/shell/selectors";
 
 interface Props extends ActionIconProps {}
 

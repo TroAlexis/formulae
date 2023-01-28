@@ -1,4 +1,5 @@
-import { getLast, spliceLast } from "../../utils/array";
+import { getLast, spliceLast } from "utils/array";
+
 import { createStoreMutationFactory } from "../utils/actions";
 import {
   Formula,

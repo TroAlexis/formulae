@@ -1,18 +1,21 @@
-import { create } from "zustand";
-import { devtools } from "zustand/middleware";
-import { immer } from "zustand/middleware/immer";
-
-import { createStoreActionFactory } from "../utils/actions";
 import {
   addFormula,
   closeExpression,
   editFormula,
   openExpression,
   pushCurrentExpressionIndex,
-} from "./actions";
-import { FormulaType } from "./enums";
-import { FormulasActions, FormulasState, FormulasStore } from "./models";
-import { getBasicFormulaValue } from "./utils";
+} from "modules/formulas/actions";
+import { FormulaType } from "modules/formulas/enums";
+import {
+  FormulasActions,
+  FormulasState,
+  FormulasStore,
+} from "modules/formulas/models";
+import { getBasicFormulaValue } from "modules/formulas/utils";
+import { createStoreActionFactory } from "modules/utils/actions";
+import { create } from "zustand";
+import { devtools } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
 
 export const STATIC_FORMULA_ID = "new-formula";
 export const STATIC_VALUE_ID = "new-value";

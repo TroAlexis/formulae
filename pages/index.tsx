@@ -1,9 +1,8 @@
 import { AppShell, createStyles } from "@mantine/core";
+import { FormulaCreator } from "components/formula/FormulaCreator";
+import { Header } from "components/ui/Header";
+import { Navbar } from "components/ui/Navbar";
 import { CSSProperties } from "react";
-
-import { FormulaCreator } from "../components/formula/FormulaCreator";
-import { Header } from "../components/ui/Header";
-import { Navbar } from "../components/ui/Navbar";
 
 // Remove offset of navbar with padding
 const navbarReset = {

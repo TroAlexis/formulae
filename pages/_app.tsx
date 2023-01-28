@@ -1,13 +1,12 @@
 import "../styles/globals.css";
 
 import { MantineProvider, MantineThemeOverride } from "@mantine/core";
+import { mantineThemeOverrides } from "config/mantine/theme";
+import { useShellStore } from "modules/shell";
+import { selectTheme } from "modules/shell/selectors";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { useMemo } from "react";
-
-import { mantineThemeOverrides } from "../config/mantine/theme";
-import { useShellStore } from "../modules/shell";
-import { selectTheme } from "../modules/shell/selectors";
 
 function App({ Component, pageProps }: AppProps) {
   const theme = useShellStore(selectTheme);

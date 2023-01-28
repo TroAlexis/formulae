@@ -1,8 +1,8 @@
 import { Center, Container, Divider } from "@mantine/core";
+import { useFormulasStore } from "modules/formulas";
+import { selectRootExpression } from "modules/formulas/selectors";
 import React, { FC } from "react";
 
-import { useFormulasStore } from "../../../modules/formulas";
-import { selectRootExpression } from "../../../modules/formulas/selectors";
 import FormulaExpression from "../FormulaExpression";
 import { FormulaResult } from "../FormulaResult";
 import FormulaCreatorControls from "./Controls";

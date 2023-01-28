@@ -1,4 +1,5 @@
-import { OmitFirst } from "../../types/types";
+import { OmitFirst } from "types/types";
+
 import { StoreAction } from "./types";
 
 // Use _name for better auto-completion

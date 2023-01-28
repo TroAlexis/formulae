@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
+import { getLast } from "utils/array";
 
-import { getLast } from "../../utils/array";
 import { FormulasStore } from "./models";
 import {
   checkIsFormulaComputable,

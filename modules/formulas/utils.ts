@@ -1,5 +1,6 @@
-import { PartialBy } from "../../types/types";
-import { uuid } from "../../utils/uuid";
+import { PartialBy } from "types/types";
+import { uuid } from "utils/uuid";
+
 import { OPERATORS, OPERATORS_ORDER } from "./consts";
 import { FormulaType } from "./enums";
 import {

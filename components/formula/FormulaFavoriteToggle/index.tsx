@@ -6,12 +6,12 @@ import {
   Tooltip,
 } from "@mantine/core";
 import { IconDeviceFloppy } from "@tabler/icons-react";
+import { useHandlerProcess } from "hooks/useHandlerProcess";
+import { useFavoritesStore } from "modules/favorites";
+import { selectAddFavorite } from "modules/favorites/selectors";
+import { FormulaComputable } from "modules/formulas/models";
 import React, { FC } from "react";
 
-import { useHandlerProcess } from "../../../hooks/useHandlerProcess";
-import { useFavoritesStore } from "../../../modules/favorites";
-import { selectAddFavorite } from "../../../modules/favorites/selectors";
-import { FormulaComputable } from "../../../modules/formulas/models";
 import { useStyles } from "./styles";
 
 interface Props extends ActionIconProps {

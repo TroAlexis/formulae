@@ -5,14 +5,14 @@ import {
   Title,
   useMantineTheme,
 } from "@mantine/core";
-import React, { FC } from "react";
-
-import { ACTION_COLOR } from "../../../config/mantine/theme";
-import { useShellStore } from "../../../modules/shell";
+import { ACTION_COLOR } from "config/mantine/theme";
+import { useShellStore } from "modules/shell";
 import {
   selectIsNavbarOpen,
   selectToggleNavbar,
-} from "../../../modules/shell/selectors";
+} from "modules/shell/selectors";
+import React, { FC } from "react";
+
 import { ThemeToggle } from "../ThemeToggle";
 import { useStyles } from "./styles";
 

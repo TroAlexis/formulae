@@ -1,8 +1,7 @@
 import { CopyButton, Flex, Text, TextProps, Tooltip } from "@mantine/core";
+import { useFormulasStore } from "modules/formulas";
+import { selectFormulasResult } from "modules/formulas/selectors";
 import React, { FC } from "react";
-
-import { useFormulasStore } from "../../../modules/formulas";
-import { selectFormulasResult } from "../../../modules/formulas/selectors";
 
 interface Props extends TextProps {}
 
