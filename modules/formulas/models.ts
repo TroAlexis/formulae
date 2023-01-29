@@ -11,6 +11,7 @@ export interface FormulasActions {
   editFormula: (index: FormulaIndex, formula: Partial<Formula>) => void;
   openExpression: () => void;
   closeExpression: () => void;
+  replaceExpression: (expression: FormulaExpression) => void;
   pushCurrentExpressionIndex: (index: number) => void;
 }
 

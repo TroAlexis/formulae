@@ -1,4 +1,4 @@
-import { ActionIcon, List, useMantineTheme } from "@mantine/core";
+import { List, ThemeIcon, useMantineTheme } from "@mantine/core";
 import { IconFunction } from "@tabler/icons-react";
 import { FormulaSavedItem } from "components/formula/FormulaSaved/components/Item";
 import { useStyles } from "components/formula/FormulaSaved/styles";
@@ -14,12 +14,18 @@ export const FormulaSaved: FC<Props> = ({}) => {
   const favorites = useFavoritesStore(selectFavorites);
   const styles = useStyles();
   const { savedItem, ...classes } = styles.classes;
+
   return (
     <List
       icon={
-        <ActionIcon size={"xs"} variant={"subtle"} color={ACTION_COLOR}>
+        <ThemeIcon
+          size={"sm"}
+          variant={"light"}
+          radius={"xl"}
+          color={ACTION_COLOR}
+        >
           <IconFunction size={theme.spacing.sm} />
-        </ActionIcon>
+        </ThemeIcon>
       }
       center
       spacing={"xs"}

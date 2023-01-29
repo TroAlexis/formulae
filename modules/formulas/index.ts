@@ -4,6 +4,7 @@ import {
   editFormula,
   openExpression,
   pushCurrentExpressionIndex,
+  replaceExpression,
 } from "modules/formulas/actions";
 import { FormulaType } from "modules/formulas/enums";
 import {
@@ -47,6 +48,7 @@ export const useFormulasStore = create<FormulasStore>()(
         ),
         openExpression: createFormulasAction(openExpression),
         closeExpression: createFormulasAction(closeExpression),
+        replaceExpression: createFormulasAction(replaceExpression),
       };
     })
   )

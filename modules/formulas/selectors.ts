@@ -1,3 +1,4 @@
+import { createStoreSelector } from "modules/utils/selectors";
 import { createSelector } from "reselect";
 import { getLast } from "utils/array";
 
@@ -11,37 +12,33 @@ import {
   getFormulaByIndex,
 } from "./utils";
 
+const createFormulasSelector = createStoreSelector<FormulasStore>();
+
 /* Basic */
 
-export const selectRootExpression = (state: FormulasStore) => {
-  return state.formulas;
-};
+export const selectRootExpression = createFormulasSelector("formulas");
 
-export const selectCurrentExpressionIndex = (state: FormulasStore) =>
-  state.currentExpressionIndex;
+export const selectCurrentExpressionIndex = createFormulasSelector(
+  "currentExpressionIndex"
+);
 
 export const selectFormulas = createSelector(
   [selectRootExpression],
-  (expression) => expression.value
+  createFormulasSelector("value")
 );
 
 /* Actions */
 
-export const selectAddFormula = (state: FormulasStore) => {
-  return state.addFormula;
-};
+export const selectAddFormula = createFormulasSelector("addFormula");
 
-export const selectEditFormula = (state: FormulasStore) => {
-  return state.editFormula;
-};
+export const selectEditFormula = createFormulasSelector("editFormula");
 
-export const selectOpenExpression = (state: FormulasStore) => {
-  return state.openExpression;
-};
+export const selectOpenExpression = createFormulasSelector("openExpression");
 
-export const selectCloseExpression = (state: FormulasStore) => {
-  return state.closeExpression;
-};
+export const selectCloseExpression = createFormulasSelector("closeExpression");
+
+export const selectReplaceExpression =
+  createFormulasSelector("replaceExpression");
 
 /* Computed */
 

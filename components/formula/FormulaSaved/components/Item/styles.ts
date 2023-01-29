@@ -6,4 +6,9 @@ export const useStyles = createStyles(() => ({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  name: {
+    flex: 1,
+    minWidth: 0,
+    display: "flex",
+  },
 }));

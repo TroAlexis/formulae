@@ -30,7 +30,12 @@ export const Navbar: FC<Props> = ({}) => {
       width={{ lg: 300 }}
     >
       <MantineNavbar.Section>{/* search */}</MantineNavbar.Section>
-      <MantineNavbar.Section grow component={ScrollArea} classNames={classes}>
+      <MantineNavbar.Section
+        grow
+        component={ScrollArea}
+        offsetScrollbars
+        classNames={classes}
+      >
         <FormulaSaved />
       </MantineNavbar.Section>
     </MantineNavbar>
