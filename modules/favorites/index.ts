@@ -3,7 +3,7 @@ import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 import { createStoreActionFactory } from "../utils/actions";
-import { addFavorite } from "./actions";
+import { addFavorite, removeFavorite } from "./actions";
 import { FavoritesActions, FavoritesState, FavoritesStore } from "./models";
 
 const initialState: FavoritesState = {
@@ -22,6 +22,7 @@ export const useFavoritesStore = create<FavoritesStore>()(
         return {
           ...initialState,
           addFavorite: createFavoritesAction(addFavorite),
+          removeFavorite: createFavoritesAction(removeFavorite),
         };
       }),
       {

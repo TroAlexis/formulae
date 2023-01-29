@@ -17,3 +17,11 @@ export const addFavorite = createFavoritesMutation("addFavorite")(
     });
   }
 );
+
+export const removeFavorite = createFavoritesMutation("removeFavorite")(
+  (state, id) => {
+    const indexOfItem = state.favorites.findIndex((item) => item.id === id);
+
+    state.favorites.splice(indexOfItem, 1);
+  }
+);

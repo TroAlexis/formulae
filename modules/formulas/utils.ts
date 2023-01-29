@@ -167,3 +167,9 @@ export const getFormulaByIndex = (
     return formulas[index];
   }
 };
+
+export const getComputableShortId = (computable: FormulaComputable) => {
+  const [shortId] = computable.id.split("-");
+
+  return shortId;
+};

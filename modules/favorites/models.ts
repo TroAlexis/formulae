@@ -6,6 +6,7 @@ export interface FavoritesState {
 
 export interface FavoritesActions {
   addFavorite: (item: FormulaComputable) => void;
+  removeFavorite: (id: string) => void;
 }
 
 export interface FavoritesStore extends FavoritesState, FavoritesActions {}
