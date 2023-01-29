@@ -1,10 +1,11 @@
 import "../styles/globals.css";
 
 import { MantineProvider, MantineThemeOverride } from "@mantine/core";
-import { mantineThemeOverrides } from "config/mantine/theme";
+import { mantineThemeOverrides, PRIMARY_COLOR } from "config/mantine/theme";
 import { useShellStore } from "modules/shell";
 import { selectTheme } from "modules/shell/selectors";
 import { AppProps } from "next/app";
+import { addBasePath } from "next/dist/client/add-base-path";
 import Head from "next/head";
 import { useMemo } from "react";
 
@@ -33,7 +34,7 @@ function App({ Component, pageProps }: AppProps) {
         <meta name="keywords" content="calculator formula" />
 
         {/* Android */}
-        <meta name="theme-color" content="red" />
+        <meta name="theme-color" content={PRIMARY_COLOR} />
         <meta name="mobile-web-app-capable" content="yes" />
 
         {/* iOS */}
@@ -42,10 +43,16 @@ function App({ Component, pageProps }: AppProps) {
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
         {/* Windows  */}
-        <meta name="msapplication-navbutton-color" content="red" />
-        <meta name="msapplication-TileColor" content="red" />
-        <meta name="msapplication-TileImage" content="ms-icon-144x144.png" />
-        <meta name="msapplication-config" content="browserconfig.xml" />
+        <meta name="msapplication-navbutton-color" content={PRIMARY_COLOR} />
+        <meta name="msapplication-TileColor" content={PRIMARY_COLOR} />
+        <meta
+          name="msapplication-TileImage"
+          content={addBasePath("ms-icon-144x144.png")}
+        />
+        <meta
+          name="msapplication-config"
+          content={addBasePath("browserconfig.xml")}
+        />
 
         {/* Pinned Sites  */}
         <meta name="application-name" content="Formulae" />
@@ -63,7 +70,7 @@ function App({ Component, pageProps }: AppProps) {
         <meta name="browsermode" content="application" />
 
         {/* Disable night mode for this page  */}
-        <meta name="nightmode" content="enable/disable" />
+        {/*<meta name="nightmode" content="enable/disable" />*/}
 
         {/* Fitscreen  */}
         {/* <meta name="viewport" content="uc-fitscreen=yes" /> */}
@@ -95,18 +102,26 @@ function App({ Component, pageProps }: AppProps) {
         {/* <link href="path/to/icon.svg" rel="mask-icon" sizes="any" color="red" /> */}
 
         {/*  Android  */}
-        <link href="icons/icon-192x192.png" rel="icon" sizes="192x192" />
+        <link
+          href={addBasePath("icons/icon-192x192.png")}
+          rel="icon"
+          sizes="192x192"
+        />
         {/* <link href="icons/icon-128x128.png" rel="icon" sizes="128x128" /> */}
 
         {/*  Others */}
-        <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link
+          href={addBasePath("favicon.ico")}
+          rel="shortcut icon"
+          type="image/x-icon"
+        />
 
         {/*  UC Browser  */}
         {/* <link href="images/icon-52x52.png" rel="apple-touch-icon-precomposed" sizes="57x57" />
         <link href="images/icon-72x72.png" rel="apple-touch-icon" sizes="72x72" /> */}
 
         {/*  Manifest.json  */}
-        <link href="manifest.json" rel="manifest" />
+        <link href={addBasePath("manifest.json")} rel="manifest" />
       </Head>
 
       <MantineProvider withGlobalStyles withNormalizeCSS theme={themeOverrides}>
