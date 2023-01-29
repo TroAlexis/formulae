@@ -60,7 +60,7 @@ function App({ Component, pageProps }: AppProps) {
           name="msapplication-tooltip"
           content="Variable formulae creator"
         />
-        <meta name="msapplication-starturl" content="/" />
+        <meta name="msapplication-starturl" content="/formulae" />
 
         {/* Tap highlighting  */}
         <meta name="msapplication-tap-highlight" content="no" />
