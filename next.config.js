@@ -1,11 +1,13 @@
-/** @type {import('next').NextConfig} */
-
 const withPWA = require("next-pwa")({
   disable: process.env.NODE_ENV === "development",
   dest: "public",
 });
 
-module.exports = withPWA({
+/** @type {import('next').NextConfig} */
+const config = {
   reactStrictMode: true,
   swcMinify: true,
-});
+  basePath: "/formulae",
+};
+
+module.exports = withPWA(config);
