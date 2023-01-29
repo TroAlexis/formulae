@@ -25,3 +25,9 @@ export const removeFavorite = createFavoritesMutation("removeFavorite")(
     state.favorites.splice(indexOfItem, 1);
   }
 );
+
+export const setSearchText = createFavoritesMutation("setSearchText")(
+  (state, text) => {
+    state.search.text = text;
+  }
+);

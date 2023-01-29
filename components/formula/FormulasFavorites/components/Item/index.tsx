@@ -6,8 +6,8 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
-import { useStyles } from "components/formula/FormulaSaved/components/Item/styles";
-import { getFormulaName } from "components/formula/FormulaSaved/components/Item/utils";
+import { useStyles } from "components/formula/FormulasFavorites/components/Item/styles";
+import { getFormulaName } from "components/formula/FormulasFavorites/components/Item/utils";
 import { useFavoritesStore } from "modules/favorites";
 import { selectRemoveFavorite } from "modules/favorites/selectors";
 import { useFormulasStore } from "modules/formulas";

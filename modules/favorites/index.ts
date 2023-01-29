@@ -3,11 +3,14 @@ import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 import { createStoreActionFactory } from "../utils/actions";
-import { addFavorite, removeFavorite } from "./actions";
+import { addFavorite, removeFavorite, setSearchText } from "./actions";
 import { FavoritesActions, FavoritesState, FavoritesStore } from "./models";
 
 const initialState: FavoritesState = {
   favorites: [],
+  search: {
+    text: "",
+  },
 };
 
 export const useFavoritesStore = create<FavoritesStore>()(
@@ -23,6 +26,7 @@ export const useFavoritesStore = create<FavoritesStore>()(
           ...initialState,
           addFavorite: createFavoritesAction(addFavorite),
           removeFavorite: createFavoritesAction(removeFavorite),
+          setSearchText: createFavoritesAction(setSearchText),
         };
       }),
       {
