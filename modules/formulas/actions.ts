@@ -11,6 +11,7 @@ import {
   selectActiveExpression,
   selectCurrentExpressionIndex,
   selectFormulas,
+  selectRootExpression,
 } from "./selectors";
 import {
   checkIsFormulaOperator,
@@ -32,8 +33,16 @@ export const addFormula = createMutation("addFormula")((state, formula) => {
 
 export const editFormula = createMutation("editFormula")(
   (state, index, formula) => {
-    const formulas = selectFormulas(state);
-    const editedFormula = getFormulaByIndex(formulas, index);
+    let editedFormula: Formula;
+    const isIndexEmpty =
+      index === undefined || (Array.isArray(index) && !index.length);
+    if (isIndexEmpty) {
+      editedFormula = selectRootExpression(state);
+    } else {
+      const formulas = selectFormulas(state);
+      editedFormula = getFormulaByIndex(formulas, index);
+    }
+
     Object.assign(editedFormula, formula);
   }
 );
