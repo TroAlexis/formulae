@@ -11,4 +11,11 @@ export const mantineThemeOverrides: MantineThemeOverride = {
     xl: 32,
     lg: 40,
   },
+  components: {
+    Input: {
+      styles: () => ({
+        input: { lineHeight: 1.5 },
+      }),
+    },
+  },
 };
