@@ -173,3 +173,11 @@ export const getComputableShortId = (computable: FormulaComputable) => {
 
   return shortId;
 };
+
+export const checkIsIndexEmpty = (index: FormulaIndex) => {
+  return Array.isArray(index) && !index.length;
+};
+
+export const checkIndexesEqual = (a?: FormulaIndex, b?: FormulaIndex) => {
+  return JSON.stringify(a) === JSON.stringify(b);
+};

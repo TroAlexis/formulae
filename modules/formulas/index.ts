@@ -5,6 +5,7 @@ import {
   openExpression,
   pushCurrentExpressionIndex,
   replaceExpression,
+  setCurrentExpressionIndex,
 } from "modules/formulas/actions";
 import { FormulaType } from "modules/formulas/enums";
 import {
@@ -29,6 +30,7 @@ const initialState: FormulasState = {
     value: [{ ...getBasicFormulaValue(), id: STATIC_VALUE_ID }],
     name: "New formula",
   },
+  currentExpressionIndex: [],
 };
 
 export const useFormulasStore = create<FormulasStore>()(
@@ -49,6 +51,9 @@ export const useFormulasStore = create<FormulasStore>()(
         openExpression: createFormulasAction(openExpression),
         closeExpression: createFormulasAction(closeExpression),
         replaceExpression: createFormulasAction(replaceExpression),
+        setCurrentExpressionIndex: createFormulasAction(
+          setCurrentExpressionIndex
+        ),
       };
     })
   )

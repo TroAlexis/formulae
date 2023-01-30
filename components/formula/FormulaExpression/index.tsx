@@ -1,5 +1,8 @@
 import { Flex, Paper, PaperProps, ScrollArea } from "@mantine/core";
+import { useStyles } from "components/formula/FormulaExpression/styles";
+import { useFormulasStore } from "modules/formulas";
 import { FormulaExpression } from "modules/formulas/models";
+import { selectIsExpressionSelected } from "modules/formulas/selectors";
 import { FormulaIndex } from "modules/formulas/types";
 import {
   checkIsFormulaExpression,
@@ -20,13 +23,21 @@ interface Props extends PaperProps {
 const FormulaExpression: FC<Props> = ({
   expression,
   parentIndex = [],
+  className,
   ...props
 }) => {
+  const isSelected = useFormulasStore((state) =>
+    selectIsExpressionSelected(state, parentIndex)
+  );
+
   const formulas = expression.value;
+
+  const { classes, cx } = useStyles();
 
   return (
     <Paper
       component={Flex}
+      className={cx(className, isSelected && classes.selected)}
       withBorder
       radius={"lg"}
       direction={"column"}

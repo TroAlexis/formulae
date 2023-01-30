@@ -1,9 +1,11 @@
+import { FormulaIndex } from "modules/formulas/types";
 import { createStoreSelector } from "modules/utils/selectors";
 import { createSelector } from "reselect";
 import { getLast } from "utils/array";
 
 import { FormulasStore } from "./models";
 import {
+  checkIndexesEqual,
   checkIsFormulaComputable,
   checkIsFormulaExpression,
   checkIsFormulaOperator,
@@ -39,6 +41,10 @@ export const selectCloseExpression = createFormulasSelector("closeExpression");
 
 export const selectReplaceExpression =
   createFormulasSelector("replaceExpression");
+
+export const selectSetCurrentExpressionIndex = createFormulasSelector(
+  "setCurrentExpressionIndex"
+);
 
 /* Computed */
 
@@ -106,6 +112,13 @@ export const selectIsExpressionCloseable = createSelector(
     }
 
     const lastValue = expression.value[expression.value.length - 1];
-    return checkIsFormulaValue(lastValue);
+    return checkIsFormulaComputable(lastValue);
+  }
+);
+
+export const selectIsExpressionSelected = createSelector(
+  [selectCurrentExpressionIndex, (_, index: FormulaIndex) => index],
+  (currentIndex, index) => {
+    return checkIndexesEqual(currentIndex, index);
   }
 );

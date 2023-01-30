@@ -16,6 +16,7 @@ import {
 import {
   checkIsFormulaOperator,
   checkIsFormulaValue,
+  checkIsIndexEmpty,
   createFormulaExpression,
   getBasicFormulaValue,
   getFormulaByIndex,
@@ -34,8 +35,8 @@ export const addFormula = createMutation("addFormula")((state, formula) => {
 export const editFormula = createMutation("editFormula")(
   (state, index, formula) => {
     let editedFormula: Formula;
-    const isIndexEmpty =
-      index === undefined || (Array.isArray(index) && !index.length);
+    const isIndexEmpty = checkIsIndexEmpty(index);
+
     if (isIndexEmpty) {
       editedFormula = selectRootExpression(state);
     } else {
@@ -103,3 +104,9 @@ export const replaceExpression = createMutation("replaceExpression")(
     state.formulas = expression;
   }
 );
+
+export const setCurrentExpressionIndex = createMutation(
+  "setCurrentExpressionIndex"
+)((state, index) => {
+  state.currentExpressionIndex = index;
+});
