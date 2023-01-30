@@ -10,7 +10,14 @@ const navbarReset = {
 } as CSSProperties;
 
 const useStyles = createStyles(() => ({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    flex: 1,
+  },
+  body: { flex: 1, flexDirection: "column" },
   main: {
+    minHeight: "unset",
     display: "flex",
     flexDirection: "column",
   },
@@ -20,7 +27,7 @@ export default function Home() {
   const { classes } = useStyles();
   return (
     <AppShell
-      classNames={{ main: classes.main }}
+      classNames={classes}
       padding={"sm"}
       header={<Header />}
       navbar={<Navbar />}
