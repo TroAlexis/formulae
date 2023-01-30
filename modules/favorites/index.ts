@@ -1,3 +1,4 @@
+import { createUseHydratedStore } from "modules/utils/store";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
@@ -13,7 +14,7 @@ const initialState: FavoritesState = {
   },
 };
 
-export const useFavoritesStore = create<FavoritesStore>()(
+const useFavoritesStoreHook = create<FavoritesStore>()(
   devtools(
     persist(
       immer((set) => {
@@ -34,4 +35,9 @@ export const useFavoritesStore = create<FavoritesStore>()(
       }
     )
   )
+);
+
+export const useFavoritesStore = createUseHydratedStore(
+  useFavoritesStoreHook,
+  initialState
 );

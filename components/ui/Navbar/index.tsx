@@ -1,20 +1,10 @@
 import { Navbar as MantineNavbar, ScrollArea } from "@mantine/core";
 import { FavoritesSearch } from "components/favorites/FavoritesSearch";
+import { FormulasFavorites } from "components/formula/FormulasFavorites";
 import { useStyles } from "components/ui/Navbar/styles";
 import { useShellStore } from "modules/shell";
 import { selectIsNavbarOpen } from "modules/shell/selectors";
-import dynamic from "next/dynamic";
 import React, { FC } from "react";
-
-const FormulasFavorites = dynamic(
-  () =>
-    import("components/formula/FormulasFavorites").then(
-      (module) => module.FormulasFavorites
-    ),
-  {
-    ssr: false,
-  }
-);
 
 interface Props {}
 
