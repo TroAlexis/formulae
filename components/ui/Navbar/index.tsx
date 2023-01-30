@@ -20,7 +20,7 @@ export const Navbar: FC<Props> = ({}) => {
       p={"xs"}
       width={{ lg: 300 }}
     >
-      <MantineNavbar.Section mb={"sm"}>
+      <MantineNavbar.Section>
         <FavoritesSearch />
       </MantineNavbar.Section>
       <MantineNavbar.Section
@@ -29,7 +29,7 @@ export const Navbar: FC<Props> = ({}) => {
         offsetScrollbars
         classNames={classes}
       >
-        <FormulasFavorites />
+        <FormulasFavorites pt={"sm"} />
       </MantineNavbar.Section>
     </MantineNavbar>
   );

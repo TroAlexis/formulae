@@ -1,6 +1,7 @@
 import { TextInput, TextInputProps, useMantineTheme } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import { IconSearch } from "@tabler/icons-react";
+import { FavoritesSearchHint } from "components/favorites/FavoritesSearch/components/Hint";
 import { useFavoritesStore } from "modules/favorites";
 import {
   selectFavoritesSearchText,
@@ -33,6 +34,8 @@ export const FavoritesSearch: FC<Props> = (props) => {
       placeholder={"Search saved formulas"}
       onChange={handleChange}
       ref={inputRef}
+      rightSection={<FavoritesSearchHint />}
+      rightSectionWidth={60}
       {...props}
     />
   );

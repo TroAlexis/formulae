@@ -1,4 +1,11 @@
-import { Center, List, Text, ThemeIcon, useMantineTheme } from "@mantine/core";
+import {
+  Center,
+  List,
+  ListProps,
+  Text,
+  ThemeIcon,
+  useMantineTheme,
+} from "@mantine/core";
 import { IconFunction } from "@tabler/icons-react";
 import { FormulaSavedItem } from "components/formula/FormulasFavorites/components/Item";
 import { useStyles } from "components/formula/FormulasFavorites/styles";
@@ -7,9 +14,9 @@ import { useFavoritesStore } from "modules/favorites";
 import { selectFavoritesFilteredBySearchText } from "modules/favorites/selectors";
 import React, { FC } from "react";
 
-interface Props {}
+interface Props extends Omit<ListProps, "children"> {}
 
-export const FormulasFavorites: FC<Props> = ({}) => {
+export const FormulasFavorites: FC<Props> = (props) => {
   const theme = useMantineTheme();
   const favorites = useFavoritesStore(selectFavoritesFilteredBySearchText);
   const styles = useStyles();
@@ -30,6 +37,7 @@ export const FormulasFavorites: FC<Props> = ({}) => {
       center
       spacing={"xs"}
       classNames={classes}
+      {...props}
     >
       {favorites.length ? (
         favorites.map((item) => (

@@ -1,6 +1,12 @@
-import { ActionIcon, ActionIconProps, useMantineTheme } from "@mantine/core";
+import {
+  ActionIcon,
+  ActionIconProps,
+  Tooltip,
+  useMantineTheme,
+} from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import { IconMoonStars, IconSunFilled } from "@tabler/icons-react";
+import { ThemeToggleHint } from "components/ui/ThemeToggle/components/Hint";
 import { ACTION_COLOR } from "config/mantine/theme";
 import { useThemeStore } from "modules/theme";
 import { selectTheme, selectToggleTheme } from "modules/theme/selectors";
@@ -19,18 +25,20 @@ export const ThemeToggle: FC<Props> = (props) => {
   useHotkeys([["mod+J", toggleTheme]]);
 
   return (
-    <ActionIcon
-      size={"md"}
-      color={ACTION_COLOR}
-      variant={"outline"}
-      onClick={toggleTheme}
-      {...props}
-    >
-      {scheme === "light" ? (
-        <IconMoonStars size={iconSize} />
-      ) : (
-        <IconSunFilled size={iconSize} />
-      )}
-    </ActionIcon>
+    <Tooltip label={<ThemeToggleHint />} position={"left"}>
+      <ActionIcon
+        size={"md"}
+        color={ACTION_COLOR}
+        variant={"outline"}
+        onClick={toggleTheme}
+        {...props}
+      >
+        {scheme === "light" ? (
+          <IconMoonStars size={iconSize} />
+        ) : (
+          <IconSunFilled size={iconSize} />
+        )}
+      </ActionIcon>
+    </Tooltip>
   );
 };
