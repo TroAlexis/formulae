@@ -2,15 +2,15 @@ import "../styles/globals.css";
 
 import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 import { mantineThemeOverrides, PRIMARY_COLOR } from "config/mantine/theme";
-import { useShellStore } from "modules/shell";
-import { selectTheme } from "modules/shell/selectors";
+import { useThemeStore } from "modules/theme";
+import { selectTheme } from "modules/theme/selectors";
 import { AppProps } from "next/app";
 import { addBasePath } from "next/dist/client/add-base-path";
 import Head from "next/head";
 import { useMemo } from "react";
 
 function App({ Component, pageProps }: AppProps) {
-  const theme = useShellStore(selectTheme);
+  const theme = useThemeStore(selectTheme);
 
   const themeOverrides = useMemo<MantineThemeOverride>(
     () => ({
