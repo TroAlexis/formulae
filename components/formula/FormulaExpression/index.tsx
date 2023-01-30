@@ -27,16 +27,19 @@ const FormulaExpression: FC<Props> = ({
   return (
     <Paper
       component={Flex}
-      shadow={"xs"}
       withBorder
-      p={"xs"}
       radius={"lg"}
       direction={"column"}
       {...props}
     >
-      <FormulaNameControl index={parentIndex} computable={expression} />
+      <FormulaNameControl
+        px={"xs"}
+        pt={"xs"}
+        index={parentIndex}
+        computable={expression}
+      />
 
-      <ScrollArea>
+      <ScrollArea px={"xs"} pb={"sm"}>
         {formulas.map((formula, index) => {
           const parentIndexArray = Array.isArray(parentIndex)
             ? parentIndex
