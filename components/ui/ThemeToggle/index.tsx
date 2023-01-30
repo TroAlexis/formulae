@@ -1,4 +1,5 @@
 import { ActionIcon, ActionIconProps, useMantineTheme } from "@mantine/core";
+import { useHotkeys } from "@mantine/hooks";
 import { IconMoonStars, IconSunFilled } from "@tabler/icons-react";
 import { ACTION_COLOR } from "config/mantine/theme";
 import { useThemeStore } from "modules/theme";
@@ -14,6 +15,8 @@ export const ThemeToggle: FC<Props> = (props) => {
   const scheme = useThemeStore(selectTheme);
 
   const iconSize = theme.spacing.sm;
+
+  useHotkeys([["mod+J", toggleTheme]]);
 
   return (
     <ActionIcon
