@@ -1,4 +1,5 @@
 import { MantineThemeOverride } from "@mantine/core";
+import { montserrat, noto } from "config/fonts";
 
 export const ACTION_COLOR = "indigo";
 export const PRIMARY_COLOR = ACTION_COLOR;
@@ -11,6 +12,10 @@ export const mantineThemeOverrides: MantineThemeOverride = {
     xl: 32,
     lg: 40,
   },
+  headings: {
+    fontFamily: noto.style.fontFamily,
+  },
+  fontFamily: montserrat.style.fontFamily,
   components: {
     Input: {
       styles: () => ({
