@@ -29,7 +29,7 @@ export const ThemeToggle: FC<Props> = (props) => {
       <ActionIcon
         size={"md"}
         color={ACTION_COLOR}
-        variant={"outline"}
+        variant={"subtle"}
         onClick={toggleTheme}
         {...props}
       >
