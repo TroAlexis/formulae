@@ -17,5 +17,13 @@ export const mantineThemeOverrides: MantineThemeOverride = {
         input: { lineHeight: 1.5 },
       }),
     },
+    Tooltip: {
+      defaultProps: {
+        events: {
+          hover: true,
+          focus: true,
+        },
+      },
+    },
   },
 };
