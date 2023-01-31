@@ -1,4 +1,11 @@
-import { CopyButton, Flex, Text, TextProps, Tooltip } from "@mantine/core";
+import {
+  CopyButton,
+  Flex,
+  Text,
+  TextProps,
+  Tooltip,
+  useMantineTheme,
+} from "@mantine/core";
 import { useFormulasStore } from "modules/formulas";
 import { selectFormulasResult } from "modules/formulas/selectors";
 import React, { FC } from "react";
@@ -7,6 +14,11 @@ interface Props extends TextProps {}
 
 export const FormulaResult: FC<Props> = ({ ...props }) => {
   const result = useFormulasStore(selectFormulasResult);
+  const theme = useMantineTheme();
+
+  const { fontSize } = theme.headings.sizes.h1;
+
+  const size = fontSize ? parseInt(fontSize as string) : "xl";
 
   return (
     <Flex align={"center"} justify={"center"}>
@@ -20,7 +32,7 @@ export const FormulaResult: FC<Props> = ({ ...props }) => {
             <Text
               span
               align={"center"}
-              size={"xl"}
+              size={size}
               fw={700}
               onClick={copy}
               {...props}
