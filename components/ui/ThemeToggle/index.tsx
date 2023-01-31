@@ -25,7 +25,7 @@ export const ThemeToggle: FC<Props> = (props) => {
   useHotkeys([["mod+J", toggleTheme]]);
 
   return (
-    <Tooltip label={<ThemeToggleHint />} position={"left"}>
+    <Tooltip label={<ThemeToggleHint />} withArrow position={"left"}>
       <ActionIcon
         size={"md"}
         color={ACTION_COLOR}
