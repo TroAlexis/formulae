@@ -7,7 +7,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { IconFunction } from "@tabler/icons-react";
-import { FormulaSavedItem } from "components/formula/FormulasFavorites/components/Item";
+import { FormulaFavoritesItem } from "components/formula/FormulasFavorites/components/Item";
 import { useStyles } from "components/formula/FormulasFavorites/styles";
 import { ACTION_COLOR } from "config/mantine/theme";
 import { useFavoritesStore } from "modules/favorites";
@@ -42,7 +42,7 @@ export const FormulasFavorites: FC<Props> = (props) => {
       {favorites.length ? (
         favorites.map((item) => (
           <List.Item key={item.id}>
-            <FormulaSavedItem item={item} className={savedItem} />
+            <FormulaFavoritesItem item={item} className={savedItem} />
           </List.Item>
         ))
       ) : (

@@ -1,15 +1,7 @@
-import {
-  ActionIcon,
-  FlexProps,
-  Text,
-  UnstyledButton,
-  useMantineTheme,
-} from "@mantine/core";
-import { IconTrash } from "@tabler/icons-react";
+import { FlexProps, Text, UnstyledButton } from "@mantine/core";
+import { FormulasFavoritesItemMenu } from "components/formula/FormulasFavorites/components/Item/components/Menu";
 import { useStyles } from "components/formula/FormulasFavorites/components/Item/styles";
 import { getFormulaName } from "components/formula/FormulasFavorites/components/Item/utils";
-import { useFavoritesStore } from "modules/favorites";
-import { selectRemoveFavorite } from "modules/favorites/selectors";
 import { useFormulasStore } from "modules/formulas";
 import { FormulaComputable } from "modules/formulas/models";
 import { selectReplaceExpression } from "modules/formulas/selectors";
@@ -20,18 +12,16 @@ interface Props extends FlexProps {
   item: FormulaComputable;
 }
 
-export const FormulaSavedItem: FC<Props> = ({ item, className, ...props }) => {
-  const theme = useMantineTheme();
+export const FormulaFavoritesItem: FC<Props> = ({
+  item,
+  className,
+  ...props
+}) => {
   const { classes, cx } = useStyles();
 
   const name = getFormulaName(item);
 
-  const removeItem = useFavoritesStore(selectRemoveFavorite);
   const replaceExpression = useFormulasStore(selectReplaceExpression);
-
-  const handleRemove = () => {
-    removeItem(item.id);
-  };
 
   const handleReplace = () => {
     if (checkIsFormulaExpression(item)) {
@@ -46,9 +36,7 @@ export const FormulaSavedItem: FC<Props> = ({ item, className, ...props }) => {
           {name}
         </Text>
       </UnstyledButton>
-      <ActionIcon size={"xs"} onClick={handleRemove}>
-        <IconTrash size={theme.spacing.sm}></IconTrash>
-      </ActionIcon>
+      <FormulasFavoritesItemMenu item={item} />
     </span>
   );
 };
