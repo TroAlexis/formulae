@@ -7,7 +7,7 @@ name: Deploy Next.js site to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
+    branches: ["master"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -80,6 +80,13 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: ./out
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Create semantic-release
+        run: npx semantic-release
+
 
   # Deployment job
   deploy:
@@ -87,7 +94,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: release
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
