@@ -1,11 +1,11 @@
 import { Flex, FlexProps, TextInput, TextInputProps } from "@mantine/core";
+import { FormulaMenu } from "components/formula/FormulaMenu";
 import { useFormulasStore } from "modules/formulas";
 import { FormulaComputable } from "modules/formulas/models";
 import { selectEditFormula } from "modules/formulas/selectors";
 import { FormulaIndex } from "modules/formulas/types";
 import React, { FC } from "react";
 
-import { FormulaFavoriteToggle } from "../FormulaFavoriteToggle";
 import { useStyles } from "./styles";
 
 interface Props extends FlexProps {
@@ -34,19 +34,15 @@ export const FormulaNameControl: FC<Props> = ({
 
   return (
     <Flex gap={"xs"} pb={"xs"} align={"center"} {...props}>
-      <FormulaFavoriteToggle
-        computable={computable}
-        className={classes.iconWrapper}
-      />
       <TextInput
         size={"xs"}
         value={inputValue}
         variant={"unstyled"}
-        tt={"uppercase"}
         placeholder={"Enter variable name"}
-        classNames={{ input: classes.nameInput }}
+        classNames={{ input: classes.nameInput, root: classes.inputWrapper }}
         onChange={handleNameChange}
       />
+      <FormulaMenu computable={computable} />
     </Flex>
   );
 };
