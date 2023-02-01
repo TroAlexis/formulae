@@ -1,8 +1,4 @@
-# Sample workflow for building and deploying a Next.js site to GitHub Pages
-#
-# To get started with Next.js see: https://nextjs.org/docs/getting-started
-#
-name: Deploy Next.js site to Pages
+name: Build, release and deploy
 
 on:
   # Runs on pushes targeting the default branch
@@ -55,10 +51,6 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v2
         with:
-          # Automatically inject basePath in your Next.js configuration file and disable
-          # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
-          #
-          # You may remove this line if you want to manage the configuration yourself.
           static_site_generator: next
       - name: Restore cache
         uses: actions/cache@v3
@@ -81,6 +73,9 @@ jobs:
         with:
           path: ./out
       - name: Create semantic-release
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npx semantic-release
 
 
