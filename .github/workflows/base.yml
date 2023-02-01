@@ -80,10 +80,6 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: ./out
-  release:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
       - name: Create semantic-release
         run: npx semantic-release
 
@@ -94,7 +90,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: release
+    needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
