@@ -62,6 +62,7 @@ export const FormulaNameControl: FC<Props> = ({
           <FormulaExpressionMenu
             classNames={{ target: className }}
             computable={computable}
+            index={index}
           />
         )}
       </Hoverable>
