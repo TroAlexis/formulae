@@ -1,11 +1,13 @@
 import { Flex, FlexProps, TextInput, TextInputProps } from "@mantine/core";
 import { FormulaExpressionMenu } from "components/formula/FormulaExpression/components/Menu";
+import { Hoverable } from "components/ui/Hoverable";
 import { useFormulasStore } from "modules/formulas";
 import { FormulaComputable } from "modules/formulas/models";
 import { selectEditFormula } from "modules/formulas/selectors";
 import { FormulaIndex } from "modules/formulas/types";
 import React, { FC } from "react";
 
+import styles from "./index.module.css";
 import { useStyles } from "./styles";
 
 interface Props extends FlexProps {
@@ -16,10 +18,11 @@ interface Props extends FlexProps {
 export const FormulaNameControl: FC<Props> = ({
   computable,
   index,
+  className,
   ...props
 }) => {
   const editFormula = useFormulasStore(selectEditFormula);
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
 
   const { name, id } = computable;
   const [shortId] = id.split("-");
@@ -33,7 +36,13 @@ export const FormulaNameControl: FC<Props> = ({
   };
 
   return (
-    <Flex gap={"xs"} pb={"xs"} align={"center"} {...props}>
+    <Flex
+      gap={"xs"}
+      pb={"xs"}
+      align={"center"}
+      className={cx(className, styles.wrapper)}
+      {...props}
+    >
       <TextInput
         size={"xs"}
         value={inputValue}
@@ -43,7 +52,14 @@ export const FormulaNameControl: FC<Props> = ({
         onChange={handleNameChange}
       />
 
-      <FormulaExpressionMenu computable={computable} />
+      <Hoverable hoverTargetClassName={styles.wrapper}>
+        {({ className }) => (
+          <FormulaExpressionMenu
+            classNames={{ target: className }}
+            computable={computable}
+          />
+        )}
+      </Hoverable>
     </Flex>
   );
 };
