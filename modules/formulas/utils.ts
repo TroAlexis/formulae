@@ -175,30 +175,34 @@ export const removeFormulaByIndexArray = (
   if (!index.length) return undefined;
 
   const lastIndex = index.length - 1;
+  const lastIndexValue = index[lastIndex];
   const indexWithoutLast = index.slice(0, lastIndex);
+
   if (indexWithoutLast.length) {
     const parentFormula = getFormulaByIndex(formulas, indexWithoutLast);
 
     if (checkIsFormulaExpression(parentFormula)) {
-      return removeFormulaByIndex(parentFormula.value, lastIndex);
+      return removeFormulaByIndex(parentFormula.value, lastIndexValue);
     }
 
     return undefined;
   }
 
-  return removeFormulaByIndex(formulas, index[lastIndex]);
+  return removeFormulaByIndex(formulas, lastIndexValue);
 };
 
 export const removeFormulaByIndex = (
   formulas: Formula[],
   index: FormulaIndex
-): Formula[] | undefined => {
+): Formula | undefined => {
   const isIndexArray = Array.isArray(index);
 
   if (isIndexArray) {
     return removeFormulaByIndexArray(formulas, index);
   } else {
-    return formulas.splice(index, 1);
+    const [removedElement] = formulas.splice(index, 1);
+
+    return removedElement;
   }
 };
 
@@ -214,4 +218,16 @@ export const checkIsIndexEmpty = (index: FormulaIndex) => {
 
 export const checkIndexesEqual = (a?: FormulaIndex, b?: FormulaIndex) => {
   return JSON.stringify(a) === JSON.stringify(b);
+};
+
+export const checkIsIndexDeep = (index: FormulaIndex): index is any[] => {
+  return Array.isArray(index) && index.length >= 1;
+};
+
+export const checkIndexStartsWith = (a: FormulaIndex, b: FormulaIndex) => {
+  if (Array.isArray(a) && Array.isArray(b)) {
+    return b.every((item, index) => a[index] === item);
+  }
+
+  return false;
 };

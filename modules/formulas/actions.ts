@@ -1,4 +1,4 @@
-import { getLast, spliceLast } from "utils/array";
+import { getLast, sliceExceptLast, spliceLast } from "utils/array";
 
 import { createStoreMutationFactory } from "../utils/actions";
 import {
@@ -14,8 +14,11 @@ import {
   selectRootExpression,
 } from "./selectors";
 import {
+  checkIndexStartsWith,
+  checkIsFormulaExpression,
   checkIsFormulaOperator,
   checkIsFormulaValue,
+  checkIsIndexDeep,
   checkIsIndexEmpty,
   createFormulaExpression,
   getBasicFormulaValue,
@@ -51,8 +54,19 @@ export const editFormula = createMutation("editFormula")(
 
 export const removeFormula = createMutation("removeFormula")((state, index) => {
   const formulas = selectFormulas(state);
+  const currentExpressionIndex = selectCurrentExpressionIndex(state);
 
-  removeFormulaByIndex(formulas, index);
+  const removedFormula = removeFormulaByIndex(formulas, index);
+
+  if (!removedFormula) return;
+
+  if (checkIsIndexDeep(index) && checkIsFormulaExpression(removedFormula)) {
+    if (checkIndexStartsWith(currentExpressionIndex, index)) {
+      const nextIndex = sliceExceptLast(index);
+
+      setCurrentExpressionIndex(state, nextIndex);
+    }
+  }
 });
 
 export const pushCurrentExpressionIndex = createMutation(
@@ -115,5 +129,5 @@ export const replaceExpression = createMutation("replaceExpression")(
 export const setCurrentExpressionIndex = createMutation(
   "setCurrentExpressionIndex"
 )((state, index) => {
-  state.currentExpressionIndex = index;
+  state.currentExpressionIndex = Array.isArray(index) ? index : [index];
 });

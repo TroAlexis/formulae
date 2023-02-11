@@ -3,7 +3,7 @@ import { FormulaIndex, FormulaValueType } from "./types";
 
 export interface FormulasState {
   formulas: FormulaExpression;
-  currentExpressionIndex: FormulaIndex;
+  currentExpressionIndex: number[];
 }
 
 export interface FormulasActions {
