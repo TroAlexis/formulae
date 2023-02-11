@@ -1,5 +1,5 @@
 import { Flex, FlexProps, TextInput, TextInputProps } from "@mantine/core";
-import { FormulaMenu } from "components/formula/FormulaMenu";
+import { FormulaExpressionMenu } from "components/formula/FormulaExpression/components/Menu";
 import { useFormulasStore } from "modules/formulas";
 import { FormulaComputable } from "modules/formulas/models";
 import { selectEditFormula } from "modules/formulas/selectors";
@@ -42,7 +42,8 @@ export const FormulaNameControl: FC<Props> = ({
         classNames={{ input: classes.nameInput, root: classes.inputWrapper }}
         onChange={handleNameChange}
       />
-      <FormulaMenu computable={computable} />
+
+      <FormulaExpressionMenu computable={computable} />
     </Flex>
   );
 };
