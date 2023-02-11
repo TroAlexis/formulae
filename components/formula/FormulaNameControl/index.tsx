@@ -1,4 +1,5 @@
 import { Flex, FlexProps, TextInput, TextInputProps } from "@mantine/core";
+import { FormulaDelete } from "components/formula/FormulaDelete";
 import { FormulaExpressionMenu } from "components/formula/FormulaExpression/components/Menu";
 import { Hoverable } from "components/ui/Hoverable";
 import { useFormulasStore } from "modules/formulas";
@@ -43,6 +44,12 @@ export const FormulaNameControl: FC<Props> = ({
       className={cx(className, styles.wrapper)}
       {...props}
     >
+      <Hoverable hoverTargetClassName={styles.wrapper}>
+        {({ className }) => (
+          <FormulaDelete className={className} index={index} />
+        )}
+      </Hoverable>
+
       <TextInput
         size={"xs"}
         value={inputValue}

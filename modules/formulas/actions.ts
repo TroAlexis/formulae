@@ -20,6 +20,7 @@ import {
   createFormulaExpression,
   getBasicFormulaValue,
   getFormulaByIndex,
+  removeFormulaByIndex,
 } from "./utils";
 
 const createMutation = createStoreMutationFactory<
@@ -47,6 +48,12 @@ export const editFormula = createMutation("editFormula")(
     Object.assign(editedFormula, formula);
   }
 );
+
+export const removeFormula = createMutation("removeFormula")((state, index) => {
+  const formulas = selectFormulas(state);
+
+  removeFormulaByIndex(formulas, index);
+});
 
 export const pushCurrentExpressionIndex = createMutation(
   "pushCurrentExpressionIndex"

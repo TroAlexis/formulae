@@ -9,6 +9,7 @@ export interface FormulasState {
 export interface FormulasActions {
   addFormula: (formula: Formula) => void;
   editFormula: (index: FormulaIndex, formula: Partial<Formula>) => void;
+  removeFormula: (index: FormulaIndex) => void;
   openExpression: () => void;
   closeExpression: () => void;
   replaceExpression: (expression: FormulaExpression) => void;

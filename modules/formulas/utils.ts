@@ -111,7 +111,7 @@ export const getExpressionResult = (
   }, expression.value);
 
   const [value] = result;
-  if (value.type === FormulaType.EXPRESSION) {
+  if (value?.type === FormulaType.EXPRESSION) {
     return getExpressionResult(value);
   }
 
@@ -163,8 +163,42 @@ export const getFormulaByIndex = (
 
   if (isIndexArray) {
     return getFormulaByIndexArray(formulas, index);
+  }
+
+  return formulas[index];
+};
+
+export const removeFormulaByIndexArray = (
+  formulas: Formula[],
+  index: number[]
+) => {
+  if (!index.length) return undefined;
+
+  const lastIndex = index.length - 1;
+  const indexWithoutLast = index.slice(0, lastIndex);
+  if (indexWithoutLast.length) {
+    const parentFormula = getFormulaByIndex(formulas, indexWithoutLast);
+
+    if (checkIsFormulaExpression(parentFormula)) {
+      return removeFormulaByIndex(parentFormula.value, lastIndex);
+    }
+
+    return undefined;
+  }
+
+  return removeFormulaByIndex(formulas, index[lastIndex]);
+};
+
+export const removeFormulaByIndex = (
+  formulas: Formula[],
+  index: FormulaIndex
+): Formula[] | undefined => {
+  const isIndexArray = Array.isArray(index);
+
+  if (isIndexArray) {
+    return removeFormulaByIndexArray(formulas, index);
   } else {
-    return formulas[index];
+    return formulas.splice(index, 1);
   }
 };
 

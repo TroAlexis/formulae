@@ -4,6 +4,7 @@ import {
   editFormula,
   openExpression,
   pushCurrentExpressionIndex,
+  removeFormula,
   replaceExpression,
   setCurrentExpressionIndex,
 } from "modules/formulas/actions";
@@ -45,6 +46,7 @@ export const useFormulasStore = create<FormulasStore>()(
         ...initialState,
         addFormula: createFormulasAction(addFormula),
         editFormula: createFormulasAction(editFormula),
+        removeFormula: createFormulasAction(removeFormula),
         pushCurrentExpressionIndex: createFormulasAction(
           pushCurrentExpressionIndex
         ),

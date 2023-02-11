@@ -35,6 +35,8 @@ export const selectAddFormula = createFormulasSelector("addFormula");
 
 export const selectEditFormula = createFormulasSelector("editFormula");
 
+export const selectRemoveFormula = createFormulasSelector("removeFormula");
+
 export const selectOpenExpression = createFormulasSelector("openExpression");
 
 export const selectCloseExpression = createFormulasSelector("closeExpression");

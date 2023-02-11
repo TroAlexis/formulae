@@ -1,12 +1,10 @@
 import {
-  ActionIcon,
   Flex,
   NumberInput,
   NumberInputHandlers,
   NumberInputProps,
-  useMantineTheme,
 } from "@mantine/core";
-import { IconTrash } from "@tabler/icons-react";
+import { FormulaDelete } from "components/formula/FormulaDelete";
 import { FormulaMenu } from "components/formula/FormulaMenu";
 import { Hoverable } from "components/ui/Hoverable";
 import { useFormulasStore } from "modules/formulas";
@@ -19,7 +17,6 @@ import { FormulaValueProps } from "./models";
 import { useStyles } from "./styles";
 
 const FormulaValue: FC<FormulaValueProps> = ({ formulaValue, index }) => {
-  const theme = useMantineTheme();
   const editFormula = useFormulasStore(selectEditFormula);
   const { classes } = useStyles();
   const handlers = useRef<NumberInputHandlers>();
@@ -31,22 +28,12 @@ const FormulaValue: FC<FormulaValueProps> = ({ formulaValue, index }) => {
     return editFormula(index, { value });
   };
 
-  const handleDelete = () => {};
-
   return (
     <Flex direction={"column"} className={styles.wrapper}>
       <Flex gap={"xs"} align={"center"}>
         <Hoverable hoverTargetClassName={styles.wrapper}>
           {({ className }) => (
-            <ActionIcon
-              size={"lg"}
-              color={"red"}
-              variant="subtle"
-              onClick={handleDelete}
-              className={className}
-            >
-              <IconTrash size={theme.spacing.sm} />
-            </ActionIcon>
+            <FormulaDelete className={className} index={index} />
           )}
         </Hoverable>
 
