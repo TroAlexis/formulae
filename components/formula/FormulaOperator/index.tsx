@@ -1,4 +1,6 @@
 import { AutocompleteProps, Select } from "@mantine/core";
+import { FormulaLayout } from "components/formula/FormulaLayout";
+import { useStyles } from "components/formula/FormulaOperator/styles";
 import { useFormulasStore } from "modules/formulas";
 import { OPERATORS } from "modules/formulas/consts";
 import { FormulaOperatorType } from "modules/formulas/enums";
@@ -18,6 +20,8 @@ const operators = [...OPERATORS.entries()].map(([type, operator]) => ({
 }));
 
 const FormulaOperator: FC<Props> = ({ operator, index }) => {
+  const { classes } = useStyles();
+
   const editFormula = useFormulasStore(selectEditFormula);
   const { value } = operator;
 
@@ -27,22 +31,24 @@ const FormulaOperator: FC<Props> = ({ operator, index }) => {
     value: FormulaOperatorType
   ) => {
     if (OPERATORS.has(value)) {
-      editFormula(index, { value: value });
+      editFormula(index, { value });
     }
   };
 
   return (
-    <Select
-      searchable
-      withinPortal
-      size={"sm"}
-      value={label}
-      onChange={handleChange}
-      placeholder={"Select operator"}
-      data={operators}
-      styles={{ input: { textAlign: "center" } }}
-      variant={"unstyled"}
-    />
+    <FormulaLayout index={index}>
+      <Select
+        searchable
+        withinPortal
+        size={"sm"}
+        value={label}
+        onChange={handleChange}
+        placeholder={"Select operator"}
+        data={operators}
+        classNames={classes}
+        variant={"unstyled"}
+      />
+    </FormulaLayout>
   );
 };
 
