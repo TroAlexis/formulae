@@ -1,6 +1,7 @@
 import { Flex, FlexProps, TextInput, TextInputProps } from "@mantine/core";
 import { FormulaDelete } from "components/formula/FormulaDelete";
 import { FormulaExpressionMenu } from "components/formula/FormulaExpression/components/Menu";
+import { getFormulaName } from "components/formula/FormulasFavorites/components/Item/utils";
 import { Hoverable } from "components/ui/Hoverable";
 import { useFormulasStore } from "modules/formulas";
 import { FormulaComputable } from "modules/formulas/models";
@@ -25,10 +26,7 @@ export const FormulaNameControl: FC<Props> = ({
   const editFormula = useFormulasStore(selectEditFormula);
   const { classes, cx } = useStyles();
 
-  const { name, id } = computable;
-  const [shortId] = id.split("-");
-
-  const inputValue = name ?? shortId;
+  const inputValue = getFormulaName(computable);
 
   const handleNameChange: TextInputProps["onChange"] = (event) => {
     const name = event.target.value;
