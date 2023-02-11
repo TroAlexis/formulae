@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+import { toLowerCaseTrim } from "utils/string";
 
 import { createStoreSelector } from "../utils/selectors";
 import { FavoritesStore } from "./models";
@@ -28,9 +29,7 @@ export const selectFavoritesFilteredBySearchText = createSelector(
         return false;
       }
 
-      const [name, text] = [item.name, searchText].map((t) =>
-        t.trim().toLowerCase()
-      );
+      const [name, text] = [item.name, searchText].map(toLowerCaseTrim);
 
       return name.includes(text);
     });
