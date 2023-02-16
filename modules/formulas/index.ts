@@ -7,6 +7,7 @@ import {
   removeFormula,
   replaceExpression,
   setCurrentExpressionIndex,
+  toggleCollapseExpression,
 } from "modules/formulas/actions";
 import { FormulaType } from "modules/formulas/enums";
 import {
@@ -47,6 +48,9 @@ export const useFormulasStore = create<FormulasStore>()(
         addFormula: createFormulasAction(addFormula),
         editFormula: createFormulasAction(editFormula),
         removeFormula: createFormulasAction(removeFormula),
+        toggleCollapseExpression: createFormulasAction(
+          toggleCollapseExpression
+        ),
         pushCurrentExpressionIndex: createFormulasAction(
           pushCurrentExpressionIndex
         ),

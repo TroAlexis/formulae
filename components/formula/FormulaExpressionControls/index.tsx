@@ -1,9 +1,10 @@
 import { Flex, FlexProps, TextInput, TextInputProps } from "@mantine/core";
 import { FormulaDelete } from "components/formula/FormulaDelete";
+import { FormulaExpressionCollapse } from "components/formula/FormulaExpression/components/Collapse";
 import { FormulaExpressionMenu } from "components/formula/FormulaExpression/components/Menu";
 import { Hoverable } from "components/ui/Hoverable";
 import { useFormulasStore } from "modules/formulas";
-import { FormulaComputable } from "modules/formulas/models";
+import { FormulaExpression } from "modules/formulas/models";
 import { selectEditFormula } from "modules/formulas/selectors";
 import { FormulaIndex } from "modules/formulas/types";
 import React, { FC } from "react";
@@ -13,11 +14,11 @@ import { useStyles } from "./styles";
 
 interface Props extends FlexProps {
   index: FormulaIndex;
-  computable: FormulaComputable;
+  expression: FormulaExpression;
 }
 
 export const FormulaExpressionControls: FC<Props> = ({
-  computable,
+  expression,
   index,
   className,
   ...props
@@ -25,7 +26,7 @@ export const FormulaExpressionControls: FC<Props> = ({
   const editFormula = useFormulasStore(selectEditFormula);
   const { classes, cx } = useStyles();
 
-  const inputValue = computable.name;
+  const inputValue = expression.name;
 
   const handleNameChange: TextInputProps["onChange"] = (event) => {
     const name = event.target.value;
@@ -55,12 +56,21 @@ export const FormulaExpressionControls: FC<Props> = ({
         classNames={{ input: classes.nameInput, root: classes.inputWrapper }}
         onChange={handleNameChange}
       />
+      <Hoverable hoverTargetClassName={styles.wrapper}>
+        {({ className }) => (
+          <FormulaExpressionCollapse
+            className={className}
+            expression={expression}
+            index={index}
+          />
+        )}
+      </Hoverable>
 
       <Hoverable hoverTargetClassName={styles.wrapper}>
         {({ className }) => (
           <FormulaExpressionMenu
             classNames={{ target: className }}
-            computable={computable}
+            expression={expression}
             index={index}
           />
         )}

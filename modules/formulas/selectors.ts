@@ -1,3 +1,4 @@
+import { toggleCollapseExpression } from "modules/formulas/actions";
 import { FormulaIndex } from "modules/formulas/types";
 import { createStoreSelector } from "modules/utils/selectors";
 import { createSelector } from "reselect";
@@ -36,6 +37,10 @@ export const selectAddFormula = createFormulasSelector("addFormula");
 export const selectEditFormula = createFormulasSelector("editFormula");
 
 export const selectRemoveFormula = createFormulasSelector("removeFormula");
+
+export const selectToggleCollapseExpression = createFormulasSelector(
+  "toggleCollapseExpression"
+);
 
 export const selectOpenExpression = createFormulasSelector("openExpression");
 
