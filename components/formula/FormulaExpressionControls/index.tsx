@@ -17,7 +17,7 @@ interface Props extends FlexProps {
   computable: FormulaComputable;
 }
 
-export const FormulaNameControl: FC<Props> = ({
+export const FormulaExpressionControls: FC<Props> = ({
   computable,
   index,
   className,

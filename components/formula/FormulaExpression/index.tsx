@@ -11,7 +11,7 @@ import {
 } from "modules/formulas/utils";
 import React, { FC } from "react";
 
-import { FormulaNameControl } from "../FormulaNameControl";
+import { FormulaExpressionControls } from "../FormulaExpressionControls";
 import FormulaOperator from "../FormulaOperator";
 import FormulaValue from "../FormulaValue";
 
@@ -43,7 +43,7 @@ const FormulaExpression: FC<Props> = ({
       direction={"column"}
       {...props}
     >
-      <FormulaNameControl
+      <FormulaExpressionControls
         px={"xs"}
         pt={"xs"}
         index={parentIndex}
