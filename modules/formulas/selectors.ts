@@ -1,4 +1,3 @@
-import { toggleCollapseExpression } from "modules/formulas/actions";
 import { FormulaIndex } from "modules/formulas/types";
 import { createStoreSelector } from "modules/utils/selectors";
 import { createSelector } from "reselect";
