@@ -69,6 +69,18 @@ export const removeFormula = createMutation("removeFormula")((state, index) => {
   }
 });
 
+export const toggleCollapseExpression = createMutation(
+  "toggleCollapseExpression"
+)((state, index, value) => {
+  const formulas = selectFormulas(state);
+
+  const expression = getFormulaByIndex(formulas, index);
+
+  if (checkIsFormulaExpression(expression)) {
+    expression.collapsed = value === undefined ? !expression.collapsed : value;
+  }
+});
+
 export const pushCurrentExpressionIndex = createMutation(
   "pushCurrentExpressionIndex"
 )((state, index) => {

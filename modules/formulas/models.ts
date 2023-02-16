@@ -10,6 +10,7 @@ export interface FormulasActions {
   addFormula: (formula: Formula) => void;
   editFormula: (index: FormulaIndex, formula: Partial<Formula>) => void;
   removeFormula: (index: FormulaIndex) => void;
+  toggleCollapseExpression: (index: FormulaIndex, value?: boolean) => void;
   openExpression: () => void;
   closeExpression: () => void;
   replaceExpression: (expression: FormulaExpression) => void;
@@ -37,7 +38,13 @@ export interface FormulaOperator extends FormulaBase {
   value: FormulaOperatorType;
 }
 
-export interface FormulaExpression extends FormulaComputableBase {
+export interface FormulaExpressionOptions {
+  collapsed?: boolean;
+}
+
+export interface FormulaExpression
+  extends FormulaComputableBase,
+    FormulaExpressionOptions {
   type: FormulaType.EXPRESSION;
   value: Formula[];
 }
