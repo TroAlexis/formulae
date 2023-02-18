@@ -6,14 +6,15 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "assets": "node tools/assets",
     "start": "next start",
     "telemetry": "next telemetry",
     "type-check": "tsc --noEmit",
     "type-check:watch": "tsc --noEmit --watch",
     "lint": "next lint",
     "lint-fix": "next lint --fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "assets": "node tools/assets",
+    "assets:favicon": "node tools/assets favicon"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
