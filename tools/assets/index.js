@@ -13,7 +13,7 @@ const checkModeIs = (value, mode) => value === undefined || value === mode;
 
   const sharedOptions = {
     manifest: "./public/manifest.json",
-    pathOverride: "/icons",
+    pathOverride: "/formulae/icons",
     quality: 100,
     xhtml: true,
   };
