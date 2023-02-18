@@ -1,10 +1,21 @@
-import { PRIMARY_COLOR } from "config/mantine/theme";
+import { useMantineTheme } from "@mantine/core";
+import { isLightTheme } from "config/mantine/utils";
+import { useThemeStore } from "modules/theme";
+import { selectTheme } from "modules/theme/selectors";
 import { addBasePath } from "next/dist/client/add-base-path";
+import Head from "next/head";
 import React, { FC } from "react";
 
 export const Meta: FC = ({}) => {
+  const theme = useMantineTheme();
+  const userTheme = useThemeStore(selectTheme);
+
+  const THEME_COLOR = isLightTheme(userTheme)
+    ? theme.white
+    : theme.colors.dark[7];
+
   return (
-    <>
+    <Head>
       {/*  Manifest.json  */}
       <link href={addBasePath("/manifest.json")} rel="manifest" />
 
@@ -331,7 +342,7 @@ export const Meta: FC = ({}) => {
       <meta name="keywords" content="calculator formula" />
 
       {/* Android */}
-      <meta name="theme-color" content={PRIMARY_COLOR} />
+      <meta name="theme-color" content={THEME_COLOR} />
       <meta name="mobile-web-app-capable" content="yes" />
 
       {/* iOS */}
@@ -340,8 +351,8 @@ export const Meta: FC = ({}) => {
       <meta name="apple-mobile-web-app-capable" content="yes" />
 
       {/* Windows  */}
-      <meta name="msapplication-navbutton-color" content={PRIMARY_COLOR} />
-      <meta name="msapplication-TileColor" content={PRIMARY_COLOR} />
+      <meta name="msapplication-navbutton-color" content={THEME_COLOR} />
+      <meta name="msapplication-TileColor" content={THEME_COLOR} />
 
       <meta name="msapplication-tooltip" content="Formulas creator" />
       <meta name="msapplication-starturl" content="/formulae" />
@@ -378,6 +389,6 @@ export const Meta: FC = ({}) => {
 
       {/* Orientation  */}
       <meta name="screen-orientation" content="portrait" />
-    </>
+    </Head>
   );
 };

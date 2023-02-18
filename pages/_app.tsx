@@ -24,9 +24,9 @@ function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>Formulae</title>
-
-        <Meta />
       </Head>
+
+      <Meta />
 
       <MantineProvider withGlobalStyles withNormalizeCSS theme={themeOverrides}>
         <Component {...pageProps} />
