@@ -1,3 +1,5 @@
+const basePath = "/formulae";
+
 const withPWA = require("next-pwa")({
   disable: process.env.NODE_ENV === "development",
   dest: "public",
@@ -7,7 +9,7 @@ const withPWA = require("next-pwa")({
 const config = {
   reactStrictMode: true,
   swcMinify: true,
-  basePath: "/formulae",
+  basePath,
 };
 
 module.exports = withPWA(config);

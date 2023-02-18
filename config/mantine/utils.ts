@@ -1,4 +1,3 @@
-import { MantineTheme } from "@mantine/core";
+import { ColorScheme } from "@mantine/core";
 
-export const isLightTheme = (theme: MantineTheme) =>
-  theme.colorScheme === "light";
+export const isLightTheme = (theme: ColorScheme) => theme === "light";

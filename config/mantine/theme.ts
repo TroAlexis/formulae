@@ -2,7 +2,6 @@ import { MantineThemeOverride } from "@mantine/core";
 import { montserrat, noto } from "config/fonts";
 
 export const ACTION_COLOR = "indigo";
-export const PRIMARY_COLOR = ACTION_COLOR;
 
 export const mantineThemeOverrides: MantineThemeOverride = {
   spacing: {
