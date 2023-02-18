@@ -7,11 +7,11 @@ export const useStyles = createStyles((theme) => {
       "&:focus-visible": {
         zIndex: 1,
       },
-      "&:first-child": {
+      "&:first-of-type": {
         borderTopLeftRadius: edgeRadius,
         borderBottomLeftRadius: edgeRadius,
       },
-      "&:last-child": {
+      "&:last-of-type": {
         borderTopRightRadius: edgeRadius,
         borderBottomRightRadius: edgeRadius,
       },
