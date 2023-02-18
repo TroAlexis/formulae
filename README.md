@@ -1,3 +1,3 @@
-Variable formulas creator
+Formulas creator
 
 [Website](https://troalexis.github.io/formulae/)
