@@ -1,5 +1,13 @@
 const pwaAssetGenerator = require("pwa-asset-generator");
 
+const MODE = {
+  SPLASH: "splash",
+  SPLASH_LIGHT: "splash-light",
+  SPLASH_DARK: "splash-dark",
+  FAVICON: "favicon",
+  ICONS: "icons",
+};
+
 const args = process.argv.slice(2);
 
 const [mode] = args;
@@ -11,34 +19,34 @@ const checkModeIs = (value, mode) => value === undefined || value === mode;
   const logoPath = "./assets/images/logo.svg";
   const logoTinyPath = "./assets/images/logo-tiny.svg";
 
-  const sharedOptions = {
+  const imageGenerationOptions = {
     manifest: "./public/manifest.json",
     pathOverride: "/formulae/icons",
     quality: 100,
     xhtml: true,
   };
 
-  const isSplash = checkModeIs(mode, "splash");
+  const shouldGenerateSplashImages = checkModeIs(mode, MODE.SPLASH);
+  const shouldGenerateSplashLightImages = checkModeIs(mode, MODE.SPLASH_LIGHT);
+  const shouldGenerateSplashDarkImages = checkModeIs(mode, MODE.SPLASH_DARK);
 
-  if (isSplash || checkModeIs(mode, "splash-light")) {
-    /* Generate splash dark mode images */
+  if (
+    shouldGenerateSplashImages ||
+    shouldGenerateSplashLightImages ||
+    shouldGenerateSplashDarkImages
+  ) {
+    /* Generate splash images */
+    const background = shouldGenerateSplashDarkImages ? "#1A1B1E" : undefined;
+
     await pwaAssetGenerator.generateImages(logoPath, outputFolderPath, {
-      background: "#1A1B1E",
-      darkMode: true,
       splashOnly: true,
-      ...sharedOptions,
+      background,
+      darkMode: shouldGenerateSplashDarkImages,
+      ...imageGenerationOptions,
     });
   }
 
-  if (isSplash || checkModeIs(mode, "splash-dark")) {
-    /* Generate splash light mode images */
-    await pwaAssetGenerator.generateImages(logoPath, outputFolderPath, {
-      splashOnly: true,
-      ...sharedOptions,
-    });
-  }
-
-  if (checkModeIs(mode, "favicon")) {
+  if (checkModeIs(mode, MODE.FAVICON)) {
     /* Generate favicon */
     await pwaAssetGenerator.generateImages(logoTinyPath, outputFolderPath, {
       favicon: true,
@@ -46,17 +54,17 @@ const checkModeIs = (value, mode) => value === undefined || value === mode;
       opaque: false,
       padding: "0",
       type: "png",
-      ...sharedOptions,
+      ...imageGenerationOptions,
     });
   }
 
-  if (checkModeIs(mode, "icons")) {
+  if (checkModeIs(mode, MODE.ICONS)) {
     /* Generate images */
     await pwaAssetGenerator.generateImages(logoTinyPath, outputFolderPath, {
       iconOnly: true,
       mstile: true,
       opaque: false,
-      ...sharedOptions,
+      ...imageGenerationOptions,
     });
   }
 })();
