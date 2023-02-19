@@ -52,7 +52,7 @@ const checkModeIs = (value, mode) => value === undefined || value === mode;
 
   if (checkModeIs(mode, "icons")) {
     /* Generate images */
-    await pwaAssetGenerator.generateImages(logoPath, outputFolderPath, {
+    await pwaAssetGenerator.generateImages(logoTinyPath, outputFolderPath, {
       iconOnly: true,
       mstile: true,
       opaque: false,
