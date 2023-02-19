@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useHydrated } from "hooks/useHydrated";
 import { create } from "zustand";
 
 export const createUseHydratedStore = <
@@ -10,9 +10,7 @@ export const createUseHydratedStore = <
 ) =>
   (<U>(selector: (state: unknown) => U, equals?: (a: U, b: U) => boolean) => {
     const store = useStoreHook(selector, equals);
-    const [hydrated, setHydrated] = useState(false);
-
-    useEffect(() => setHydrated(true), []);
+    const [hydrated] = useHydrated();
 
     return hydrated ? store : selector(initialState);
   }) as UseStore;
