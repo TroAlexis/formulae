@@ -2,6 +2,7 @@ import "../styles/globals.css";
 
 import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 import { Meta } from "components/app/Meta";
+import { Viewport } from "components/app/Viewport";
 import { mantineThemeOverrides } from "config/mantine/theme";
 import { useThemeStore } from "modules/theme";
 import { selectTheme } from "modules/theme/selectors";
@@ -27,6 +28,7 @@ function App({ Component, pageProps }: AppProps) {
       </Head>
 
       <Meta />
+      <Viewport />
 
       <MantineProvider withGlobalStyles withNormalizeCSS theme={themeOverrides}>
         <Component {...pageProps} />
