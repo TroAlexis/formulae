@@ -14,9 +14,11 @@ import { useFavoritesStore } from "modules/favorites";
 import { selectFavoritesFilteredBySearchText } from "modules/favorites/selectors";
 import React, { FC } from "react";
 
-interface Props extends Omit<ListProps, "children"> {}
+interface Props extends Omit<ListProps, "children"> {
+  onItemClick?: () => unknown;
+}
 
-export const FormulasFavorites: FC<Props> = (props) => {
+export const FormulasFavorites: FC<Props> = ({ onItemClick, ...props }) => {
   const theme = useMantineTheme();
   const favorites = useFavoritesStore(selectFavoritesFilteredBySearchText);
   const styles = useStyles();
@@ -42,7 +44,11 @@ export const FormulasFavorites: FC<Props> = (props) => {
       {favorites.length ? (
         favorites.map((item) => (
           <List.Item key={item.id}>
-            <FormulaFavoritesItem item={item} className={savedItem} />
+            <FormulaFavoritesItem
+              item={item}
+              className={savedItem}
+              onClick={onItemClick}
+            />
           </List.Item>
         ))
       ) : (

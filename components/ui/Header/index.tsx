@@ -12,6 +12,7 @@ import {
   selectToggleNavbar,
 } from "modules/shell/selectors";
 import React, { FC } from "react";
+import { wrapFunctionCall } from "utils/function";
 
 import { ThemeToggle } from "../ThemeToggle";
 import { useStyles } from "./styles";
@@ -25,12 +26,14 @@ export const Header: FC<Props> = ({}) => {
 
   const { classes } = useStyles();
 
+  const handleBurgerClick = wrapFunctionCall(toggleNavbar);
+
   return (
     <MantineHeader height={60} p={"xs"} className={classes.header}>
       <MediaQuery largerThan="lg" styles={{ display: "none" }}>
         <Burger
           opened={isNavbarOpened}
-          onClick={toggleNavbar}
+          onClick={handleBurgerClick}
           color={theme.colors.indigo[6]}
           size="sm"
           className={classes.burger}
