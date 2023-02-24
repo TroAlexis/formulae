@@ -1,5 +1,7 @@
 import { FlexProps, Text, UnstyledButton } from "@mantine/core";
 import { FormulasFavoritesItemMenu } from "components/formula/FormulasFavorites/components/Item/components/Menu";
+import { FormulasFavoritesItemNameInput } from "components/formula/FormulasFavorites/components/Item/components/NameInput";
+import { useItemEdit } from "components/formula/FormulasFavorites/components/Item/hooks/useItemEdit";
 import { useStyles } from "components/formula/FormulasFavorites/components/Item/styles";
 import { getFormulaName } from "components/formula/FormulasFavorites/components/Item/utils";
 import { useFormulasStore } from "modules/formulas";
@@ -32,14 +34,33 @@ export const FormulaFavoritesItem: FC<Props> = ({
     }
   };
 
+  const {
+    editing,
+    name: itemName,
+    handleNameEdit,
+    handleNameChange,
+    handleNameSave,
+    handleClose,
+  } = useItemEdit(item);
+
   return (
     <span className={cx(classes.wrapper, className)} {...props}>
-      <UnstyledButton className={classes.name} onClick={handleReplace}>
-        <Text span truncate size={"sm"}>
-          {name}
-        </Text>
-      </UnstyledButton>
-      <FormulasFavoritesItemMenu item={item} />
+      {editing ? (
+        <FormulasFavoritesItemNameInput
+          name={itemName}
+          onChange={handleNameChange}
+          onSave={handleNameSave}
+          onCancel={handleClose}
+          className={classes.name}
+        />
+      ) : (
+        <UnstyledButton className={classes.name} onClick={handleReplace}>
+          <Text span truncate size={"sm"}>
+            {name}
+          </Text>
+        </UnstyledButton>
+      )}
+      <FormulasFavoritesItemMenu item={item} onEdit={handleNameEdit} />
     </span>
   );
 };
