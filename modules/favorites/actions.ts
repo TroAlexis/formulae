@@ -1,3 +1,4 @@
+import { selectFavoriteById } from "modules/favorites/selectors";
 import { uuid } from "utils/uuid";
 
 import { createStoreMutationFactory } from "../utils/actions";
@@ -15,6 +16,18 @@ export const addFavorite = createFavoritesMutation("addFavorite")(
       // Generate new id for computable to prevent duplicates
       id: uuid(),
     });
+  }
+);
+
+export const editFavorite = createFavoritesMutation("editFavorite")(
+  (state, id, favorite) => {
+    const editedFavorite = selectFavoriteById(state, id);
+
+    if (!editedFavorite) {
+      return;
+    }
+
+    Object.assign(editedFavorite, favorite);
   }
 );
 
