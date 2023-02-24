@@ -6,3 +6,5 @@ const createShellSelector = createStoreSelector<ShellStore>();
 export const selectIsNavbarOpen = createShellSelector("isNavBarOpen");
 
 export const selectToggleNavbar = createShellSelector("toggleNavbar");
+
+export const selectCloseNavbar = createShellSelector("closeNavbar");

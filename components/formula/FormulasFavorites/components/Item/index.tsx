@@ -10,11 +10,13 @@ import React, { FC } from "react";
 
 interface Props extends FlexProps {
   item: FormulaComputable;
+  onClick?: () => unknown;
 }
 
 export const FormulaFavoritesItem: FC<Props> = ({
   item,
   className,
+  onClick,
   ...props
 }) => {
   const { classes, cx } = useStyles();
@@ -26,6 +28,7 @@ export const FormulaFavoritesItem: FC<Props> = ({
   const handleReplace = () => {
     if (checkIsFormulaExpression(item)) {
       replaceExpression(item);
+      onClick?.();
     }
   };
 

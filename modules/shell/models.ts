@@ -3,7 +3,8 @@ export interface ShellState {
 }
 
 export interface ShellActions {
-  toggleNavbar: () => void;
+  toggleNavbar: (value?: boolean) => void;
+  closeNavbar: () => void;
 }
 
 export interface ShellStore extends ShellState, ShellActions {}

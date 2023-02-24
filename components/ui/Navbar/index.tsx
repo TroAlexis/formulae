@@ -3,7 +3,7 @@ import { FavoritesSearch } from "components/favorites/FavoritesSearch";
 import { FormulasFavorites } from "components/formula/FormulasFavorites";
 import { useStyles } from "components/ui/Navbar/styles";
 import { useShellStore } from "modules/shell";
-import { selectIsNavbarOpen } from "modules/shell/selectors";
+import { selectCloseNavbar, selectIsNavbarOpen } from "modules/shell/selectors";
 import React, { FC } from "react";
 
 interface Props {}
@@ -11,6 +11,8 @@ interface Props {}
 export const Navbar: FC<Props> = ({}) => {
   const isNavbarOpen = useShellStore(selectIsNavbarOpen);
   const { classes } = useStyles();
+
+  const closeNavbar = useShellStore(selectCloseNavbar);
 
   return (
     <MantineNavbar
@@ -29,7 +31,7 @@ export const Navbar: FC<Props> = ({}) => {
         offsetScrollbars
         classNames={classes}
       >
-        <FormulasFavorites pt={"sm"} />
+        <FormulasFavorites pt={"sm"} onItemClick={closeNavbar} />
       </MantineNavbar.Section>
     </MantineNavbar>
   );
