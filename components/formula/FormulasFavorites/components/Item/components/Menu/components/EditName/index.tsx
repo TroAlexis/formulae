@@ -1,6 +1,6 @@
 import { ActionIcon, Menu, useMantineTheme } from "@mantine/core";
 import { IconPencil } from "@tabler/icons-react";
-import { FormulasFavoritesItemMenuEditNameProps } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditName/models";
+import { FormulasFavoritesItemMenuEditNameProps } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditDescription/models";
 import React, { FC } from "react";
 
 export const FormulasFavoritesItemMenuEditName: FC<
