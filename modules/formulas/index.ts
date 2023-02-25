@@ -19,6 +19,7 @@ import {
 } from "modules/formulas/models";
 import { getBasicFormulaValue } from "modules/formulas/utils";
 import { createStoreActionFactory } from "modules/utils/actions";
+import { createUseTemporalStore } from "modules/utils/store";
 import { QUARTER_SECOND } from "types/consts";
 import { temporal } from "zundo";
 import { create } from "zustand";
@@ -75,4 +76,6 @@ export const useFormulasStore = create<FormulasStore>()(
   )
 );
 
-export const useFormulasStoreTemporal = create(useFormulasStore.temporal);
+export const useFormulasStoreTemporal = createUseTemporalStore(
+  useFormulasStore.temporal
+);

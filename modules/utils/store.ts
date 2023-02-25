@@ -1,5 +1,6 @@
 import { useHydrated } from "hooks/useHydrated";
-import { create } from "zustand";
+import { TemporalState } from "zundo";
+import { create, StoreApi, useStore } from "zustand";
 
 export const createUseHydratedStore = <
   UseStore extends ReturnType<typeof create>,
@@ -14,3 +15,11 @@ export const createUseHydratedStore = <
 
     return hydrated ? store : selector(initialState);
   }) as UseStore;
+
+export const createUseTemporalStore =
+  <S>(store: StoreApi<TemporalState<S>>) =>
+  <T>(
+    selector: (state: TemporalState<S>) => T,
+    equality?: (a: T, b: T) => boolean
+  ) =>
+    useStore(store, selector, equality);
