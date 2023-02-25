@@ -1,14 +1,14 @@
 import { ActionIcon, Menu, useMantineTheme } from "@mantine/core";
 import { IconPencil } from "@tabler/icons-react";
-import { FormulasFavoritesItemMenuEditProps } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/Edit/models";
+import { FormulasFavoritesItemMenuEditNameProps } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditName/models";
 import React, { FC } from "react";
 
-export const FormulasFavoritesItemMenuEdit: FC<
-  FormulasFavoritesItemMenuEditProps
-> = ({ item, onEdit }) => {
+export const FormulasFavoritesItemMenuEditName: FC<
+  FormulasFavoritesItemMenuEditNameProps
+> = ({ item, onNameEdit }) => {
   const theme = useMantineTheme();
 
-  const handleEdit = () => onEdit(item);
+  const handleEdit = () => onNameEdit(item);
 
   return (
     <Menu.Item

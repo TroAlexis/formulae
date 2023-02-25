@@ -4,24 +4,26 @@ import { IconDeviceFloppy, IconX } from "@tabler/icons-react";
 import {
   getRightSectionWidth,
   useStyles,
-} from "components/formula/FormulasFavorites/components/Item/components/NameInput/styles";
+} from "components/formula/FormulasFavorites/components/Item/components/Input/styles";
 import React, { ChangeEventHandler, FC, FormEventHandler } from "react";
 import { wrapFunctionCall } from "utils/function";
 
 interface Props {
-  name?: string;
+  value?: string;
   className?: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
   onSave: FormEventHandler<HTMLFormElement>;
   onCancel: () => unknown;
+  placeholder?: string;
 }
 
-export const FormulasFavoritesItemNameInput: FC<Props> = ({
-  name,
+export const FormulasFavoritesItemInput: FC<Props> = ({
+  value,
   onChange,
   onSave,
   onCancel,
   className,
+  placeholder,
 }) => {
   const { classes } = useStyles();
   const theme = useMantineTheme();
@@ -45,11 +47,11 @@ export const FormulasFavoritesItemNameInput: FC<Props> = ({
     <TextInput
       variant={"unstyled"}
       size={"sm"}
-      value={name}
-      placeholder={"Enter formula name"}
+      value={value}
       classNames={{ input: classes.nameInput, wrapper: classes.wrapper }}
       autoFocus
       className={className}
+      placeholder={placeholder}
       wrapperProps={wrapperProps}
       onChange={onChange}
       rightSectionWidth={RIGHT_SECTION_WIDTH}

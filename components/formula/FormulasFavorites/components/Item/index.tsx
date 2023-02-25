@@ -1,9 +1,13 @@
 import { FlexProps, Text, UnstyledButton } from "@mantine/core";
+import { FormulasFavoritesItemIcon } from "components/formula/FormulasFavorites/components/Item/components/Icon";
+import { FormulasFavoritesItemInput } from "components/formula/FormulasFavorites/components/Item/components/Input";
 import { FormulasFavoritesItemMenu } from "components/formula/FormulasFavorites/components/Item/components/Menu";
-import { FormulasFavoritesItemNameInput } from "components/formula/FormulasFavorites/components/Item/components/NameInput";
-import { useItemEdit } from "components/formula/FormulasFavorites/components/Item/hooks/useItemEdit";
+import { useItemEditor } from "components/formula/FormulasFavorites/components/Item/hooks/useItemEditor";
 import { useStyles } from "components/formula/FormulasFavorites/components/Item/styles";
-import { getFormulaName } from "components/formula/FormulasFavorites/components/Item/utils";
+import {
+  createGetEditHandler,
+  getFormulaName,
+} from "components/formula/FormulasFavorites/components/Item/utils";
 import { useFormulasStore } from "modules/formulas";
 import { FormulaComputable } from "modules/formulas/models";
 import { selectReplaceExpression } from "modules/formulas/selectors";
@@ -34,33 +38,52 @@ export const FormulaFavoritesItem: FC<Props> = ({
     }
   };
 
-  const {
-    editing,
-    name: itemName,
-    handleNameEdit,
-    handleNameChange,
-    handleNameSave,
-    handleClose,
-  } = useItemEdit(item);
+  const nameEditor = useItemEditor(item, "name");
+  const descriptionEditor = useItemEditor(item, "description");
+  const editors = [nameEditor, descriptionEditor];
+
+  const getEditHandler = createGetEditHandler(editors);
+
+  const isEditing = nameEditor.editing || descriptionEditor.editing;
 
   return (
     <span className={cx(classes.wrapper, className)} {...props}>
-      {editing ? (
-        <FormulasFavoritesItemNameInput
-          name={itemName}
-          onChange={handleNameChange}
-          onSave={handleNameSave}
-          onCancel={handleClose}
+      <FormulasFavoritesItemIcon item={item} />
+
+      {nameEditor.editing && (
+        <FormulasFavoritesItemInput
+          value={nameEditor.value}
+          onChange={nameEditor.handleChange}
+          onSave={nameEditor.handleSave}
+          onCancel={nameEditor.handleClose}
+          placeholder={"Enter name"}
           className={classes.name}
         />
-      ) : (
+      )}
+
+      {descriptionEditor.editing && (
+        <FormulasFavoritesItemInput
+          value={descriptionEditor.value}
+          onChange={descriptionEditor.handleChange}
+          onSave={descriptionEditor.handleSave}
+          onCancel={descriptionEditor.handleClose}
+          placeholder={"Enter description"}
+          className={classes.name}
+        />
+      )}
+
+      {!isEditing && (
         <UnstyledButton className={classes.name} onClick={handleReplace}>
           <Text span truncate size={"sm"}>
             {name}
           </Text>
         </UnstyledButton>
       )}
-      <FormulasFavoritesItemMenu item={item} onEdit={handleNameEdit} />
+      <FormulasFavoritesItemMenu
+        item={item}
+        onNameEdit={getEditHandler(nameEditor)}
+        onDescriptionEdit={getEditHandler(descriptionEditor)}
+      />
     </span>
   );
 };

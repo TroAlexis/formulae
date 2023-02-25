@@ -26,6 +26,7 @@ export interface FormulaBase {
 
 export interface FormulaComputableBase extends FormulaBase {
   name?: string;
+  description?: string;
 }
 
 export interface FormulaValue extends FormulaComputableBase {
