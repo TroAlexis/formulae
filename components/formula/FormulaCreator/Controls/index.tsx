@@ -1,14 +1,23 @@
 import { ActionIcon, ActionIconProps, Group, GroupProps } from "@mantine/core";
-import { IconCalculator, IconHash } from "@tabler/icons-react";
+import {
+  IconArrowBack,
+  IconArrowForward,
+  IconCalculator,
+  IconHash,
+} from "@tabler/icons-react";
 import { useStyles } from "components/formula/FormulaCreator/Controls/styles";
-import { useFormulasStore } from "modules/formulas";
+import { useFormulasStore, useFormulasStoreTemporal } from "modules/formulas";
 import { FormulaOperatorType } from "modules/formulas/enums";
 import {
   selectAddFormula,
   selectCloseExpression,
+  selectFormulasRedo,
+  selectFormulasUndo,
   selectIsComputableAddable,
   selectIsExpressionCloseable,
   selectIsExpressionOpenable,
+  selectIsFormulaRedoable,
+  selectIsFormulaUndoable,
   selectIsOperatorAddable,
   selectOpenExpression,
 } from "modules/formulas/selectors";
@@ -17,6 +26,7 @@ import {
   getBasicFormulaValue,
 } from "modules/formulas/utils";
 import React, { ComponentProps, FC } from "react";
+import { wrapFunctionCall } from "utils/function";
 
 interface Props extends GroupProps {}
 
@@ -28,10 +38,16 @@ const FormulaCreatorControls: FC<Props> = (props) => {
   const openExpression = useFormulasStore(selectOpenExpression);
   const closeExpression = useFormulasStore(selectCloseExpression);
 
+  const formulasUndo = useFormulasStoreTemporal(selectFormulasUndo);
+  const formulasRedo = useFormulasStoreTemporal(selectFormulasRedo);
+
   const isOperatorAddable = useFormulasStore(selectIsOperatorAddable);
   const isComputableAddable = useFormulasStore(selectIsComputableAddable);
   const isExpressionOpenable = useFormulasStore(selectIsExpressionOpenable);
   const isExpressionCloseable = useFormulasStore(selectIsExpressionCloseable);
+
+  const isFormulaUndoable = useFormulasStoreTemporal(selectIsFormulaUndoable);
+  const isFormulaRedoable = useFormulasStoreTemporal(selectIsFormulaRedoable);
 
   const addPlus = () =>
     addFormula(createFormulaOperator({ value: FormulaOperatorType.ADDITION }));
@@ -64,6 +80,18 @@ const FormulaCreatorControls: FC<Props> = (props) => {
       disabled: !isExpressionCloseable,
       children: ")",
       id: "close-expression",
+    },
+    {
+      onClick: wrapFunctionCall(formulasUndo),
+      disabled: !isFormulaUndoable,
+      children: <IconArrowBack />,
+      id: "undo",
+    },
+    {
+      onClick: wrapFunctionCall(formulasRedo),
+      children: <IconArrowForward />,
+      disabled: !isFormulaRedoable,
+      id: "redo",
     },
   ];
 

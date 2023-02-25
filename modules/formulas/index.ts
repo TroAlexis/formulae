@@ -1,3 +1,4 @@
+import { debounce } from "debounce";
 import {
   addFormula,
   closeExpression,
@@ -9,6 +10,7 @@ import {
   setCurrentExpressionIndex,
   toggleCollapseExpression,
 } from "modules/formulas/actions";
+import { FORMULAS_TEMPORAL_LIMIT } from "modules/formulas/consts";
 import { FormulaType } from "modules/formulas/enums";
 import {
   FormulasActions,
@@ -17,6 +19,8 @@ import {
 } from "modules/formulas/models";
 import { getBasicFormulaValue } from "modules/formulas/utils";
 import { createStoreActionFactory } from "modules/utils/actions";
+import { QUARTER_SECOND } from "types/consts";
+import { temporal } from "zundo";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
@@ -37,30 +41,38 @@ const initialState: FormulasState = {
 
 export const useFormulasStore = create<FormulasStore>()(
   devtools(
-    immer((set) => {
-      const createFormulasAction = createStoreActionFactory<
-        FormulasActions,
-        FormulasStore
-      >()(set);
+    temporal(
+      immer((set) => {
+        const createFormulasAction = createStoreActionFactory<
+          FormulasActions,
+          FormulasStore
+        >()(set);
 
-      return {
-        ...initialState,
-        addFormula: createFormulasAction(addFormula),
-        editFormula: createFormulasAction(editFormula),
-        removeFormula: createFormulasAction(removeFormula),
-        toggleCollapseExpression: createFormulasAction(
-          toggleCollapseExpression
-        ),
-        pushCurrentExpressionIndex: createFormulasAction(
-          pushCurrentExpressionIndex
-        ),
-        openExpression: createFormulasAction(openExpression),
-        closeExpression: createFormulasAction(closeExpression),
-        replaceExpression: createFormulasAction(replaceExpression),
-        setCurrentExpressionIndex: createFormulasAction(
-          setCurrentExpressionIndex
-        ),
-      };
-    })
+        return {
+          ...initialState,
+          addFormula: createFormulasAction(addFormula),
+          editFormula: createFormulasAction(editFormula),
+          removeFormula: createFormulasAction(removeFormula),
+          toggleCollapseExpression: createFormulasAction(
+            toggleCollapseExpression
+          ),
+          pushCurrentExpressionIndex: createFormulasAction(
+            pushCurrentExpressionIndex
+          ),
+          openExpression: createFormulasAction(openExpression),
+          closeExpression: createFormulasAction(closeExpression),
+          replaceExpression: createFormulasAction(replaceExpression),
+          setCurrentExpressionIndex: createFormulasAction(
+            setCurrentExpressionIndex
+          ),
+        };
+      }),
+      {
+        limit: FORMULAS_TEMPORAL_LIMIT,
+        handleSet: (handleSet) => debounce(handleSet, QUARTER_SECOND, true),
+      }
+    )
   )
 );
+
+export const useFormulasStoreTemporal = create(useFormulasStore.temporal);

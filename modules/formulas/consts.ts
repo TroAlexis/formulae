@@ -3,6 +3,8 @@ import { FormulaOperator, FormulaValue, Operator } from "./models";
 import { FormulaValueType, OperatorOrderChecker } from "./types";
 import { createFormulaValue } from "./utils";
 
+export const FORMULAS_TEMPORAL_LIMIT = 100;
+
 const createOperatorComputer =
   (computer: (a: FormulaValueType, b: FormulaValueType) => FormulaValueType) =>
   (a: FormulaValue, b: FormulaValue) =>

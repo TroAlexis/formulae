@@ -2,6 +2,7 @@ import { FormulaIndex } from "modules/formulas/types";
 import { createStoreSelector } from "modules/utils/selectors";
 import { createSelector } from "reselect";
 import { getLast } from "utils/array";
+import { TemporalState } from "zundo";
 
 import { FormulasStore } from "./models";
 import {
@@ -15,6 +16,8 @@ import {
 } from "./utils";
 
 const createFormulasSelector = createStoreSelector<FormulasStore>();
+const createFormulasTemporalSelector =
+  createStoreSelector<TemporalState<FormulasStore>>();
 
 /* Basic */
 
@@ -51,6 +54,16 @@ export const selectReplaceExpression =
 export const selectSetCurrentExpressionIndex = createFormulasSelector(
   "setCurrentExpressionIndex"
 );
+
+export const selectFormulasUndo = createFormulasTemporalSelector("undo");
+
+export const selectFormulasRedo = createFormulasTemporalSelector("redo");
+
+export const selectFormulasPastStates =
+  createFormulasTemporalSelector("pastStates");
+
+export const selectFormulasFutureStates =
+  createFormulasTemporalSelector("futureStates");
 
 /* Computed */
 
@@ -127,4 +140,14 @@ export const selectIsExpressionSelected = createSelector(
   (currentIndex, index) => {
     return checkIndexesEqual(currentIndex, index);
   }
+);
+
+export const selectIsFormulaUndoable = createSelector(
+  [selectFormulasPastStates],
+  (pastStates) => !!pastStates.length
+);
+
+export const selectIsFormulaRedoable = createSelector(
+  [selectFormulasFutureStates],
+  (futureStates) => !!futureStates.length
 );
