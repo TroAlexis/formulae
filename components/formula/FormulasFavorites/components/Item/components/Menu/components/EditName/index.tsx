@@ -1,4 +1,4 @@
-import { ActionIcon, Menu, useMantineTheme } from "@mantine/core";
+import { ActionIcon, Menu, Text, useMantineTheme } from "@mantine/core";
 import { IconPencil } from "@tabler/icons-react";
 import { FormulasFavoritesItemMenuEditNameProps } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditDescription/models";
 import React, { FC } from "react";
@@ -19,7 +19,7 @@ export const FormulasFavoritesItemMenuEditName: FC<
         </ActionIcon>
       }
     >
-      Edit name
+      <Text size={"xs"}>Edit name</Text>
     </Menu.Item>
   );
 };

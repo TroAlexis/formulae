@@ -1,4 +1,4 @@
-import { ActionIcon, Menu, useMantineTheme } from "@mantine/core";
+import { ActionIcon, Menu, Text, useMantineTheme } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 import { useFavoritesStore } from "modules/favorites";
 import { selectRemoveFavorite } from "modules/favorites/selectors";
@@ -26,7 +26,7 @@ export const FormulasFavoritesItemMenuDelete: FC<Props> = ({ item }) => {
         </ActionIcon>
       }
     >
-      Delete
+      <Text size={"xs"}>Delete</Text>
     </Menu.Item>
   );
 };

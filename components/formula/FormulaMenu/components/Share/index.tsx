@@ -5,9 +5,9 @@ import {
   Text,
   useMantineTheme,
 } from "@mantine/core";
-import { IconDeviceFloppy } from "@tabler/icons-react";
-import { useFavoritesStore } from "modules/favorites";
-import { selectAddFavorite } from "modules/favorites/selectors";
+import { useClipboard } from "@mantine/hooks";
+import { IconShare } from "@tabler/icons-react";
+import { useFormulaShare } from "hooks/useFormulaShare";
 import { FormulaComputable } from "modules/formulas/models";
 import React, { FC } from "react";
 
@@ -15,24 +15,26 @@ interface Props extends MenuItemProps {
   computable: FormulaComputable;
 }
 
-export const FormulaMenuFavorite: FC<Props> = ({ computable, ...props }) => {
+export const FormulaMenuShare: FC<Props> = ({ computable, ...props }) => {
   const theme = useMantineTheme();
-  const addFavorite = useFavoritesStore(selectAddFavorite);
-  const onAddFavorite = () => {
-    addFavorite(computable);
+  const { link } = useFormulaShare(computable);
+  const clipboard = useClipboard();
+
+  const handleClick = () => {
+    clipboard.copy(link);
   };
 
   return (
     <Menu.Item
       icon={
         <ActionIcon size={"xs"} variant={"transparent"} component={"span"}>
-          <IconDeviceFloppy size={theme.spacing.sm} />
+          <IconShare size={theme.spacing.sm} />
         </ActionIcon>
       }
-      onClick={onAddFavorite}
+      onClick={handleClick}
       {...props}
     >
-      <Text size={"xs"}>Save</Text>
+      <Text size={"xs"}>Copy link</Text>
     </Menu.Item>
   );
 };

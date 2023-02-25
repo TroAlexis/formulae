@@ -42,7 +42,7 @@ export const FormulaMenuSelect: FC<Props> = ({ index, ...props }) => {
       onClick={onSelect}
       {...props}
     >
-      <Text size={"xs"}>Select formula</Text>
+      <Text size={"xs"}>Select</Text>
     </Menu.Item>
   );
 };

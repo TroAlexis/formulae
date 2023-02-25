@@ -1,5 +1,6 @@
 import { ActionIcon, Menu, useMantineTheme } from "@mantine/core";
 import { IconDotsVertical } from "@tabler/icons-react";
+import { FormulaMenuShare } from "components/formula/FormulaMenu/components/Share";
 import { FormulasFavoritesItemMenuDelete } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/Delete";
 import { FormulasFavoritesItemMenuEditDescription } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditDescription";
 import { FormulasFavoritesItemMenuEditNameProps } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditDescription/models";
@@ -31,7 +32,6 @@ export const FormulasFavoritesItemMenu: FC<Props> = ({
       <Menu.Dropdown>
         <Menu.Label>Actions</Menu.Label>
 
-        <FormulasFavoritesItemMenuDelete item={item} />
         <FormulasFavoritesItemMenuEditName
           item={item}
           onNameEdit={onNameEdit}
@@ -40,6 +40,8 @@ export const FormulasFavoritesItemMenu: FC<Props> = ({
           item={item}
           onDescriptionEdit={onDescriptionEdit}
         />
+        <FormulaMenuShare computable={item} />
+        <FormulasFavoritesItemMenuDelete item={item} />
       </Menu.Dropdown>
     </Menu>
   );
