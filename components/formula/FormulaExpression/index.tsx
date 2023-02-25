@@ -1,4 +1,4 @@
-import { Collapse, Flex, Paper, PaperProps, ScrollArea } from "@mantine/core";
+import { Collapse, Flex, Paper, PaperProps } from "@mantine/core";
 import { useStyles } from "components/formula/FormulaExpression/styles";
 import { useFormulasStore } from "modules/formulas";
 import { FormulaExpression } from "modules/formulas/models";
@@ -50,45 +50,43 @@ const FormulaExpression: FC<Props> = ({
         expression={expression}
       />
 
-      <Collapse in={!isCollapsed}>
-        <ScrollArea px={"xs"} pb={"sm"}>
-          {formulas.map((formula, index) => {
-            const parentIndexArray = Array.isArray(parentIndex)
-              ? parentIndex
-              : [parentIndex];
-            const currentIndex = [...parentIndexArray, index];
-            if (checkIsFormulaOperator(formula)) {
-              return (
-                <FormulaOperator
-                  index={currentIndex}
-                  operator={formula}
-                  key={formula.id}
-                />
-              );
-            }
-            if (checkIsFormulaValue(formula)) {
-              return (
-                <FormulaValue
-                  index={currentIndex}
-                  formulaValue={formula}
-                  key={formula.id}
-                />
-              );
-            }
+      <Collapse in={!isCollapsed} px={"xs"} pb={"sm"}>
+        {formulas.map((formula, index) => {
+          const parentIndexArray = Array.isArray(parentIndex)
+            ? parentIndex
+            : [parentIndex];
+          const currentIndex = [...parentIndexArray, index];
+          if (checkIsFormulaOperator(formula)) {
+            return (
+              <FormulaOperator
+                index={currentIndex}
+                operator={formula}
+                key={formula.id}
+              />
+            );
+          }
+          if (checkIsFormulaValue(formula)) {
+            return (
+              <FormulaValue
+                index={currentIndex}
+                formulaValue={formula}
+                key={formula.id}
+              />
+            );
+          }
 
-            if (checkIsFormulaExpression(formula)) {
-              return (
-                <FormulaExpression
-                  expression={formula}
-                  key={formula.id}
-                  parentIndex={currentIndex}
-                />
-              );
-            }
+          if (checkIsFormulaExpression(formula)) {
+            return (
+              <FormulaExpression
+                expression={formula}
+                key={formula.id}
+                parentIndex={currentIndex}
+              />
+            );
+          }
 
-            return null;
-          })}
-        </ScrollArea>
+          return null;
+        })}
       </Collapse>
     </Paper>
   );

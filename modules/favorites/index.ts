@@ -4,7 +4,12 @@ import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 import { createStoreActionFactory } from "../utils/actions";
-import { addFavorite, removeFavorite, setSearchText } from "./actions";
+import {
+  addFavorite,
+  editFavorite,
+  removeFavorite,
+  setSearchText,
+} from "./actions";
 import { FavoritesActions, FavoritesState, FavoritesStore } from "./models";
 
 const initialState: FavoritesState = {
@@ -28,6 +33,7 @@ const useFavoritesStoreHook = create<FavoritesStore>()(
           addFavorite: createFavoritesAction(addFavorite),
           removeFavorite: createFavoritesAction(removeFavorite),
           setSearchText: createFavoritesAction(setSearchText),
+          editFavorite: createFavoritesAction(editFavorite),
         };
       }),
       {

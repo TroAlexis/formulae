@@ -9,6 +9,7 @@ export interface FavoritesState {
 
 export interface FavoritesActions {
   addFavorite: (item: FormulaComputable) => void;
+  editFavorite: (id: string, item: Partial<FormulaComputable>) => void;
   removeFavorite: (id: string) => void;
   setSearchText: (text: string) => void;
 }

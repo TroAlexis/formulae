@@ -9,7 +9,7 @@ const navbarReset = {
   "--mantine-navbar-width": "0px",
 } as CSSProperties;
 
-const useStyles = createStyles(() => ({
+const useStyles = createStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
@@ -20,6 +20,9 @@ const useStyles = createStyles(() => ({
     minHeight: "unset",
     display: "flex",
     flexDirection: "column",
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingBottom: theme.spacing.xl,
   },
 }));
 

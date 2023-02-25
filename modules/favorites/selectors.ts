@@ -8,6 +8,13 @@ const createFavoritesSelector = createStoreSelector<FavoritesStore>();
 
 export const selectFavorites = createFavoritesSelector("favorites");
 
+export const selectFavoriteById = createSelector(
+  [selectFavorites, (_, id: string) => id],
+  (favorites, id) => {
+    return favorites.find((favorite) => favorite.id === id);
+  }
+);
+
 export const selectFavoritesSearch = createFavoritesSelector("search");
 
 export const selectFavoritesSearchText = createSelector(
@@ -39,6 +46,8 @@ export const selectFavoritesFilteredBySearchText = createSelector(
 export const selectAddFavorite = createFavoritesSelector("addFavorite");
 
 export const selectRemoveFavorite = createFavoritesSelector("removeFavorite");
+
+export const selectEditFavorite = createFavoritesSelector("editFavorite");
 
 export const selectFavoritesSetSearchText =
   createFavoritesSelector("setSearchText");

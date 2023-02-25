@@ -8,14 +8,16 @@ export const useStyles = createStyles((_theme, params: HoverableProps) => {
 
   return {
     hoverable: {
-      opacity: 0,
-      transitionDuration: ".3s",
-      transitionTimingFunction: "ease-out",
-      transitionProperty: "opacity",
+      [`@media (hover: hover)`]: {
+        opacity: 0,
+        transitionDuration: ".3s",
+        transitionTimingFunction: "ease-out",
+        transitionProperty: "opacity",
 
-      [`&:hover, &:focus`]: onHover,
+        [`&:hover, &:focus`]: onHover,
 
-      [`.${params.hoverTargetClassName}:hover &`]: onHover,
+        [`.${params.hoverTargetClassName}:hover &`]: onHover,
+      },
     },
   };
 });
