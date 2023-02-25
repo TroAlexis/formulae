@@ -1,6 +1,6 @@
 import { FormulaComputable } from "modules/formulas/models";
 import { useRouter } from "next/router";
-import { serializeFormulaExpression } from "utils/formulas";
+import { serialize } from "utils/serialize";
 import { getOrigin } from "utils/window";
 
 export const useFormulaShare = (formula: FormulaComputable) => {
@@ -8,7 +8,7 @@ export const useFormulaShare = (formula: FormulaComputable) => {
 
   const hostname = getOrigin();
 
-  const serializedFormula = serializeFormulaExpression(formula);
+  const serializedFormula = serialize(formula);
 
   const link = `${hostname}${basePath}?formula=${serializedFormula}`;
 

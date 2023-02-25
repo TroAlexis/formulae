@@ -1,8 +1,9 @@
 import { useFormulasStore } from "modules/formulas";
+import { FormulaExpression } from "modules/formulas/models";
 import { selectReplaceExpression } from "modules/formulas/selectors";
 import { useRouter } from "next/router";
 import { FC, useEffect } from "react";
-import { parseFormulaExpression } from "utils/formulas";
+import { parse } from "utils/serialize";
 
 interface Props {}
 
@@ -14,7 +15,7 @@ export const FormulaParser: FC<Props> = ({}) => {
 
   useEffect(() => {
     if (formula && !Array.isArray(formula)) {
-      const parsedFormula = parseFormulaExpression(formula);
+      const parsedFormula = parse<FormulaExpression>(formula);
 
       replaceExpression(parsedFormula);
     }

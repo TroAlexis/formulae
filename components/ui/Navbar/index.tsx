@@ -1,4 +1,5 @@
-import { Navbar as MantineNavbar, ScrollArea } from "@mantine/core";
+import { Flex, Navbar as MantineNavbar, ScrollArea } from "@mantine/core";
+import { FavoritesMenu } from "components/favorites/FavoritesMenu";
 import { FavoritesSearch } from "components/favorites/FavoritesSearch";
 import { FormulasFavorites } from "components/formula/FormulasFavorites";
 import { useStyles } from "components/ui/Navbar/styles";
@@ -23,7 +24,10 @@ export const Navbar: FC<Props> = ({}) => {
       width={{ lg: 300 }}
     >
       <MantineNavbar.Section>
-        <FavoritesSearch />
+        <Flex align={"center"} pr={12}>
+          <FavoritesSearch mr={"sm"} className={classes.search} />
+          <FavoritesMenu />
+        </Flex>
       </MantineNavbar.Section>
       <MantineNavbar.Section
         grow

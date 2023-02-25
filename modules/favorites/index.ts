@@ -8,6 +8,7 @@ import {
   addFavorite,
   editFavorite,
   removeFavorite,
+  setFavorites,
   setSearchText,
 } from "./actions";
 import { FavoritesActions, FavoritesState, FavoritesStore } from "./models";
@@ -31,6 +32,7 @@ const useFavoritesStoreHook = create<FavoritesStore>()(
         return {
           ...initialState,
           addFavorite: createFavoritesAction(addFavorite),
+          setFavorites: createFavoritesAction(setFavorites),
           removeFavorite: createFavoritesAction(removeFavorite),
           setSearchText: createFavoritesAction(setSearchText),
           editFavorite: createFavoritesAction(editFavorite),

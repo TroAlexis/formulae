@@ -6,4 +6,7 @@ export const useStyles = createStyles(() => ({
       display: "block !important",
     },
   },
+  search: {
+    flex: 1,
+  },
 }));

@@ -24,7 +24,8 @@ export const FormulaExpressionMenu: FC<Props> = ({
 
       <FormulaMenuSelect index={index} />
       <FormulaMenuFavorite computable={expression} />
-      <FormulaMenuShare computable={expression} />
+      <FormulaMenuShare computable={expression} action={"link"} />
+      <FormulaMenuShare computable={expression} action={"formula"} />
     </FormulaMenu>
   );
 };
