@@ -31,7 +31,7 @@ export const FavoritesSearch: FC<Props> = (props) => {
     <TextInput
       icon={<IconSearch size={theme.spacing.sm} />}
       value={searchText}
-      placeholder={"Search saved formulas"}
+      placeholder={"Search formulas"}
       onChange={handleChange}
       ref={inputRef}
       rightSection={<FavoritesSearchHint />}

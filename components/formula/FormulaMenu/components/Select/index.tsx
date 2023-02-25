@@ -1,11 +1,6 @@
-import {
-  ActionIcon,
-  Menu,
-  MenuItemProps,
-  Text,
-  useMantineTheme,
-} from "@mantine/core";
 import { IconSelect } from "@tabler/icons-react";
+import { FormulaMenuItem } from "components/formula/FormulaMenu/components/Item";
+import { FormulaMenuItemProps } from "components/formula/FormulaMenu/components/Item/models";
 import { useFormulasStore } from "modules/formulas";
 import {
   selectCurrentExpressionIndex,
@@ -15,12 +10,11 @@ import { FormulaIndex } from "modules/formulas/types";
 import { checkIndexesEqual } from "modules/formulas/utils";
 import React, { FC } from "react";
 
-interface Props extends MenuItemProps {
+interface Props extends FormulaMenuItemProps {
   index: FormulaIndex;
 }
 
 export const FormulaMenuSelect: FC<Props> = ({ index, ...props }) => {
-  const theme = useMantineTheme();
   const setCurrentExpressionIndex = useFormulasStore(
     selectSetCurrentExpressionIndex
   );
@@ -32,17 +26,13 @@ export const FormulaMenuSelect: FC<Props> = ({ index, ...props }) => {
   };
 
   return (
-    <Menu.Item
-      disabled={isActiveIndex}
-      icon={
-        <ActionIcon size={"xs"} variant={"transparent"} component={"span"}>
-          <IconSelect size={theme.spacing.sm} />
-        </ActionIcon>
-      }
+    <FormulaMenuItem
       onClick={onSelect}
+      icon={IconSelect}
+      disabled={isActiveIndex}
       {...props}
     >
-      <Text size={"xs"}>Select formula</Text>
-    </Menu.Item>
+      Select
+    </FormulaMenuItem>
   );
 };

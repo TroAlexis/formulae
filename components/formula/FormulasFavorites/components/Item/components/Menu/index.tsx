@@ -1,10 +1,11 @@
 import { ActionIcon, Menu, useMantineTheme } from "@mantine/core";
 import { IconDotsVertical } from "@tabler/icons-react";
+import { FormulaMenuShare } from "components/formula/FormulaMenu/components/Share";
 import { FormulasFavoritesItemMenuDelete } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/Delete";
 import { FormulasFavoritesItemMenuEditDescription } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditDescription";
-import { FormulasFavoritesItemMenuEditNameProps } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditDescription/models";
+import { FormulasFavoritesItemMenuEditDescriptionProps } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditDescription/models";
 import { FormulasFavoritesItemMenuEditName } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditName";
-import { FormulasFavoritesItemMenuEditDescriptionProps } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditName/models";
+import { FormulasFavoritesItemMenuEditNameProps } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditName/models";
 import { FormulaComputable } from "modules/formulas/models";
 import React, { FC } from "react";
 
@@ -31,7 +32,6 @@ export const FormulasFavoritesItemMenu: FC<Props> = ({
       <Menu.Dropdown>
         <Menu.Label>Actions</Menu.Label>
 
-        <FormulasFavoritesItemMenuDelete item={item} />
         <FormulasFavoritesItemMenuEditName
           item={item}
           onNameEdit={onNameEdit}
@@ -40,6 +40,9 @@ export const FormulasFavoritesItemMenu: FC<Props> = ({
           item={item}
           onDescriptionEdit={onDescriptionEdit}
         />
+        <FormulaMenuShare computable={item} action={"link"} />
+        <FormulaMenuShare computable={item} action={"formula"} />
+        <FormulasFavoritesItemMenuDelete item={item} />
       </Menu.Dropdown>
     </Menu>
   );

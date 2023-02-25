@@ -45,6 +45,8 @@ export const selectFavoritesFilteredBySearchText = createSelector(
 
 export const selectAddFavorite = createFavoritesSelector("addFavorite");
 
+export const selectSetFavorites = createFavoritesSelector("setFavorites");
+
 export const selectRemoveFavorite = createFavoritesSelector("removeFavorite");
 
 export const selectEditFavorite = createFavoritesSelector("editFavorite");

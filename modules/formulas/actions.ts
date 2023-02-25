@@ -134,7 +134,10 @@ export const closeExpression = createMutation("closeExpression")((state) => {
 
 export const replaceExpression = createMutation("replaceExpression")(
   (state, expression) => {
-    state.formulas = expression;
+    state.formulas = {
+      ...expression,
+      collapsed: false,
+    };
   }
 );
 

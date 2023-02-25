@@ -19,6 +19,12 @@ export const addFavorite = createFavoritesMutation("addFavorite")(
   }
 );
 
+export const setFavorites = createFavoritesMutation("setFavorites")(
+  (state, favorites) => {
+    state.favorites = favorites;
+  }
+);
+
 export const editFavorite = createFavoritesMutation("editFavorite")(
   (state, id, favorite) => {
     const editedFavorite = selectFavoriteById(state, id);

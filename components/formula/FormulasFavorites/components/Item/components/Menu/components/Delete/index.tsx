@@ -1,5 +1,5 @@
-import { ActionIcon, Menu, useMantineTheme } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
+import { FormulaMenuItem } from "components/formula/FormulaMenu/components/Item";
 import { useFavoritesStore } from "modules/favorites";
 import { selectRemoveFavorite } from "modules/favorites/selectors";
 import { FormulaComputable } from "modules/formulas/models";
@@ -10,7 +10,6 @@ interface Props {
 }
 
 export const FormulasFavoritesItemMenuDelete: FC<Props> = ({ item }) => {
-  const theme = useMantineTheme();
   const removeItem = useFavoritesStore(selectRemoveFavorite);
 
   const handleRemove = () => {
@@ -18,15 +17,8 @@ export const FormulasFavoritesItemMenuDelete: FC<Props> = ({ item }) => {
   };
 
   return (
-    <Menu.Item
-      onClick={handleRemove}
-      icon={
-        <ActionIcon component={"span"} size={"xs"}>
-          <IconTrash size={theme.spacing.sm}></IconTrash>
-        </ActionIcon>
-      }
-    >
+    <FormulaMenuItem icon={IconTrash} onClick={handleRemove}>
       Delete
-    </Menu.Item>
+    </FormulaMenuItem>
   );
 };

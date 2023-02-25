@@ -1,25 +1,16 @@
-import { ActionIcon, Menu, useMantineTheme } from "@mantine/core";
 import { IconFileDescription } from "@tabler/icons-react";
-import { FormulasFavoritesItemMenuEditDescriptionProps } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditName/models";
+import { FormulaMenuItem } from "components/formula/FormulaMenu/components/Item";
+import { FormulasFavoritesItemMenuEditDescriptionProps } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditDescription/models";
 import React, { FC } from "react";
 
 export const FormulasFavoritesItemMenuEditDescription: FC<
   FormulasFavoritesItemMenuEditDescriptionProps
 > = ({ item, onDescriptionEdit }) => {
-  const theme = useMantineTheme();
-
   const handleEdit = () => onDescriptionEdit(item);
 
   return (
-    <Menu.Item
-      onClick={handleEdit}
-      icon={
-        <ActionIcon component={"span"} size={"xs"}>
-          <IconFileDescription size={theme.spacing.sm}></IconFileDescription>
-        </ActionIcon>
-      }
-    >
+    <FormulaMenuItem onClick={handleEdit} icon={IconFileDescription}>
       Edit description
-    </Menu.Item>
+    </FormulaMenuItem>
   );
 };

@@ -2,6 +2,7 @@ import { Menu } from "@mantine/core";
 import { FormulaMenu } from "components/formula/FormulaMenu";
 import { FormulaMenuFavorite } from "components/formula/FormulaMenu/components/Favorite";
 import { FormulaMenuSelect } from "components/formula/FormulaMenu/components/Select";
+import { FormulaMenuShare } from "components/formula/FormulaMenu/components/Share";
 import { FormulaMenuProps } from "components/formula/FormulaMenu/models";
 import { FormulaExpression } from "modules/formulas/models";
 import { FormulaIndex } from "modules/formulas/types";
@@ -23,6 +24,8 @@ export const FormulaExpressionMenu: FC<Props> = ({
 
       <FormulaMenuSelect index={index} />
       <FormulaMenuFavorite computable={expression} />
+      <FormulaMenuShare computable={expression} action={"link"} />
+      <FormulaMenuShare computable={expression} action={"formula"} />
     </FormulaMenu>
   );
 };
