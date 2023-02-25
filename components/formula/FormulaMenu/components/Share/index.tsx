@@ -1,22 +1,16 @@
-import {
-  ActionIcon,
-  Menu,
-  MenuItemProps,
-  Text,
-  useMantineTheme,
-} from "@mantine/core";
 import { useClipboard } from "@mantine/hooks";
 import { IconShare } from "@tabler/icons-react";
+import { FormulaMenuItem } from "components/formula/FormulaMenu/components/Item";
+import { FormulaMenuItemProps } from "components/formula/FormulaMenu/components/Item/models";
 import { useFormulaShare } from "hooks/useFormulaShare";
 import { FormulaComputable } from "modules/formulas/models";
 import React, { FC } from "react";
 
-interface Props extends MenuItemProps {
+interface Props extends FormulaMenuItemProps {
   computable: FormulaComputable;
 }
 
 export const FormulaMenuShare: FC<Props> = ({ computable, ...props }) => {
-  const theme = useMantineTheme();
   const { link } = useFormulaShare(computable);
   const clipboard = useClipboard();
 
@@ -25,16 +19,8 @@ export const FormulaMenuShare: FC<Props> = ({ computable, ...props }) => {
   };
 
   return (
-    <Menu.Item
-      icon={
-        <ActionIcon size={"xs"} variant={"transparent"} component={"span"}>
-          <IconShare size={theme.spacing.sm} />
-        </ActionIcon>
-      }
-      onClick={handleClick}
-      {...props}
-    >
-      <Text size={"xs"}>Copy link</Text>
-    </Menu.Item>
+    <FormulaMenuItem onClick={handleClick} icon={IconShare} {...props}>
+      Copy link
+    </FormulaMenuItem>
   );
 };

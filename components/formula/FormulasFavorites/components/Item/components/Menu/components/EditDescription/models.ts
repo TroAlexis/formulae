@@ -1,6 +1,6 @@
 import { FormulaComputable } from "modules/formulas/models";
 
-export interface FormulasFavoritesItemMenuEditNameProps {
+export interface FormulasFavoritesItemMenuEditDescriptionProps {
   item: FormulaComputable;
-  onNameEdit: (item: FormulaComputable) => void;
+  onDescriptionEdit: (item: FormulaComputable) => void;
 }

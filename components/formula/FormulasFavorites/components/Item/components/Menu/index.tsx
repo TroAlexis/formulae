@@ -3,9 +3,9 @@ import { IconDotsVertical } from "@tabler/icons-react";
 import { FormulaMenuShare } from "components/formula/FormulaMenu/components/Share";
 import { FormulasFavoritesItemMenuDelete } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/Delete";
 import { FormulasFavoritesItemMenuEditDescription } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditDescription";
-import { FormulasFavoritesItemMenuEditNameProps } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditDescription/models";
+import { FormulasFavoritesItemMenuEditDescriptionProps } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditDescription/models";
 import { FormulasFavoritesItemMenuEditName } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditName";
-import { FormulasFavoritesItemMenuEditDescriptionProps } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditName/models";
+import { FormulasFavoritesItemMenuEditNameProps } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditName/models";
 import { FormulaComputable } from "modules/formulas/models";
 import React, { FC } from "react";
 
