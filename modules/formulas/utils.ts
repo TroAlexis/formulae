@@ -24,8 +24,6 @@ export const createFormulaFactory =
       ...formula,
     } as T);
 
-export const createFormula = createFormulaFactory<Formula>()({});
-
 export const createFormulaValue = createFormulaFactory<FormulaValue>()({
   type: FormulaType.VALUE,
 });
@@ -243,22 +241,6 @@ export const getComputableShortId = (computable: FormulaComputable) => {
 
 export const checkIsIndexEmpty = (index: FormulaIndex) => {
   return Array.isArray(index) && !index.length;
-};
-
-export const checkIndexesEqual = (a?: FormulaIndex, b?: FormulaIndex) => {
-  return JSON.stringify(a) === JSON.stringify(b);
-};
-
-export const checkIsIndexDeep = (index: FormulaIndex): index is any[] => {
-  return Array.isArray(index) && index.length >= 1;
-};
-
-export const checkIndexStartsWith = (a: FormulaIndex, b: FormulaIndex) => {
-  if (Array.isArray(a) && Array.isArray(b)) {
-    return b.every((item, index) => a[index] === item);
-  }
-
-  return false;
 };
 
 type CloneFormulaMeta = Pick<FormulaExpression, "parentId">;
