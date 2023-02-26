@@ -40,9 +40,11 @@ export const FormulasFavoritesItemMenu: FC<Props> = ({
           item={item}
           onDescriptionEdit={onDescriptionEdit}
         />
+        <FormulasFavoritesItemMenuDelete item={item} />
+
+        <Menu.Label>Share & reuse</Menu.Label>
         <FormulaMenuShare computable={item} action={"link"} />
         <FormulaMenuShare computable={item} action={"formula"} />
-        <FormulasFavoritesItemMenuDelete item={item} />
       </Menu.Dropdown>
     </Menu>
   );

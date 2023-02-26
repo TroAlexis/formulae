@@ -20,6 +20,7 @@ import {
   checkIsFormulaValue,
   checkIsIndexDeep,
   checkIsIndexEmpty,
+  cloneFormula,
   createFormulaExpression,
   getBasicFormulaValue,
   getFormulaByIndex,
@@ -133,11 +134,20 @@ export const closeExpression = createMutation("closeExpression")((state) => {
 });
 
 export const replaceExpression = createMutation("replaceExpression")(
-  (state, expression) => {
-    state.formulas = {
+  (state, expression, index) => {
+    const currentExpressionIndex = selectCurrentExpressionIndex(state);
+    const replaceIndex = index ?? currentExpressionIndex;
+    const replacerExpression = cloneFormula({
       ...expression,
       collapsed: false,
-    };
+    });
+
+    if (checkIsIndexEmpty(replaceIndex)) {
+      state.formulas = replacerExpression;
+    } else {
+      const formulas = selectFormulas(state);
+      removeFormulaByIndex(formulas, replaceIndex, replacerExpression);
+    }
   }
 );
 

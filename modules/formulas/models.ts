@@ -13,7 +13,10 @@ export interface FormulasActions {
   toggleCollapseExpression: (index: FormulaIndex, value?: boolean) => void;
   openExpression: () => void;
   closeExpression: () => void;
-  replaceExpression: (expression: FormulaExpression) => void;
+  replaceExpression: (
+    expression: FormulaExpression,
+    index?: FormulaIndex
+  ) => void;
   pushCurrentExpressionIndex: (index: number) => void;
   setCurrentExpressionIndex: (index: FormulaIndex) => void;
 }
