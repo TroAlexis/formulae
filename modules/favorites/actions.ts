@@ -1,5 +1,5 @@
 import { selectFavoriteById } from "modules/favorites/selectors";
-import { uuid } from "utils/uuid";
+import { cloneFormula } from "modules/formulas/utils";
 
 import { createStoreMutationFactory } from "../utils/actions";
 import { FavoritesActions, FavoritesStore } from "./models";
@@ -11,17 +11,15 @@ const createFavoritesMutation = createStoreMutationFactory<
 
 export const addFavorite = createFavoritesMutation("addFavorite")(
   (state, favorite) => {
-    state.favorites.push({
-      ...favorite,
-      // Generate new id for computable to prevent duplicates
-      id: uuid(),
-    });
+    const clonedFavorite = cloneFormula(favorite);
+
+    state.favorites.push(clonedFavorite);
   }
 );
 
 export const setFavorites = createFavoritesMutation("setFavorites")(
   (state, favorites) => {
-    state.favorites = favorites;
+    state.favorites = favorites.map(cloneFormula);
   }
 );
 

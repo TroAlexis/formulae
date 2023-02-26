@@ -47,7 +47,7 @@ export const FormulaFavoritesItem: FC<Props> = ({
   const isEditing = nameEditor.editing || descriptionEditor.editing;
 
   return (
-    <span className={cx(classes.wrapper, className)} {...props}>
+    <div className={cx(classes.wrapper, className)} {...props}>
       <FormulasFavoritesItemIcon item={item} />
 
       {nameEditor.editing && (
@@ -84,6 +84,6 @@ export const FormulaFavoritesItem: FC<Props> = ({
         onNameEdit={getEditHandler(nameEditor)}
         onDescriptionEdit={getEditHandler(descriptionEditor)}
       />
-    </span>
+    </div>
   );
 };

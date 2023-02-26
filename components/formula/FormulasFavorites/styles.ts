@@ -1,20 +1,13 @@
 import { createStyles } from "@mantine/core";
 
-export const useStyles = createStyles(() => ({
+export const useStyles = createStyles((theme) => ({
+  list: {
+    display: "flex",
+    flexDirection: "column",
+    gap: theme.spacing.xs,
+  },
   item: {
     display: "flex",
-  },
-  /* Styles for truncate working as intended */
-  itemWrapper: {
-    flex: 1,
-    minWidth: 0,
-  },
-  itemIcon: {
-    "~ span": {
-      display: "inline-flex",
-      flex: 1,
-      minWidth: 0,
-    },
   },
   savedItem: {
     flex: 1,

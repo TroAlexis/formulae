@@ -11,6 +11,7 @@ import {
   checkIsFormulaExpression,
   checkIsFormulaOperator,
   checkIsFormulaValue,
+  checkIsIndexEmpty,
   getExpressionResult,
   getFormulaByIndex,
 } from "./utils";
@@ -70,7 +71,7 @@ export const selectFormulasFutureStates =
 export const selectCurrentExpression = createSelector(
   [selectFormulas, selectCurrentExpressionIndex],
   (formulas, currentExpressionIndex) => {
-    const isDefinedIndex = currentExpressionIndex !== undefined;
+    const isDefinedIndex = !checkIsIndexEmpty(currentExpressionIndex);
     if (isDefinedIndex) {
       const formula = getFormulaByIndex(formulas, currentExpressionIndex);
 

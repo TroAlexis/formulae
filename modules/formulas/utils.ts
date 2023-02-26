@@ -24,6 +24,8 @@ export const createFormulaFactory =
       ...formula,
     } as T);
 
+export const createFormula = createFormulaFactory<Formula>()({});
+
 export const createFormulaValue = createFormulaFactory<FormulaValue>()({
   type: FormulaType.VALUE,
 });
@@ -170,7 +172,8 @@ export const getFormulaByIndex = (
 
 export const removeFormulaByIndexArray = (
   formulas: Formula[],
-  index: number[]
+  index: number[],
+  ...items: Formula[]
 ) => {
   if (!index.length) return undefined;
 
@@ -182,25 +185,30 @@ export const removeFormulaByIndexArray = (
     const parentFormula = getFormulaByIndex(formulas, indexWithoutLast);
 
     if (checkIsFormulaExpression(parentFormula)) {
-      return removeFormulaByIndex(parentFormula.value, lastIndexValue);
+      return removeFormulaByIndex(
+        parentFormula.value,
+        lastIndexValue,
+        ...items
+      );
     }
 
     return undefined;
   }
 
-  return removeFormulaByIndex(formulas, lastIndexValue);
+  return removeFormulaByIndex(formulas, lastIndexValue, ...items);
 };
 
 export const removeFormulaByIndex = (
   formulas: Formula[],
-  index: FormulaIndex
+  index: FormulaIndex,
+  ...items: Formula[]
 ): Formula | undefined => {
   const isIndexArray = Array.isArray(index);
 
   if (isIndexArray) {
-    return removeFormulaByIndexArray(formulas, index);
+    return removeFormulaByIndexArray(formulas, index, ...items);
   } else {
-    const [removedElement] = formulas.splice(index, 1);
+    const [removedElement] = formulas.splice(index, 1, ...items);
 
     return removedElement;
   }
@@ -230,4 +238,14 @@ export const checkIndexStartsWith = (a: FormulaIndex, b: FormulaIndex) => {
   }
 
   return false;
+};
+
+export const cloneFormula = <T extends Formula>(formula: T): T => {
+  const clonedFormula = { ...formula, id: uuid() };
+
+  if (checkIsFormulaExpression(formula)) {
+    return { ...clonedFormula, value: formula.value.map(cloneFormula) };
+  } else {
+    return clonedFormula;
+  }
 };
