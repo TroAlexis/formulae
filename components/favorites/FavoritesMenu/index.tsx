@@ -1,5 +1,6 @@
 import { ActionIcon, Menu, useMantineTheme } from "@mantine/core";
 import { IconDotsVertical } from "@tabler/icons-react";
+import { FavoritesMenuDelete } from "components/favorites/FavoritesMenu/components/Delete";
 import { FavoritesMenuExport } from "components/favorites/FavoritesMenu/components/Export";
 import { FavoritesMenuImport } from "components/favorites/FavoritesMenu/components/Import";
 import React, { FC } from "react";
@@ -17,11 +18,13 @@ export const FavoritesMenu: FC<Props> = ({}) => {
         </ActionIcon>
       </Menu.Target>
       <Menu.Dropdown>
-        <Menu.Label>Actions</Menu.Label>
-
+        <Menu.Label>Sharing</Menu.Label>
         <FavoritesMenuExport />
         <FavoritesMenuImport action={"add"} />
         <FavoritesMenuImport action={"replace"} />
+
+        <Menu.Label>Actions</Menu.Label>
+        <FavoritesMenuDelete />
       </Menu.Dropdown>
     </Menu>
   );
