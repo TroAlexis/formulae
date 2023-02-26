@@ -1,9 +1,11 @@
+import { Maybe } from "types/types";
+
 import { FormulaOperatorType, FormulaType } from "./enums";
 import { FormulaIndex, FormulaValueType } from "./types";
 
 export interface FormulasState {
   formulas: FormulaExpression;
-  currentExpressionIndex: number[];
+  selectedExpressionId: Maybe<string>;
 }
 
 export interface FormulasActions {
@@ -17,14 +19,15 @@ export interface FormulasActions {
     expression: FormulaExpression,
     index?: FormulaIndex
   ) => void;
-  pushCurrentExpressionIndex: (index: number) => void;
-  setCurrentExpressionIndex: (index: FormulaIndex) => void;
+  setSelectedExpressionId: (id: Maybe<string>) => void;
+  setSelectedExpression: (path: string | FormulaIndex) => void;
 }
 
 export interface FormulasStore extends FormulasState, FormulasActions {}
 
 export interface FormulaBase {
   id: string;
+  parentId?: string;
 }
 
 export interface FormulaComputableBase extends FormulaBase {

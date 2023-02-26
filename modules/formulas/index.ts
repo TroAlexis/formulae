@@ -4,10 +4,10 @@ import {
   closeExpression,
   editFormula,
   openExpression,
-  pushCurrentExpressionIndex,
   removeFormula,
   replaceExpression,
-  setCurrentExpressionIndex,
+  setSelectedExpression,
+  setSelectedExpressionId,
   toggleCollapseExpression,
 } from "modules/formulas/actions";
 import { FORMULAS_TEMPORAL_LIMIT } from "modules/formulas/consts";
@@ -37,7 +37,7 @@ const initialState: FormulasState = {
     value: [{ ...getBasicFormulaValue(), id: STATIC_VALUE_ID }],
     name: "New formula",
   },
-  currentExpressionIndex: [],
+  selectedExpressionId: undefined,
 };
 
 export const useFormulasStore = create<FormulasStore>()(
@@ -57,14 +57,12 @@ export const useFormulasStore = create<FormulasStore>()(
           toggleCollapseExpression: createFormulasAction(
             toggleCollapseExpression
           ),
-          pushCurrentExpressionIndex: createFormulasAction(
-            pushCurrentExpressionIndex
-          ),
           openExpression: createFormulasAction(openExpression),
           closeExpression: createFormulasAction(closeExpression),
           replaceExpression: createFormulasAction(replaceExpression),
-          setCurrentExpressionIndex: createFormulasAction(
-            setCurrentExpressionIndex
+          setSelectedExpression: createFormulasAction(setSelectedExpression),
+          setSelectedExpressionId: createFormulasAction(
+            setSelectedExpressionId
           ),
         };
       }),

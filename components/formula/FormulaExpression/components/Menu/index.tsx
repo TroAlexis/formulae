@@ -23,7 +23,7 @@ export const FormulaExpressionMenu: FC<Props> = ({
     <FormulaMenu {...props}>
       <Menu.Label>Actions</Menu.Label>
 
-      <FormulaMenuSelect index={index} />
+      <FormulaMenuSelect expression={expression} />
       <FormulaMenuFavorite computable={expression} />
 
       <Menu.Label>Share & reuse</Menu.Label>

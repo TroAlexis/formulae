@@ -27,7 +27,7 @@ const FormulaExpression: FC<Props> = ({
   ...props
 }) => {
   const isSelected = useFormulasStore((state) =>
-    selectIsExpressionSelected(state, parentIndex)
+    selectIsExpressionSelected(state, expression.id)
   );
   const isCollapsed = expression.collapsed;
   const formulas = expression.value;

@@ -1,4 +1,4 @@
-import { PartialBy } from "types/types";
+import { Maybe, PartialBy } from "types/types";
 import { uuid } from "utils/uuid";
 
 import { OPERATORS, OPERATORS_ORDER } from "./consts";
@@ -170,6 +170,27 @@ export const getFormulaByIndex = (
   return formulas[index];
 };
 
+export const getFormulaById = (
+  formulas: Formula[],
+  id: string
+): Maybe<Formula> => {
+  let result: Maybe<Formula> = undefined;
+
+  formulas.forEach((formula) => {
+    const isFound = formula.id === id;
+
+    if (isFound) {
+      result = formula;
+    }
+
+    if (!isFound && checkIsFormulaExpression(formula)) {
+      result = getFormulaById(formula.value, id);
+    }
+  });
+
+  return result;
+};
+
 export const removeFormulaByIndexArray = (
   formulas: Formula[],
   index: number[],
@@ -240,11 +261,21 @@ export const checkIndexStartsWith = (a: FormulaIndex, b: FormulaIndex) => {
   return false;
 };
 
-export const cloneFormula = <T extends Formula>(formula: T): T => {
-  const clonedFormula = { ...formula, id: uuid() };
+type CloneFormulaMeta = Pick<FormulaExpression, "parentId">;
+
+export const cloneFormula = <T extends Formula>(
+  formula: T,
+  meta: CloneFormulaMeta = {}
+): T => {
+  const clonedFormula = { ...formula, id: uuid(), ...meta };
 
   if (checkIsFormulaExpression(formula)) {
-    return { ...clonedFormula, value: formula.value.map(cloneFormula) };
+    return {
+      ...clonedFormula,
+      value: formula.value.map((childFormula) =>
+        cloneFormula(childFormula, { parentId: clonedFormula.id })
+      ),
+    };
   } else {
     return clonedFormula;
   }

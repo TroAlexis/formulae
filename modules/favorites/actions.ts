@@ -19,7 +19,7 @@ export const addFavorite = createFavoritesMutation("addFavorite")(
 
 export const setFavorites = createFavoritesMutation("setFavorites")(
   (state, favorites) => {
-    state.favorites = favorites.map(cloneFormula);
+    state.favorites = favorites.map((formula) => cloneFormula(formula));
   }
 );
 

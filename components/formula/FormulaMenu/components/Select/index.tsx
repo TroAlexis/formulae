@@ -2,34 +2,31 @@ import { IconSelect } from "@tabler/icons-react";
 import { FormulaMenuItem } from "components/formula/FormulaMenu/components/Item";
 import { FormulaMenuItemProps } from "components/formula/FormulaMenu/components/Item/models";
 import { useFormulasStore } from "modules/formulas";
+import { FormulaExpression } from "modules/formulas/models";
 import {
-  selectCurrentExpressionIndex,
-  selectSetCurrentExpressionIndex,
+  selectSelectedExpressionId,
+  selectSetSelectedExpression,
 } from "modules/formulas/selectors";
-import { FormulaIndex } from "modules/formulas/types";
-import { checkIndexesEqual } from "modules/formulas/utils";
 import React, { FC } from "react";
 
 interface Props extends FormulaMenuItemProps {
-  index: FormulaIndex;
+  expression: FormulaExpression;
 }
 
-export const FormulaMenuSelect: FC<Props> = ({ index, ...props }) => {
-  const setCurrentExpressionIndex = useFormulasStore(
-    selectSetCurrentExpressionIndex
-  );
-  const currentExpressionIndex = useFormulasStore(selectCurrentExpressionIndex);
-  const isActiveIndex = checkIndexesEqual(index, currentExpressionIndex);
+export const FormulaMenuSelect: FC<Props> = ({ expression, ...props }) => {
+  const selectExpression = useFormulasStore(selectSetSelectedExpression);
+  const selectedExpressionId = useFormulasStore(selectSelectedExpressionId);
+  const isActive = expression.id === selectedExpressionId;
 
   const onSelect = () => {
-    setCurrentExpressionIndex(index);
+    selectExpression(expression.id);
   };
 
   return (
     <FormulaMenuItem
       onClick={onSelect}
       icon={IconSelect}
-      disabled={isActiveIndex}
+      disabled={isActive}
       {...props}
     >
       Select

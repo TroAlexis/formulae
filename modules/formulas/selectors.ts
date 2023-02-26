@@ -1,4 +1,3 @@
-import { FormulaIndex } from "modules/formulas/types";
 import { createStoreSelector } from "modules/utils/selectors";
 import { createSelector } from "reselect";
 import { getLast } from "utils/array";
@@ -6,14 +5,12 @@ import { TemporalState } from "zundo";
 
 import { FormulasStore } from "./models";
 import {
-  checkIndexesEqual,
   checkIsFormulaComputable,
   checkIsFormulaExpression,
   checkIsFormulaOperator,
   checkIsFormulaValue,
-  checkIsIndexEmpty,
   getExpressionResult,
-  getFormulaByIndex,
+  getFormulaById,
 } from "./utils";
 
 const createFormulasSelector = createStoreSelector<FormulasStore>();
@@ -24,8 +21,8 @@ const createFormulasTemporalSelector =
 
 export const selectRootExpression = createFormulasSelector("formulas");
 
-export const selectCurrentExpressionIndex = createFormulasSelector(
-  "currentExpressionIndex"
+export const selectSelectedExpressionId = createFormulasSelector(
+  "selectedExpressionId"
 );
 
 export const selectFormulas = createSelector(
@@ -52,8 +49,8 @@ export const selectCloseExpression = createFormulasSelector("closeExpression");
 export const selectReplaceExpression =
   createFormulasSelector("replaceExpression");
 
-export const selectSetCurrentExpressionIndex = createFormulasSelector(
-  "setCurrentExpressionIndex"
+export const selectSetSelectedExpression = createFormulasSelector(
+  "setSelectedExpression"
 );
 
 export const selectFormulasUndo = createFormulasTemporalSelector("undo");
@@ -69,13 +66,13 @@ export const selectFormulasFutureStates =
 /* Computed */
 
 export const selectCurrentExpression = createSelector(
-  [selectFormulas, selectCurrentExpressionIndex],
-  (formulas, currentExpressionIndex) => {
-    const isDefinedIndex = !checkIsIndexEmpty(currentExpressionIndex);
-    if (isDefinedIndex) {
-      const formula = getFormulaByIndex(formulas, currentExpressionIndex);
+  [selectFormulas, selectSelectedExpressionId],
+  (formulas, selectedExpressionId) => {
+    const isDefinedId = selectedExpressionId !== undefined;
+    if (isDefinedId) {
+      const formula = getFormulaById(formulas, selectedExpressionId);
 
-      if (checkIsFormulaExpression(formula)) {
+      if (formula && checkIsFormulaExpression(formula)) {
         return formula;
       }
     }
@@ -137,9 +134,9 @@ export const selectIsExpressionCloseable = createSelector(
 );
 
 export const selectIsExpressionSelected = createSelector(
-  [selectCurrentExpressionIndex, (_, index: FormulaIndex) => index],
-  (currentIndex, index) => {
-    return checkIndexesEqual(currentIndex, index);
+  [selectActiveExpression, (_, id: string) => id],
+  (activeExpression, id) => {
+    return activeExpression.id === id;
   }
 );
 
