@@ -118,9 +118,16 @@ export const getExpressionResult = (
   return getFormulaInitialValue(result);
 };
 
+export const checkFormulaType = <T extends Formula>(
+  formula: Formula,
+  type: FormulaType
+): formula is T => {
+  return formula?.type === type;
+};
+
 export const createFormulaChecker = <T extends Formula>(type: FormulaType) => {
   return (formula: Formula): formula is T => {
-    return formula?.type === type;
+    return checkFormulaType(formula, type);
   };
 };
 

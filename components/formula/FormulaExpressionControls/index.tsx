@@ -3,28 +3,26 @@ import { FormulaDelete } from "components/formula/FormulaDelete";
 import { FormulaExpressionCollapse } from "components/formula/FormulaExpression/components/Collapse";
 import { FormulaExpressionMenu } from "components/formula/FormulaExpression/components/Menu";
 import { Hoverable } from "components/ui/Hoverable";
+import { useFormulaContext } from "contexts/useFormulaContext";
 import { useFormulasStore } from "modules/formulas";
-import { FormulaExpression } from "modules/formulas/models";
+import { FormulaType } from "modules/formulas/enums";
 import { selectEditFormula } from "modules/formulas/selectors";
-import { FormulaIndex } from "modules/formulas/types";
 import React, { FC } from "react";
 
 import styles from "./index.module.css";
 import { useStyles } from "./styles";
 
-interface Props extends FlexProps {
-  index: FormulaIndex;
-  expression: FormulaExpression;
-}
+type Props = FlexProps;
 
 export const FormulaExpressionControls: FC<Props> = ({
-  expression,
-  index,
   className,
   ...props
 }) => {
   const editFormula = useFormulasStore(selectEditFormula);
   const { classes, cx } = useStyles();
+  const { formula: expression, index } = useFormulaContext(
+    FormulaType.EXPRESSION
+  );
 
   const inputValue = expression.name;
 
@@ -43,9 +41,7 @@ export const FormulaExpressionControls: FC<Props> = ({
       {...props}
     >
       <Hoverable hoverTargetClassName={styles.wrapper}>
-        {({ className }) => (
-          <FormulaDelete className={className} index={index} />
-        )}
+        {({ className }) => <FormulaDelete className={className} />}
       </Hoverable>
 
       <TextInput
@@ -57,22 +53,12 @@ export const FormulaExpressionControls: FC<Props> = ({
         onChange={handleNameChange}
       />
       <Hoverable hoverTargetClassName={styles.wrapper}>
-        {({ className }) => (
-          <FormulaExpressionCollapse
-            className={className}
-            expression={expression}
-            index={index}
-          />
-        )}
+        {({ className }) => <FormulaExpressionCollapse className={className} />}
       </Hoverable>
 
       <Hoverable hoverTargetClassName={styles.wrapper}>
         {({ className }) => (
-          <FormulaExpressionMenu
-            classNames={{ target: className }}
-            expression={expression}
-            index={index}
-          />
+          <FormulaExpressionMenu classNames={{ target: className }} />
         )}
       </Hoverable>
     </Flex>

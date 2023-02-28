@@ -4,18 +4,21 @@ import {
   NumberInputProps,
 } from "@mantine/core";
 import { FormulaLayout } from "components/formula/FormulaLayout";
+import { useFormulaContext } from "contexts/useFormulaContext";
 import { useFormulasStore } from "modules/formulas";
+import { FormulaType } from "modules/formulas/enums";
 import { selectEditFormula } from "modules/formulas/selectors";
 import React, { FC, useRef } from "react";
 import { DEFAULT_FORMULA_VALUE, DEFAULT_PRECISION } from "types/consts";
 
-import { FormulaValueProps } from "./models";
 import { useStyles } from "./styles";
 
-const FormulaValue: FC<FormulaValueProps> = ({ formulaValue, index }) => {
+const FormulaValue: FC = () => {
   const editFormula = useFormulasStore(selectEditFormula);
   const { classes } = useStyles();
   const handlers = useRef<NumberInputHandlers>();
+
+  const { formula: formulaValue, index } = useFormulaContext(FormulaType.VALUE);
 
   const { value } = formulaValue;
 
@@ -25,7 +28,7 @@ const FormulaValue: FC<FormulaValueProps> = ({ formulaValue, index }) => {
   };
 
   return (
-    <FormulaLayout index={index}>
+    <FormulaLayout>
       <NumberInput
         size={"sm"}
         value={value}

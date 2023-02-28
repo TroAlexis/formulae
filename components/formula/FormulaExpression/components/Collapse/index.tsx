@@ -1,23 +1,19 @@
 import { ActionIcon, ActionIconProps, useMantineTheme } from "@mantine/core";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
+import { useFormulaContext } from "contexts/useFormulaContext";
 import { useFormulasStore } from "modules/formulas";
-import { FormulaExpression } from "modules/formulas/models";
+import { FormulaType } from "modules/formulas/enums";
 import { selectToggleCollapseExpression } from "modules/formulas/selectors";
-import { FormulaIndex } from "modules/formulas/types";
 import { checkIsIndexEmpty } from "modules/formulas/utils";
 import React, { FC } from "react";
 
-interface Props extends ActionIconProps {
-  index: FormulaIndex;
-  expression: FormulaExpression;
-}
+type Props = ActionIconProps;
 
-export const FormulaExpressionCollapse: FC<Props> = ({
-  index,
-  expression,
-  ...props
-}) => {
+export const FormulaExpressionCollapse: FC<Props> = (props) => {
   const theme = useMantineTheme();
+  const { formula: expression, index } = useFormulaContext(
+    FormulaType.EXPRESSION
+  );
   const toggleCollapseExpression = useFormulasStore(
     selectToggleCollapseExpression
   );

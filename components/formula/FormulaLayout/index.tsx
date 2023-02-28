@@ -8,7 +8,6 @@ import { FC } from "react";
 import styles from "./index.module.css";
 
 export const FormulaLayout: FC<FormulaLayoutProps> = ({
-  index,
   children,
   ...props
 }) => {
@@ -16,9 +15,7 @@ export const FormulaLayout: FC<FormulaLayoutProps> = ({
     <Flex direction={"column"} className={styles.wrapper} {...props}>
       <Flex gap={"xs"} align={"center"}>
         <Hoverable hoverTargetClassName={styles.wrapper}>
-          {({ className }) => (
-            <FormulaDelete className={className} index={index} />
-          )}
+          {({ className }) => <FormulaDelete className={className} />}
         </Hoverable>
 
         {children}

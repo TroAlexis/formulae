@@ -1,19 +1,17 @@
 import { IconTrash } from "@tabler/icons-react";
 import { FormulaMenuItem } from "components/formula/FormulaMenu/components/Item";
+import { useFormulaContext } from "contexts/useFormulaContext";
 import { useFavoritesStore } from "modules/favorites";
 import { selectRemoveFavorite } from "modules/favorites/selectors";
-import { FormulaComputable } from "modules/formulas/models";
+import { FormulaType } from "modules/formulas/enums";
 import React, { FC } from "react";
 
-interface Props {
-  item: FormulaComputable;
-}
-
-export const FormulasFavoritesItemMenuDelete: FC<Props> = ({ item }) => {
+export const FormulasFavoritesItemMenuDelete: FC = () => {
   const removeItem = useFavoritesStore(selectRemoveFavorite);
+  const { formula } = useFormulaContext(FormulaType.EXPRESSION);
 
   const handleRemove = () => {
-    removeItem(item.id);
+    removeItem(formula.id);
   };
 
   return (

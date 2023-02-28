@@ -1,6 +1,8 @@
 import { Container, Divider } from "@mantine/core";
+import { FormulaProvider } from "contexts/useFormulaContext";
 import { useFormulasStore } from "modules/formulas";
 import { selectRootExpression } from "modules/formulas/selectors";
+import { FormulaIndex } from "modules/formulas/types";
 import React, { FC } from "react";
 
 import FormulaExpression from "../FormulaExpression";
@@ -9,6 +11,8 @@ import FormulaCreatorControls from "./Controls";
 import { useStyles } from "./styles";
 
 interface Props {}
+
+const DEFAULT_INDEX: FormulaIndex = [];
 
 export const FormulaCreator: FC<Props> = ({}) => {
   const expression = useFormulasStore(selectRootExpression);
@@ -20,7 +24,9 @@ export const FormulaCreator: FC<Props> = ({}) => {
 
       <Divider label={"="} labelPosition={"center"} my={"sm"} />
 
-      <FormulaExpression className={classes.scroll} expression={expression} />
+      <FormulaProvider formula={expression} index={DEFAULT_INDEX}>
+        <FormulaExpression className={classes.scroll} />
+      </FormulaProvider>
 
       <FormulaCreatorControls mt={"sm"} />
     </Container>

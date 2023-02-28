@@ -2,16 +2,14 @@ import { Text, ThemeIcon, Tooltip, useMantineTheme } from "@mantine/core";
 import { IconInfoCircle } from "@tabler/icons-react";
 import { useStyles } from "components/formula/FormulasFavorites/components/Item/components/Icon/styles";
 import { ACTION_COLOR } from "config/mantine/theme";
-import { FormulaComputable } from "modules/formulas/models";
+import { useFormulaContext } from "contexts/useFormulaContext";
+import { FormulaType } from "modules/formulas/enums";
 import React, { FC } from "react";
 
-interface Props {
-  item: FormulaComputable;
-}
-
-export const FormulasFavoritesItemIcon: FC<Props> = ({ item }) => {
+export const FormulasFavoritesItemIcon: FC = () => {
   const theme = useMantineTheme();
   const { classes } = useStyles();
+  const { formula } = useFormulaContext(FormulaType.EXPRESSION);
   return (
     <Tooltip
       withArrow
@@ -19,7 +17,7 @@ export const FormulasFavoritesItemIcon: FC<Props> = ({ item }) => {
       withinPortal
       label={
         <Text size={"xs"} className={classes.tooltip}>
-          {item.description || (
+          {formula.description || (
             <>
               <span>Description goes here!</span>
               <span>You can edit it in the menu.</span>

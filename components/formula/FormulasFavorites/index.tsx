@@ -1,6 +1,7 @@
 import { Box, BoxProps, Center, Text } from "@mantine/core";
 import { FormulaFavoritesItem } from "components/formula/FormulasFavorites/components/Item";
 import { useStyles } from "components/formula/FormulasFavorites/styles";
+import { FormulaProvider } from "contexts/useFormulaContext";
 import { useFavoritesStore } from "modules/favorites";
 import { selectFavoritesFilteredBySearchText } from "modules/favorites/selectors";
 import React, { FC } from "react";
@@ -17,13 +18,14 @@ export const FormulasFavorites: FC<Props> = ({ onItemClick, ...props }) => {
   return (
     <Box component={"ul"} className={classes.list} {...props}>
       {favorites.length ? (
-        favorites.map((item) => (
+        favorites.map((item, index) => (
           <li className={classes.item} key={item.id}>
-            <FormulaFavoritesItem
-              item={item}
-              className={savedItem}
-              onClick={onItemClick}
-            />
+            <FormulaProvider formula={item} index={index}>
+              <FormulaFavoritesItem
+                className={savedItem}
+                onClick={onItemClick}
+              />
+            </FormulaProvider>
           </li>
         ))
       ) : (

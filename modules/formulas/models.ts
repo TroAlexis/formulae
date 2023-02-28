@@ -58,6 +58,12 @@ export interface FormulaExpression
 
 export type Formula = FormulaValue | FormulaOperator | FormulaExpression;
 
+export type FormulaByType = {
+  [FormulaType.EXPRESSION]: FormulaExpression;
+  [FormulaType.VALUE]: FormulaValue;
+  [FormulaType.OPERATOR]: FormulaOperator;
+};
+
 export type FormulaComputable = Exclude<Formula, FormulaOperator>;
 
 export interface Operator {

@@ -1,26 +1,21 @@
 import { AutocompleteProps, Select } from "@mantine/core";
 import { FormulaLayout } from "components/formula/FormulaLayout";
 import { useStyles } from "components/formula/FormulaOperator/styles";
+import { useFormulaContext } from "contexts/useFormulaContext";
 import { useFormulasStore } from "modules/formulas";
 import { OPERATORS } from "modules/formulas/consts";
-import { FormulaOperatorType } from "modules/formulas/enums";
-import { FormulaOperator } from "modules/formulas/models";
+import { FormulaOperatorType, FormulaType } from "modules/formulas/enums";
 import { selectEditFormula } from "modules/formulas/selectors";
-import { FormulaIndex } from "modules/formulas/types";
 import React, { FC } from "react";
-
-interface Props {
-  index: FormulaIndex;
-  operator: FormulaOperator;
-}
 
 const operators = [...OPERATORS.entries()].map(([type, operator]) => ({
   value: type,
   label: operator.label,
 }));
 
-const FormulaOperator: FC<Props> = ({ operator, index }) => {
+const FormulaOperator: FC = () => {
   const { classes } = useStyles();
+  const { formula: operator, index } = useFormulaContext(FormulaType.OPERATOR);
 
   const editFormula = useFormulasStore(selectEditFormula);
   const { value } = operator;
@@ -36,7 +31,7 @@ const FormulaOperator: FC<Props> = ({ operator, index }) => {
   };
 
   return (
-    <FormulaLayout index={index}>
+    <FormulaLayout>
       <Select
         searchable
         withinPortal

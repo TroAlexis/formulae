@@ -8,38 +8,38 @@ import {
   createGetEditHandler,
   getFormulaName,
 } from "components/formula/FormulasFavorites/components/Item/utils";
+import { useFormulaContext } from "contexts/useFormulaContext";
 import { useFormulasStore } from "modules/formulas";
-import { FormulaComputable } from "modules/formulas/models";
+import { FormulaType } from "modules/formulas/enums";
 import { selectReplaceExpression } from "modules/formulas/selectors";
 import { checkIsFormulaExpression } from "modules/formulas/utils";
 import React, { FC } from "react";
 
 interface Props extends FlexProps {
-  item: FormulaComputable;
   onClick?: () => unknown;
 }
 
 export const FormulaFavoritesItem: FC<Props> = ({
-  item,
   className,
   onClick,
   ...props
 }) => {
+  const { formula } = useFormulaContext(FormulaType.EXPRESSION);
   const { classes, cx } = useStyles();
 
-  const name = getFormulaName(item);
+  const name = getFormulaName(formula);
 
   const replaceExpression = useFormulasStore(selectReplaceExpression);
 
   const handleReplace = () => {
-    if (checkIsFormulaExpression(item)) {
-      replaceExpression(item);
+    if (checkIsFormulaExpression(formula)) {
+      replaceExpression(formula);
       onClick?.();
     }
   };
 
-  const nameEditor = useItemEditor(item, "name");
-  const descriptionEditor = useItemEditor(item, "description");
+  const nameEditor = useItemEditor(formula, "name");
+  const descriptionEditor = useItemEditor(formula, "description");
   const editors = [nameEditor, descriptionEditor];
 
   const getEditHandler = createGetEditHandler(editors);
@@ -48,7 +48,7 @@ export const FormulaFavoritesItem: FC<Props> = ({
 
   return (
     <div className={cx(classes.wrapper, className)} {...props}>
-      <FormulasFavoritesItemIcon item={item} />
+      <FormulasFavoritesItemIcon />
 
       {nameEditor.editing && (
         <FormulasFavoritesItemInput
@@ -80,7 +80,6 @@ export const FormulaFavoritesItem: FC<Props> = ({
         </UnstyledButton>
       )}
       <FormulasFavoritesItemMenu
-        item={item}
         onNameEdit={getEditHandler(nameEditor)}
         onDescriptionEdit={getEditHandler(descriptionEditor)}
       />

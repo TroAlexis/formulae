@@ -6,17 +6,13 @@ import { FormulasFavoritesItemMenuEditDescription } from "components/formula/For
 import { FormulasFavoritesItemMenuEditDescriptionProps } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditDescription/models";
 import { FormulasFavoritesItemMenuEditName } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditName";
 import { FormulasFavoritesItemMenuEditNameProps } from "components/formula/FormulasFavorites/components/Item/components/Menu/components/EditName/models";
-import { FormulaComputable } from "modules/formulas/models";
 import React, { FC } from "react";
 
 interface Props
   extends FormulasFavoritesItemMenuEditNameProps,
-    FormulasFavoritesItemMenuEditDescriptionProps {
-  item: FormulaComputable;
-}
+    FormulasFavoritesItemMenuEditDescriptionProps {}
 
 export const FormulasFavoritesItemMenu: FC<Props> = ({
-  item,
   onNameEdit,
   onDescriptionEdit,
 }) => {
@@ -32,19 +28,15 @@ export const FormulasFavoritesItemMenu: FC<Props> = ({
       <Menu.Dropdown>
         <Menu.Label>Actions</Menu.Label>
 
-        <FormulasFavoritesItemMenuEditName
-          item={item}
-          onNameEdit={onNameEdit}
-        />
+        <FormulasFavoritesItemMenuEditName onNameEdit={onNameEdit} />
         <FormulasFavoritesItemMenuEditDescription
-          item={item}
           onDescriptionEdit={onDescriptionEdit}
         />
-        <FormulasFavoritesItemMenuDelete item={item} />
+        <FormulasFavoritesItemMenuDelete />
 
         <Menu.Label>Share & reuse</Menu.Label>
-        <FormulaMenuShare computable={item} action={"link"} />
-        <FormulaMenuShare computable={item} action={"formula"} />
+        <FormulaMenuShare action={"link"} />
+        <FormulaMenuShare action={"formula"} />
       </Menu.Dropdown>
     </Menu>
   );
