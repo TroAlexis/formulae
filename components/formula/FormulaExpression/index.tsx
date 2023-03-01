@@ -1,27 +1,25 @@
 import { Collapse, Flex, Paper, PaperProps } from "@mantine/core";
+import { FormulaExpressionItems } from "components/formula/FormulaExpression/components/Items";
 import { useStyles } from "components/formula/FormulaExpression/styles";
-import { FormulaSwitch } from "components/formula/FormulaSwitch";
-import { FormulaProvider, useFormulaContext } from "contexts/useFormulaContext";
+import { useFormulaContext } from "contexts/useFormulaContext";
 import { useFormulasStore } from "modules/formulas";
 import { FormulaType } from "modules/formulas/enums";
 import { selectIsExpressionSelected } from "modules/formulas/selectors";
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 
 import { FormulaExpressionControls } from "../FormulaExpressionControls";
 
 type Props = PaperProps;
 
 const FormulaExpression: FC<Props> = ({ className, ...props }) => {
-  const { formula: expression, index: expressionIndex } = useFormulaContext(
-    FormulaType.EXPRESSION
-  );
+  const { classes, cx } = useStyles();
+  const { formula: expression } = useFormulaContext(FormulaType.EXPRESSION);
   const isSelected = useFormulasStore((state) =>
     selectIsExpressionSelected(state, expression.id)
   );
   const isCollapsed = expression.collapsed;
-  const formulas = expression.value;
 
-  const { classes, cx } = useStyles();
+  const formulas = useMemo(() => [...expression.value], [expression.value]);
 
   return (
     <Paper
@@ -35,22 +33,7 @@ const FormulaExpression: FC<Props> = ({ className, ...props }) => {
       <FormulaExpressionControls px={"xs"} pt={"xs"} />
 
       <Collapse in={!isCollapsed} px={"xs"} pb={"sm"}>
-        {formulas.map((formula, index) => {
-          const parentIndexArray = Array.isArray(expressionIndex)
-            ? expressionIndex
-            : [expressionIndex];
-          const currentIndex = [...parentIndexArray, index];
-
-          return (
-            <FormulaProvider
-              formula={formula}
-              index={currentIndex}
-              key={formula.id}
-            >
-              <FormulaSwitch />
-            </FormulaProvider>
-          );
-        })}
+        <FormulaExpressionItems formulaIds={formulas} />
       </Collapse>
     </Paper>
   );

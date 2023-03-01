@@ -6,7 +6,7 @@ import {
   checkIsFormulaExpression,
   checkIsFormulaOperator,
   checkIsFormulaValue,
-} from "modules/formulas/utils";
+} from "modules/formulas/utils/check";
 import React, { FC } from "react";
 
 export const FormulaSwitch: FC = ({}) => {

@@ -4,6 +4,8 @@ import { FormulaMenuItem } from "components/formula/FormulaMenu/components/Item"
 import { FormulaMenuItemProps } from "components/formula/FormulaMenu/components/Item/models";
 import { useFormulaContext } from "contexts/useFormulaContext";
 import { useFormulaShare } from "hooks/useFormulaShare";
+import { selectFormulasMap } from "modules/formula/selectors";
+import { getFormulaSlice } from "modules/formula/utils";
 import { FormulaType } from "modules/formulas/enums";
 import React, { FC } from "react";
 import { serialize } from "utils/serialize";
@@ -13,14 +15,17 @@ interface Props extends FormulaMenuItemProps {
 }
 
 export const FormulaMenuShare: FC<Props> = ({ action, ...props }) => {
-  const { formula } = useFormulaContext(FormulaType.EXPRESSION);
-  const { link } = useFormulaShare(formula);
+  const { formula, useStore } = useFormulaContext(FormulaType.EXPRESSION);
+  const formulasMap = useStore(selectFormulasMap);
+  const formulaSlice = getFormulaSlice(formula.id, formulasMap);
+
+  const { link } = useFormulaShare(formulaSlice);
   const clipboard = useClipboard();
 
   const isLink = action === "link";
 
   const handleClick = () => {
-    const valueToCopy = isLink ? link : serialize(formula);
+    const valueToCopy = isLink ? link : serialize(formulaSlice);
 
     clipboard.copy(valueToCopy);
   };

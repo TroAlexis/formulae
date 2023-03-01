@@ -1,3 +1,8 @@
+import {
+  createFormulasMapSlice,
+  formulasMapInitialState,
+} from "modules/formula";
+import { editFormulaInMap } from "modules/formula/actions";
 import { createUseHydratedStore } from "modules/utils/store";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
@@ -6,7 +11,6 @@ import { immer } from "zustand/middleware/immer";
 import { createStoreActionFactory } from "../utils/actions";
 import {
   addFavorite,
-  editFavorite,
   removeFavorite,
   setFavorites,
   setSearchText,
@@ -29,13 +33,16 @@ const useFavoritesStoreHook = create<FavoritesStore>()(
           FavoritesStore
         >()(set);
 
+        const mapSlice = createFormulasMapSlice(set);
+
         return {
           ...initialState,
+          ...mapSlice,
           addFavorite: createFavoritesAction(addFavorite),
           setFavorites: createFavoritesAction(setFavorites),
           removeFavorite: createFavoritesAction(removeFavorite),
           setSearchText: createFavoritesAction(setSearchText),
-          editFavorite: createFavoritesAction(editFavorite),
+          editFavorite: createFavoritesAction(editFormulaInMap),
         };
       }),
       {
@@ -45,7 +52,7 @@ const useFavoritesStoreHook = create<FavoritesStore>()(
   )
 );
 
-export const useFavoritesStore = createUseHydratedStore(
-  useFavoritesStoreHook,
-  initialState
-);
+export const useFavoritesStore = createUseHydratedStore(useFavoritesStoreHook, {
+  ...initialState,
+  ...formulasMapInitialState,
+});

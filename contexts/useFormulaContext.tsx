@@ -1,23 +1,57 @@
+import {
+  Formula,
+  FormulaByType,
+  FormulasMapStore,
+} from "modules/formula/models";
+import { selectFormulaById } from "modules/formula/selectors";
 import { FormulaType } from "modules/formulas/enums";
-import { Formula, FormulaByType } from "modules/formulas/models";
-import { FormulaIndex } from "modules/formulas/types";
-import { checkFormulaType } from "modules/formulas/utils";
-import { createContext, PropsWithChildren, useContext, useMemo } from "react";
+import { checkFormulaType } from "modules/formulas/utils/check";
+import {
+  createContext,
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useMemo,
+} from "react";
 import { Maybe } from "types/types";
+import { StoreApi, UseBoundStore } from "zustand/esm";
 
 export interface FormulaContext<T extends Formula = Formula> {
   formula: T;
-  index: FormulaIndex;
+  useStore: BoundStore;
+}
+
+type BoundStore = UseBoundStore<StoreApi<FormulasMapStore>>;
+
+export interface FormulaProviderProps {
+  id: string;
+  useStore: BoundStore;
 }
 
 const FormulaContext = createContext<Maybe<FormulaContext>>(undefined);
 
 export const FormulaProvider = ({
   children,
-  formula,
-  index,
-}: PropsWithChildren<FormulaContext>) => {
-  const value = useMemo(() => ({ formula, index }), [formula, index]);
+  id,
+  useStore,
+}: PropsWithChildren<FormulaProviderProps>) => {
+  const selector = useCallback(
+    (state: FormulasMapStore) => selectFormulaById(state, id),
+    [id]
+  );
+  const formula = useStore(selector);
+
+  const value = useMemo(() => {
+    if (formula) {
+      return { formula, useStore: useStore };
+    }
+
+    return null;
+  }, [formula, useStore]);
+
+  if (!value) {
+    return null;
+  }
 
   return (
     <FormulaContext.Provider value={value}>{children}</FormulaContext.Provider>

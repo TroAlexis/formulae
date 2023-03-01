@@ -20,16 +20,14 @@ export const FormulaExpressionControls: FC<Props> = ({
 }) => {
   const editFormula = useFormulasStore(selectEditFormula);
   const { classes, cx } = useStyles();
-  const { formula: expression, index } = useFormulaContext(
-    FormulaType.EXPRESSION
-  );
+  const { formula: expression } = useFormulaContext(FormulaType.EXPRESSION);
 
-  const inputValue = expression.name;
+  const inputValue = expression.name || "";
 
   const handleNameChange: TextInputProps["onChange"] = (event) => {
     const name = event.target.value;
 
-    return editFormula(index, { name });
+    return editFormula(expression.id, { name });
   };
 
   return (

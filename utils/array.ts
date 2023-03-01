@@ -19,3 +19,13 @@ export const spliceLast = <T extends any[], K extends T[number]>(
   const lastIndex = getLastIndex(array);
   return array.splice(lastIndex, 1, el);
 };
+
+export const spliceItem = <T extends any[], K extends T[number]>(
+  array: T,
+  item: K,
+  ...items: K[]
+) => {
+  const indexOfItem = array.indexOf(item);
+
+  return array.splice(indexOfItem, 1, ...items);
+};

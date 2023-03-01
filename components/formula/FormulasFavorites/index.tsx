@@ -18,9 +18,9 @@ export const FormulasFavorites: FC<Props> = ({ onItemClick, ...props }) => {
   return (
     <Box component={"ul"} className={classes.list} {...props}>
       {favorites.length ? (
-        favorites.map((item, index) => (
-          <li className={classes.item} key={item.id}>
-            <FormulaProvider formula={item} index={index}>
+        favorites.map((id) => (
+          <li className={classes.item} key={id}>
+            <FormulaProvider id={id} useStore={useFavoritesStore}>
               <FormulaFavoritesItem
                 className={savedItem}
                 onClick={onItemClick}

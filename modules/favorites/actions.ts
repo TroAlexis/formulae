@@ -1,5 +1,9 @@
-import { selectFavoriteById } from "modules/favorites/selectors";
-import { cloneFormula } from "modules/formulas/utils";
+import { selectFavorites } from "modules/favorites/selectors";
+import { clearFormulaMap, deleteFormulaFromMap } from "modules/formula/actions";
+import { selectFormulasMap } from "modules/formula/selectors";
+import { cloneFormulaSlice } from "modules/formula/utils";
+import { spliceItem } from "utils/array";
+import { mergeMaps } from "utils/map";
 
 import { createStoreMutationFactory } from "../utils/actions";
 import { FavoritesActions, FavoritesStore } from "./models";
@@ -11,35 +15,38 @@ const createFavoritesMutation = createStoreMutationFactory<
 
 export const addFavorite = createFavoritesMutation("addFavorite")(
   (state, favorite) => {
-    const clonedFavorite = cloneFormula(favorite);
+    const clonedFavorite = cloneFormulaSlice(favorite);
+    const map = selectFormulasMap(state);
 
-    state.favorites.push(clonedFavorite);
+    if (clonedFavorite) {
+      state.favorites.push(clonedFavorite.id);
+
+      mergeMaps(map, clonedFavorite.map);
+    }
   }
 );
 
 export const setFavorites = createFavoritesMutation("setFavorites")(
   (state, favorites) => {
-    state.favorites = favorites.map((formula) => cloneFormula(formula));
-  }
-);
+    state.favorites = favorites.map((slice) => slice.id);
 
-export const editFavorite = createFavoritesMutation("editFavorite")(
-  (state, id, favorite) => {
-    const editedFavorite = selectFavoriteById(state, id);
+    clearFormulaMap(state);
 
-    if (!editedFavorite) {
-      return;
-    }
+    const map = selectFormulasMap(state);
 
-    Object.assign(editedFavorite, favorite);
+    favorites.forEach((slice) => {
+      mergeMaps(map, slice.map);
+    });
   }
 );
 
 export const removeFavorite = createFavoritesMutation("removeFavorite")(
   (state, id) => {
-    const indexOfItem = state.favorites.findIndex((item) => item.id === id);
+    const favorites = selectFavorites(state);
 
-    state.favorites.splice(indexOfItem, 1);
+    spliceItem(favorites, id);
+
+    deleteFormulaFromMap(state, id);
   }
 );
 

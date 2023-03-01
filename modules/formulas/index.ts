@@ -1,23 +1,25 @@
 import { debounce } from "debounce";
+import { createFormulasMapSlice } from "modules/formula";
+import { FormulasMapState } from "modules/formula/models";
 import {
   addFormula,
   closeExpression,
-  editFormula,
   openExpression,
   removeFormula,
   replaceExpression,
-  setSelectedExpression,
   setSelectedExpressionId,
   toggleCollapseExpression,
 } from "modules/formulas/actions";
 import { FORMULAS_TEMPORAL_LIMIT } from "modules/formulas/consts";
-import { FormulaType } from "modules/formulas/enums";
 import {
   FormulasActions,
   FormulasState,
   FormulasStore,
 } from "modules/formulas/models";
-import { getBasicFormulaValue } from "modules/formulas/utils";
+import {
+  createInitialExpression,
+  createInitialValue,
+} from "modules/formulas/utils/create";
 import { createStoreActionFactory } from "modules/utils/actions";
 import { createUseTemporalStore } from "modules/utils/store";
 import { QUARTER_SECOND } from "types/consts";
@@ -26,18 +28,20 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
-export const STATIC_FORMULA_ID = "new-formula";
-export const STATIC_VALUE_ID = "new-value";
+const initialValue = createInitialValue();
+
+const initialExpression = createInitialExpression();
 
 const initialState: FormulasState = {
-  formulas: {
-    id: STATIC_FORMULA_ID,
-    type: FormulaType.EXPRESSION,
-    // Set id to static value to prevent hydration errors
-    value: [{ ...getBasicFormulaValue(), id: STATIC_VALUE_ID }],
-    name: "New formula",
-  },
+  rootExpressionId: initialExpression.id,
   selectedExpressionId: undefined,
+};
+
+const initialMapState: FormulasMapState = {
+  map: Object.fromEntries([
+    [initialValue.id, initialValue],
+    [initialExpression.id, initialExpression],
+  ]),
 };
 
 export const useFormulasStore = create<FormulasStore>()(
@@ -51,8 +55,8 @@ export const useFormulasStore = create<FormulasStore>()(
 
         return {
           ...initialState,
+          ...createFormulasMapSlice(set, initialMapState),
           addFormula: createFormulasAction(addFormula),
-          editFormula: createFormulasAction(editFormula),
           removeFormula: createFormulasAction(removeFormula),
           toggleCollapseExpression: createFormulasAction(
             toggleCollapseExpression
@@ -60,7 +64,6 @@ export const useFormulasStore = create<FormulasStore>()(
           openExpression: createFormulasAction(openExpression),
           closeExpression: createFormulasAction(closeExpression),
           replaceExpression: createFormulasAction(replaceExpression),
-          setSelectedExpression: createFormulasAction(setSelectedExpression),
           setSelectedExpressionId: createFormulasAction(
             setSelectedExpressionId
           ),

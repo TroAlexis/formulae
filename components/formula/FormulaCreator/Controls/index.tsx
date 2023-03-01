@@ -22,9 +22,9 @@ import {
   selectOpenExpression,
 } from "modules/formulas/selectors";
 import {
+  createEmptyFormulaValue,
   createFormulaOperator,
-  getBasicFormulaValue,
-} from "modules/formulas/utils";
+} from "modules/formulas/utils/create";
 import React, { ComponentProps, FC } from "react";
 import { wrapFunctionCall } from "utils/function";
 
@@ -52,7 +52,7 @@ const FormulaCreatorControls: FC<Props> = (props) => {
   const addPlus = () =>
     addFormula(createFormulaOperator({ value: FormulaOperatorType.ADDITION }));
 
-  const addValue = () => addFormula(getBasicFormulaValue());
+  const addValue = () => addFormula(createEmptyFormulaValue());
 
   const { classes } = useStyles();
 

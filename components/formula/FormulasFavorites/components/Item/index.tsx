@@ -9,10 +9,13 @@ import {
   getFormulaName,
 } from "components/formula/FormulasFavorites/components/Item/utils";
 import { useFormulaContext } from "contexts/useFormulaContext";
+import { useFavoritesStore } from "modules/favorites";
+import { selectFormulasMap } from "modules/formula/selectors";
+import { getFormulaSlice } from "modules/formula/utils";
 import { useFormulasStore } from "modules/formulas";
 import { FormulaType } from "modules/formulas/enums";
 import { selectReplaceExpression } from "modules/formulas/selectors";
-import { checkIsFormulaExpression } from "modules/formulas/utils";
+import { checkIsFormulaExpression } from "modules/formulas/utils/check";
 import React, { FC } from "react";
 
 interface Props extends FlexProps {
@@ -29,12 +32,17 @@ export const FormulaFavoritesItem: FC<Props> = ({
 
   const name = getFormulaName(formula);
 
+  const map = useFavoritesStore(selectFormulasMap);
   const replaceExpression = useFormulasStore(selectReplaceExpression);
 
   const handleReplace = () => {
     if (checkIsFormulaExpression(formula)) {
-      replaceExpression(formula);
-      onClick?.();
+      const slice = getFormulaSlice(formula.id, map);
+
+      if (slice) {
+        replaceExpression(undefined, slice);
+        onClick?.();
+      }
     }
   };
 

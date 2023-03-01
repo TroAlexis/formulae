@@ -15,7 +15,7 @@ const operators = [...OPERATORS.entries()].map(([type, operator]) => ({
 
 const FormulaOperator: FC = () => {
   const { classes } = useStyles();
-  const { formula: operator, index } = useFormulaContext(FormulaType.OPERATOR);
+  const { formula: operator } = useFormulaContext(FormulaType.OPERATOR);
 
   const editFormula = useFormulasStore(selectEditFormula);
   const { value } = operator;
@@ -26,7 +26,7 @@ const FormulaOperator: FC = () => {
     value: FormulaOperatorType
   ) => {
     if (OPERATORS.has(value)) {
-      editFormula(index, { value });
+      editFormula(operator.id, { value });
     }
   };
 

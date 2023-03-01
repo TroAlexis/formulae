@@ -18,13 +18,13 @@ const FormulaValue: FC = () => {
   const { classes } = useStyles();
   const handlers = useRef<NumberInputHandlers>();
 
-  const { formula: formulaValue, index } = useFormulaContext(FormulaType.VALUE);
+  const { formula } = useFormulaContext(FormulaType.VALUE);
 
-  const { value } = formulaValue;
+  const { value, id } = formula;
 
   const handleNumberChange: NumberInputProps["onChange"] = (num) => {
     const value = num ?? DEFAULT_FORMULA_VALUE;
-    return editFormula(index, { value });
+    return editFormula(id, { value });
   };
 
   return (

@@ -1,5 +1,5 @@
 import { useItemEditor } from "components/formula/FormulasFavorites/components/Item/hooks/useItemEditor";
-import { FormulaComputable } from "modules/formulas/models";
+import { FormulaComputable } from "modules/formula/models";
 import { getComputableShortId } from "modules/formulas/utils";
 
 export const getFormulaName = (formula: FormulaComputable) => {

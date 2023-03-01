@@ -1,14 +1,14 @@
 import { useInputState } from "@mantine/hooks";
 import { useFavoritesStore } from "modules/favorites";
 import { selectEditFavorite } from "modules/favorites/selectors";
-import { FormulaComputable } from "modules/formulas/models";
+import { FormulaComputable } from "modules/formula/models";
 import { useState } from "react";
 
 export const useItemEditor = (
   item: FormulaComputable,
   property: "name" | "description"
 ) => {
-  const itemValue = item[property];
+  const itemValue = item[property] || "";
   const [editing, setEditing] = useState(false);
   const [value, handleChange] = useInputState(itemValue);
   const editFavorite = useFavoritesStore(selectEditFavorite);
