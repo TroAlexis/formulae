@@ -47,6 +47,7 @@ const useFavoritesStoreHook = create<FavoritesStore>()(
       }),
       {
         name: "favorites",
+        version: 1,
       }
     )
   )
