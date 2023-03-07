@@ -1,11 +1,11 @@
 import { IconFileArrowLeft } from "@tabler/icons-react";
 import { FormulaMenuItem } from "components/formula/FormulaMenu/components/Item";
 import { useFavoritesStore } from "modules/favorites";
+import { FavoritesSlice } from "modules/favorites/models";
 import {
   selectAddFavorite,
   selectSetFavorites,
 } from "modules/favorites/selectors";
-import { FormulaSlice } from "modules/formula/models";
 import React, { FC } from "react";
 import { parse } from "utils/serialize";
 
@@ -20,7 +20,7 @@ export const FavoritesMenuImport: FC<Props> = ({ action }) => {
   const handleClick = async () => {
     const data = await navigator.clipboard.readText();
 
-    const parsed = parse<FormulaSlice | FormulaSlice[]>(data);
+    const parsed = parse<FavoritesSlice | FavoritesSlice[]>(data);
 
     const favorites = Array.isArray(parsed) ? parsed : [parsed];
 

@@ -1,11 +1,8 @@
-import {
-  Formula,
-  FormulaByType,
-  FormulasMapStore,
-} from "modules/formula/models";
-import { selectFormulaById } from "modules/formula/selectors";
 import { FormulaType } from "modules/formulas/enums";
+import { Formula, FormulaByType, FormulaSlice } from "modules/formulas/models";
 import { checkFormulaType } from "modules/formulas/utils/check";
+import { MapStore, RecordKey } from "modules/map/models";
+import { selectById } from "modules/map/selectors";
 import {
   createContext,
   PropsWithChildren,
@@ -18,36 +15,49 @@ import { StoreApi, UseBoundStore } from "zustand/esm";
 
 export interface FormulaContext<T extends Formula = Formula> {
   formula: T;
-  useStore: BoundStore;
+  useStore: BoundStore<RecordKey, unknown>;
+  selectSlice: (state: MapStore<any, any>) => Maybe<FormulaSlice<T>>;
 }
 
-type BoundStore = UseBoundStore<StoreApi<FormulasMapStore>>;
+type BoundStore<K extends RecordKey, V> = UseBoundStore<
+  StoreApi<MapStore<K, V>>
+>;
 
-export interface FormulaProviderProps {
+export interface FormulaProviderProps<K extends RecordKey, V> {
   id: string;
-  useStore: BoundStore;
+  useStore: BoundStore<K, V>;
+  formulaSelector?: (state: MapStore<K, V>, id: string) => Maybe<Formula>;
+  sliceSelector: (state: MapStore<K, V>, id: string) => Maybe<FormulaSlice>;
 }
 
 const FormulaContext = createContext<Maybe<FormulaContext>>(undefined);
 
-export const FormulaProvider = ({
+export const FormulaProvider = <K extends RecordKey, V>({
   children,
   id,
   useStore,
-}: PropsWithChildren<FormulaProviderProps>) => {
-  const selector = useCallback(
-    (state: FormulasMapStore) => selectFormulaById(state, id),
-    [id]
+  formulaSelector = selectById,
+  sliceSelector,
+}: PropsWithChildren<FormulaProviderProps<K, V>>) => {
+  const selectFormula = useCallback(
+    (state: MapStore<K, V>) => formulaSelector(state, id),
+    [formulaSelector, id]
   );
-  const formula = useStore(selector);
+
+  const selectSlice = useCallback(
+    (state: MapStore<K, V>) => sliceSelector(state, id),
+    [sliceSelector, id]
+  );
+
+  const formula = useStore(selectFormula);
 
   const value = useMemo(() => {
     if (formula) {
-      return { formula, useStore: useStore };
+      return { formula, useStore: useStore, selectSlice };
     }
 
     return null;
-  }, [formula, useStore]);
+  }, [formula, useStore, selectSlice]);
 
   if (!value) {
     return null;

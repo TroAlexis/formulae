@@ -1,26 +1,23 @@
-import {
-  FormulaComputable,
-  FormulaSlice,
-  FormulasMapActions,
-  FormulasMapState,
-} from "modules/formula/models";
+import { FormulaExpression, FormulaSlice } from "modules/formulas/models";
+import { MapState } from "modules/map/models";
 
-export interface FavoritesState {
+export type FavoritesSlice = FormulaSlice<FormulaExpression>;
+
+export type FavoritesMapState = MapState<string, FavoritesSlice>;
+
+export interface FavoritesState extends FavoritesMapState {
   favorites: string[];
   search: {
     text?: string;
   };
 }
 
-export interface FavoritesActions extends FormulasMapActions {
-  addFavorite: (favorite: FormulaSlice) => void;
-  setFavorites: (favorites: FormulaSlice[]) => void;
-  editFavorite: (id: string, item: Partial<FormulaComputable>) => void;
+export interface FavoritesActions {
+  addFavorite: (favorite: FavoritesSlice) => void;
+  setFavorites: (favorites: FavoritesSlice[]) => void;
+  editFavorite: (id: string, item: Partial<FormulaExpression>) => void;
   removeFavorite: (id: string) => void;
   setSearchText: (text: string) => void;
 }
 
-export interface FavoritesStore
-  extends FavoritesState,
-    FormulasMapState,
-    FavoritesActions {}
+export interface FavoritesStore extends FavoritesState, FavoritesActions {}

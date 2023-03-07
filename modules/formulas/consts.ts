@@ -1,8 +1,12 @@
+import {
+  FormulaOperator,
+  FormulaValue,
+  Operator,
+} from "modules/formulas/models";
 import { createFormulaValue } from "modules/formulas/utils/create";
 
 import { FormulaOperatorType } from "./enums";
 import { FormulaValueType, OperatorOrderChecker } from "./types";
-import { FormulaOperator, FormulaValue, Operator } from "modules/formula/models";
 
 export const STATIC_FORMULA_ID = "new-formula";
 export const STATIC_VALUE_ID = "new-value";

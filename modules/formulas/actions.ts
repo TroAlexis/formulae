@@ -1,23 +1,7 @@
 import {
-  addFormulaToMap,
-  deleteFormulaFromMap,
-  editFormulaInMap,
-} from "modules/formula/actions";
-import {
-  Formula,
-  FormulaExpression,
-  FormulasMap,
-  FormulaValue,
-} from "modules/formula/models";
-import {
-  selectFormulaById,
-  selectFormulasMap,
-} from "modules/formula/selectors";
-import {
-  cloneFormulaSlice,
   findExpressionChild,
   getParentExpression,
-} from "modules/formula/utils";
+} from "modules/formulas/utils";
 import {
   checkIsFormulaExpression,
   checkIsFormulaValue,
@@ -26,15 +10,26 @@ import {
   createEmptyFormulaValue,
   createFormulaExpression,
 } from "modules/formulas/utils/create";
+import { cloneFormulaSlice } from "modules/formulas/utils/slice";
+import { addToMap, deleteFromMap, editInMap } from "modules/map/actions";
+import { selectMap } from "modules/map/selectors";
 import { Maybe } from "types/types";
 import { getLast, spliceItem } from "utils/array";
 import { getMapItem, mergeMaps } from "utils/map";
 
 import { createStoreMutationFactory } from "../utils/actions";
-import { FormulasActions, FormulasStore } from "./models";
+import {
+  Formula,
+  FormulaExpression,
+  FormulaMap,
+  FormulasActions,
+  FormulasStore,
+  FormulaValue,
+} from "./models";
 import {
   selectActiveExpression,
   selectCurrentExpression,
+  selectFormulaById,
   selectRootExpression,
   selectSelectedExpressionId,
 } from "./selectors";
@@ -47,7 +42,7 @@ const createMutation = createStoreMutationFactory<
 export const addFormula = createMutation("addFormula")((state, formula) => {
   const activeExpression = selectActiveExpression(state);
 
-  addFormulaToMap(state, {
+  addToMap(state, formula.id, {
     ...formula,
     parentId: activeExpression.id,
   });
@@ -55,10 +50,14 @@ export const addFormula = createMutation("addFormula")((state, formula) => {
   activeExpression.value.push(formula.id);
 });
 
+export const editFormula = createMutation("editFormula")((state, id, formula) =>
+  editInMap(state, id, (value) => Object.assign(value, formula))
+);
+
 const updateSelectedExpressionIdOnRemove = (
   selectedExpressionId: Maybe<string>,
   removedFormula: Formula,
-  map: FormulasMap,
+  map: FormulaMap,
   onUpdateId: (formula: FormulaExpression) => void
 ) => {
   if (checkIsFormulaExpression(removedFormula)) {
@@ -79,7 +78,7 @@ const updateSelectedExpressionIdOnRemove = (
   }
 };
 
-const removeFormulaFromExpression = (formula: Formula, map: FormulasMap) => {
+const removeFormulaFromExpression = (formula: Formula, map: FormulaMap) => {
   if (!formula.parentId) {
     return;
   }
@@ -92,28 +91,26 @@ const removeFormulaFromExpression = (formula: Formula, map: FormulasMap) => {
 };
 
 export const removeFormula = createMutation("removeFormula")((state, id) => {
-  const map = selectFormulasMap(state);
+  const map = selectMap(state);
   const formula = selectFormulaById(state, id);
 
   const selectedExpressionId = selectSelectedExpressionId(state);
 
-  if (formula) {
-    updateSelectedExpressionIdOnRemove(
-      selectedExpressionId,
-      formula,
-      map,
-      (formula) => {
-        setSelectedExpressionId(state, formula.parentId);
-      }
-    );
-
-    if (formula.parentId) {
-      removeFormulaFromExpression(formula, map);
+  updateSelectedExpressionIdOnRemove(
+    selectedExpressionId,
+    formula,
+    map,
+    (formula) => {
+      setSelectedExpressionId(state, formula.parentId);
     }
+  );
+
+  if (formula.parentId) {
+    removeFormulaFromExpression(formula, map);
   }
 
   // Remove from map
-  deleteFormulaFromMap(state, id);
+  deleteFromMap(state, id);
 });
 
 export const toggleCollapseExpression = createMutation(
@@ -159,7 +156,7 @@ const openEmptyExpression = (currentExpression: FormulaExpression) => {
 
 const openNewExpression = (
   currentExpression: FormulaExpression,
-  map: FormulasMap
+  map: FormulaMap
 ) => {
   const { value } = currentExpression;
   const lastFormulaId = getLast(value);
@@ -178,13 +175,13 @@ const openNewExpression = (
 };
 
 export const openExpression = createMutation("openExpression")((state) => {
-  const map = selectFormulasMap(state);
+  const map = selectMap(state);
   const activeExpression = selectActiveExpression(state);
 
   const newFormulas = openNewExpression(activeExpression, map);
 
   newFormulas?.forEach((formula) => {
-    addFormulaToMap(state, formula);
+    addToMap(state, formula.id, formula);
   });
 
   const [newExpression] = newFormulas;
@@ -209,7 +206,7 @@ export const replaceExpression = createMutation("replaceExpression")(
       return;
     }
 
-    const map = selectFormulasMap(state);
+    const map = selectMap(state);
     const rootExpression = selectRootExpression(state);
     const replacedExpression = expression ?? rootExpression;
     const replacedExpressionParent = getParentExpression(
@@ -239,7 +236,7 @@ export const replaceExpression = createMutation("replaceExpression")(
       );
     }
 
-    deleteFormulaFromMap(state, replacedExpression.id);
+    deleteFromMap(state, replacedExpression.id);
 
     /* Add new expression to map */
     mergeMaps(map, replacerMap);
@@ -253,7 +250,7 @@ export const replaceExpression = createMutation("replaceExpression")(
       );
 
       /* Update parent id of replacer expression  */
-      editFormulaInMap(state, replacerId, {
+      editFormula(state, replacerId, {
         parentId: replacedExpressionParent.id,
       });
     }

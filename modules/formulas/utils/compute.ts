@@ -1,11 +1,11 @@
+import { OPERATORS, OPERATORS_ORDER } from "modules/formulas/consts";
 import {
   Formula,
   FormulaComputable,
   FormulaExpression,
-  FormulasMap,
+  FormulaMap,
   FormulaValue,
-} from "modules/formula/models";
-import { OPERATORS, OPERATORS_ORDER } from "modules/formulas/consts";
+} from "modules/formulas/models";
 import { OperatorOrderChecker } from "modules/formulas/types";
 import {
   checkIsFormulaComputable,
@@ -17,7 +17,7 @@ import { createEmptyFormulaValue } from "modules/formulas/utils/create";
 import { mapKeysToValues } from "utils/map";
 
 export interface ComputeOptions {
-  formulasMap: FormulasMap;
+  formulasMap: FormulaMap;
 }
 
 export const getFirstFormulaValue = (formulas: Formula[]): FormulaValue => {

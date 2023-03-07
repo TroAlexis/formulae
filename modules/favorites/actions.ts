@@ -1,9 +1,12 @@
 import { selectFavorites } from "modules/favorites/selectors";
-import { clearFormulaMap, deleteFormulaFromMap } from "modules/formula/actions";
-import { selectFormulasMap } from "modules/formula/selectors";
-import { cloneFormulaSlice } from "modules/formula/utils";
+import { cloneFormulaSlice } from "modules/formulas/utils/slice";
+import {
+  addToMap,
+  clearMap,
+  deleteFromMap,
+  editInMap,
+} from "modules/map/actions";
 import { spliceItem } from "utils/array";
-import { mergeMaps } from "utils/map";
 
 import { createStoreMutationFactory } from "../utils/actions";
 import { FavoritesActions, FavoritesStore } from "./models";
@@ -16,13 +19,18 @@ const createFavoritesMutation = createStoreMutationFactory<
 export const addFavorite = createFavoritesMutation("addFavorite")(
   (state, favorite) => {
     const clonedFavorite = cloneFormulaSlice(favorite);
-    const map = selectFormulasMap(state);
 
-    if (clonedFavorite) {
-      state.favorites.push(clonedFavorite.id);
+    state.favorites.push(clonedFavorite.id);
 
-      mergeMaps(map, clonedFavorite.map);
-    }
+    addToMap(state, clonedFavorite.id, clonedFavorite);
+  }
+);
+
+export const editFavorite = createFavoritesMutation("editFavorite")(
+  (state, id, formula) => {
+    editInMap(state, id, (slice) => {
+      editInMap(slice, id, (value) => Object.assign(value, formula));
+    });
   }
 );
 
@@ -30,12 +38,10 @@ export const setFavorites = createFavoritesMutation("setFavorites")(
   (state, favorites) => {
     state.favorites = favorites.map((slice) => slice.id);
 
-    clearFormulaMap(state);
-
-    const map = selectFormulasMap(state);
+    clearMap(state);
 
     favorites.forEach((slice) => {
-      mergeMaps(map, slice.map);
+      addToMap(state, slice.id, slice);
     });
   }
 );
@@ -46,7 +52,7 @@ export const removeFavorite = createFavoritesMutation("removeFavorite")(
 
     spliceItem(favorites, id);
 
-    deleteFormulaFromMap(state, id);
+    deleteFromMap(state, id);
   }
 );
 

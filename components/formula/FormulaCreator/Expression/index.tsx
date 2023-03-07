@@ -2,7 +2,10 @@ import { useStyles } from "components/formula/FormulaCreator/Expression/styles";
 import FormulaExpression from "components/formula/FormulaExpression";
 import { FormulaProvider } from "contexts/useFormulaContext";
 import { useFormulasStore } from "modules/formulas";
-import { selectRootExpressionId } from "modules/formulas/selectors";
+import {
+  selectFormulaSliceById,
+  selectRootExpressionId,
+} from "modules/formulas/selectors";
 import React, { FC } from "react";
 
 export const FormulaCreatorExpression: FC = ({}) => {
@@ -10,7 +13,11 @@ export const FormulaCreatorExpression: FC = ({}) => {
   const { classes } = useStyles();
 
   return (
-    <FormulaProvider id={rootExpressionId} useStore={useFormulasStore}>
+    <FormulaProvider
+      id={rootExpressionId}
+      useStore={useFormulasStore}
+      sliceSelector={selectFormulaSliceById}
+    >
       <FormulaExpression className={classes.scroll} />
     </FormulaProvider>
   );

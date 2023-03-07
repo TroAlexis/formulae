@@ -1,5 +1,5 @@
-import { FormulaSlice } from "modules/formula/models";
 import { useFormulasStore } from "modules/formulas";
+import { FormulaSlice } from "modules/formulas/models";
 import { selectReplaceExpression } from "modules/formulas/selectors";
 import { useRouter } from "next/router";
 import { FC, useEffect } from "react";

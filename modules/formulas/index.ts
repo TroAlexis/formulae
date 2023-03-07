@@ -1,9 +1,8 @@
 import { debounce } from "debounce";
-import { createFormulasMapSlice } from "modules/formula";
-import { FormulasMapState } from "modules/formula/models";
 import {
   addFormula,
   closeExpression,
+  editFormula,
   openExpression,
   removeFormula,
   replaceExpression,
@@ -35,9 +34,6 @@ const initialExpression = createInitialExpression();
 const initialState: FormulasState = {
   rootExpressionId: initialExpression.id,
   selectedExpressionId: undefined,
-};
-
-const initialMapState: FormulasMapState = {
   map: Object.fromEntries([
     [initialValue.id, initialValue],
     [initialExpression.id, initialExpression],
@@ -55,7 +51,7 @@ export const useFormulasStore = create<FormulasStore>()(
 
         return {
           ...initialState,
-          ...createFormulasMapSlice(set, initialMapState),
+          editFormula: createFormulasAction(editFormula),
           addFormula: createFormulasAction(addFormula),
           removeFormula: createFormulasAction(removeFormula),
           toggleCollapseExpression: createFormulasAction(

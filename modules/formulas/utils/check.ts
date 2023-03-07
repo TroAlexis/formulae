@@ -1,12 +1,12 @@
 import { FormulaType } from "modules/formulas/enums";
-import { Maybe } from "types/types";
 import {
   Formula,
   FormulaComputable,
   FormulaExpression,
   FormulaOperator,
-  FormulaValue
-} from "modules/formula/models";
+  FormulaValue,
+} from "modules/formulas/models";
+import { Maybe } from "types/types";
 
 export const checkFormulaType = <T extends Formula>(
   formula: Maybe<Formula>,

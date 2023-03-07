@@ -1,11 +1,11 @@
+import { STATIC_FORMULA_ID, STATIC_VALUE_ID } from "modules/formulas/consts";
+import { FormulaType } from "modules/formulas/enums";
 import {
   Formula,
   FormulaExpression,
   FormulaOperator,
   FormulaValue,
-} from "modules/formula/models";
-import { STATIC_FORMULA_ID, STATIC_VALUE_ID } from "modules/formulas/consts";
-import { FormulaType } from "modules/formulas/enums";
+} from "modules/formulas/models";
 import { PartialBy } from "types/types";
 import { uuid } from "utils/uuid";
 

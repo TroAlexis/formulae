@@ -9,7 +9,7 @@ export const mergeMaps = <K extends RecordKey, V>(
 
 export const getMapItem = <K extends RecordKey, V>(
   key: K,
-  map: Record<K, V | undefined>
+  map: Record<K, V>
 ) => {
   return map[key];
 };
@@ -19,10 +19,6 @@ export const removeMapItem = <K extends RecordKey, V>(
   map: Record<K, V | undefined>
 ): V | undefined => {
   const item = map[key];
-
-  if (!item) {
-    return undefined;
-  }
 
   map[key] = undefined;
 

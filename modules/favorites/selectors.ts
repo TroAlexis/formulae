@@ -1,5 +1,4 @@
-import { selectFormulasMap } from "modules/formula/selectors";
-import { checkIsFormulaComputable } from "modules/formulas/utils/check";
+import { createSelectById, createTypedSelectMap } from "modules/map/selectors";
 import { createSelector } from "reselect";
 import { getMapItem } from "utils/map";
 import { toLowerCaseTrim } from "utils/string";
@@ -11,6 +10,8 @@ const createFavoritesSelector = createStoreSelector<FavoritesStore>();
 
 export const selectFavorites = createFavoritesSelector("favorites");
 
+export const selectFavoritesMap = createTypedSelectMap<FavoritesStore>();
+
 export const selectFavoritesSearch = createFavoritesSelector("search");
 
 export const selectFavoritesSearchText = createSelector(
@@ -18,8 +19,23 @@ export const selectFavoritesSearchText = createSelector(
   createFavoritesSelector("text")
 );
 
+export const selectFavoriteSliceById = createSelectById<FavoritesStore>();
+
+export const selectFavoriteFormulaById = createSelector(
+  [selectFavoritesMap, (_, id: string) => id],
+  (map, id) => {
+    const slice = getMapItem(id, map);
+
+    if (!slice) {
+      return undefined;
+    }
+
+    return getMapItem(id, slice.map);
+  }
+);
+
 export const selectFavoritesFilteredBySearchText = createSelector(
-  [selectFavorites, selectFormulasMap, selectFavoritesSearchText],
+  [selectFavorites, selectFavoritesMap, selectFavoritesSearchText],
   (favorites, map, searchText = "") => {
     // Empty search - include all
     if (!searchText) {
@@ -27,11 +43,8 @@ export const selectFavoritesFilteredBySearchText = createSelector(
     }
 
     return favorites.filter((id) => {
-      const favorite = getMapItem(id, map);
-
-      if (!checkIsFormulaComputable(favorite)) {
-        return false;
-      }
+      const slice = getMapItem(id, map);
+      const favorite = getMapItem(id, slice.map);
 
       // No name - exclude
       if (!favorite?.name) {

@@ -1,4 +1,4 @@
-import { FormulaOperator } from "modules/formula/models";
+import { FormulaOperator } from "modules/formulas/models";
 
 export type FormulaValueType = number;
 

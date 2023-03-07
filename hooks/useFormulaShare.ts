@@ -1,4 +1,4 @@
-import { FormulaSlice } from "modules/formula/models";
+import { FormulaSlice } from "modules/formulas/models";
 import { useRouter } from "next/router";
 import { serialize } from "utils/serialize";
 import { getOrigin } from "utils/window";

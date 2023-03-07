@@ -1,13 +1,14 @@
 import { FormulaSwitch } from "components/formula/FormulaSwitch";
 import { FormulaProvider } from "contexts/useFormulaContext";
 import { useFormulasStore } from "modules/formulas";
-import React, { FC, memo, useMemo } from "react";
+import { selectFormulaSliceById } from "modules/formulas/selectors";
+import React, { FC, useMemo } from "react";
 
 interface Props {
   formulaIds: string[];
 }
 
-export const FormulaExpressionItems: FC<Props> = memo(({ formulaIds }) => {
+export const FormulaExpressionItems: FC<Props> = ({ formulaIds }) => {
   const formula = useMemo(() => <FormulaSwitch />, []);
 
   return (
@@ -18,6 +19,7 @@ export const FormulaExpressionItems: FC<Props> = memo(({ formulaIds }) => {
             id={formulaId}
             key={formulaId}
             useStore={useFormulasStore}
+            sliceSelector={selectFormulaSliceById}
           >
             {formula}
           </FormulaProvider>
@@ -25,6 +27,4 @@ export const FormulaExpressionItems: FC<Props> = memo(({ formulaIds }) => {
       })}
     </>
   );
-});
-
-FormulaExpressionItems.displayName = "FormulaExpressionItems";
+};

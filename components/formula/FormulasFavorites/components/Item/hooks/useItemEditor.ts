@@ -1,7 +1,7 @@
 import { useInputState } from "@mantine/hooks";
 import { useFavoritesStore } from "modules/favorites";
 import { selectEditFavorite } from "modules/favorites/selectors";
-import { FormulaComputable } from "modules/formula/models";
+import { FormulaComputable } from "modules/formulas/models";
 import { useState } from "react";
 
 export const useItemEditor = (
