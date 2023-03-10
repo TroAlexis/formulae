@@ -13,7 +13,7 @@ import { uuid } from "utils/uuid";
 export const createFormulaFactory =
   <T extends Formula>() =>
   <K extends keyof T>(base: Pick<T, K>) =>
-  (formula: PartialBy<T, K | "id">): T =>
+  (formula?: PartialBy<T, K | "id">): T =>
     ({
       id: uuid(),
       ...base,

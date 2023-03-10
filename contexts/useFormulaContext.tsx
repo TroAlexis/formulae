@@ -78,9 +78,7 @@ export const useFormulaContext = <T extends FormulaType>(type?: T) => {
 
   const { formula } = context;
 
-  const isCorrectType = type
-    ? checkFormulaType<TypeOfFormula>(formula, type)
-    : true;
+  const isCorrectType = type ? checkFormulaType(formula, type) : true;
 
   if (!isCorrectType) {
     throw new Error(
