@@ -31,3 +31,30 @@ export const mapKeysToValues = <K extends RecordKey, V>(
 ) => {
   return keys.map((key) => map[key]);
 };
+
+type KeyBy<T, K extends keyof T> = T[K] extends RecordKey
+  ? Record<T[K], T>
+  : Record<string, never>;
+
+export const checkIsRecordKey = (item: unknown): item is RecordKey => {
+  return (
+    typeof item === "number" ||
+    typeof item === "string" ||
+    typeof item === "symbol"
+  );
+};
+
+export const keyBy = <T, K extends keyof T>(
+  items: T[],
+  key: T[K] extends RecordKey ? K : never
+): KeyBy<T, K> => {
+  return items.reduce<KeyBy<T, K>>((map, item) => {
+    const mapKey = item[key];
+
+    if (checkIsRecordKey(mapKey)) {
+      (map as any)[mapKey] = item;
+    }
+
+    return map;
+  }, {} as KeyBy<T, K>);
+};
