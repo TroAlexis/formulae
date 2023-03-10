@@ -1,32 +1,30 @@
 import { ActionIcon, ActionIconProps, useMantineTheme } from "@mantine/core";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
+import { useFormulaContext } from "contexts/useFormulaContext";
 import { useFormulasStore } from "modules/formulas";
-import { FormulaExpression } from "modules/formulas/models";
-import { selectToggleCollapseExpression } from "modules/formulas/selectors";
-import { FormulaIndex } from "modules/formulas/types";
-import { checkIsIndexEmpty } from "modules/formulas/utils";
+import { FormulaType } from "modules/formulas/enums";
+import {
+  selectRootExpressionId,
+  selectToggleCollapseExpression,
+} from "modules/formulas/selectors";
 import React, { FC } from "react";
 
-interface Props extends ActionIconProps {
-  index: FormulaIndex;
-  expression: FormulaExpression;
-}
+type Props = ActionIconProps;
 
-export const FormulaExpressionCollapse: FC<Props> = ({
-  index,
-  expression,
-  ...props
-}) => {
+export const FormulaExpressionCollapse: FC<Props> = (props) => {
   const theme = useMantineTheme();
+  const { formula: expression } = useFormulaContext(FormulaType.EXPRESSION);
+  const rootExpressionId = useFormulasStore(selectRootExpressionId);
   const toggleCollapseExpression = useFormulasStore(
     selectToggleCollapseExpression
   );
 
   const isCollapsed = expression.collapsed;
-  const isIndexEmpty = checkIsIndexEmpty(index);
+
+  const isDisabled = expression.id === rootExpressionId;
 
   const handleCollapse = () => {
-    toggleCollapseExpression(index);
+    toggleCollapseExpression(expression.id);
   };
 
   const Icon = isCollapsed ? IconPlus : IconMinus;
@@ -34,8 +32,8 @@ export const FormulaExpressionCollapse: FC<Props> = ({
   return (
     <ActionIcon
       size={"lg"}
-      disabled={isIndexEmpty}
-      variant={isIndexEmpty ? "transparent" : "subtle"}
+      disabled={isDisabled}
+      variant={isDisabled ? "transparent" : "subtle"}
       onClick={handleCollapse}
       {...props}
     >

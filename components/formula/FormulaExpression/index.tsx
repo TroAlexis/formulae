@@ -1,38 +1,25 @@
 import { Collapse, Flex, Paper, PaperProps } from "@mantine/core";
+import { FormulaExpressionItems } from "components/formula/FormulaExpression/components/Items";
 import { useStyles } from "components/formula/FormulaExpression/styles";
+import { useFormulaContext } from "contexts/useFormulaContext";
 import { useFormulasStore } from "modules/formulas";
-import { FormulaExpression } from "modules/formulas/models";
+import { FormulaType } from "modules/formulas/enums";
 import { selectIsExpressionSelected } from "modules/formulas/selectors";
-import { FormulaIndex } from "modules/formulas/types";
-import {
-  checkIsFormulaExpression,
-  checkIsFormulaOperator,
-  checkIsFormulaValue,
-} from "modules/formulas/utils";
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 
 import { FormulaExpressionControls } from "../FormulaExpressionControls";
-import FormulaOperator from "../FormulaOperator";
-import FormulaValue from "../FormulaValue";
 
-interface Props extends PaperProps {
-  expression: FormulaExpression;
-  parentIndex?: FormulaIndex;
-}
+type Props = PaperProps;
 
-const FormulaExpression: FC<Props> = ({
-  expression,
-  parentIndex = [],
-  className,
-  ...props
-}) => {
+const FormulaExpression: FC<Props> = ({ className, ...props }) => {
+  const { classes, cx } = useStyles();
+  const { formula: expression } = useFormulaContext(FormulaType.EXPRESSION);
   const isSelected = useFormulasStore((state) =>
     selectIsExpressionSelected(state, expression.id)
   );
   const isCollapsed = expression.collapsed;
-  const formulas = expression.value;
 
-  const { classes, cx } = useStyles();
+  const formulas = useMemo(() => [...expression.value], [expression.value]);
 
   return (
     <Paper
@@ -43,50 +30,10 @@ const FormulaExpression: FC<Props> = ({
       direction={"column"}
       {...props}
     >
-      <FormulaExpressionControls
-        px={"xs"}
-        pt={"xs"}
-        index={parentIndex}
-        expression={expression}
-      />
+      <FormulaExpressionControls px={"xs"} pt={"xs"} />
 
       <Collapse in={!isCollapsed} px={"xs"} pb={"sm"}>
-        {formulas.map((formula, index) => {
-          const parentIndexArray = Array.isArray(parentIndex)
-            ? parentIndex
-            : [parentIndex];
-          const currentIndex = [...parentIndexArray, index];
-          if (checkIsFormulaOperator(formula)) {
-            return (
-              <FormulaOperator
-                index={currentIndex}
-                operator={formula}
-                key={formula.id}
-              />
-            );
-          }
-          if (checkIsFormulaValue(formula)) {
-            return (
-              <FormulaValue
-                index={currentIndex}
-                formulaValue={formula}
-                key={formula.id}
-              />
-            );
-          }
-
-          if (checkIsFormulaExpression(formula)) {
-            return (
-              <FormulaExpression
-                expression={formula}
-                key={formula.id}
-                parentIndex={currentIndex}
-              />
-            );
-          }
-
-          return null;
-        })}
+        <FormulaExpressionItems formulaIds={formulas} />
       </Collapse>
     </Paper>
   );

@@ -1,19 +1,29 @@
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { FormulaMenuItem } from "components/formula/FormulaMenu/components/Item";
 import { FormulaMenuItemProps } from "components/formula/FormulaMenu/components/Item/models";
+import { useFormulaContext } from "contexts/useFormulaContext";
 import { useFavoritesStore } from "modules/favorites";
+import { FavoritesSlice } from "modules/favorites/models";
 import { selectAddFavorite } from "modules/favorites/selectors";
-import { FormulaComputable } from "modules/formulas/models";
+import { useFormulasStore } from "modules/formulas";
+import { FormulaType } from "modules/formulas/enums";
+import { getFormulaSlice } from "modules/formulas/utils/slice";
+import { selectMap } from "modules/map/selectors";
 import React, { FC } from "react";
 
-interface Props extends FormulaMenuItemProps {
-  computable: FormulaComputable;
-}
+type Props = FormulaMenuItemProps;
 
-export const FormulaMenuFavorite: FC<Props> = ({ computable, ...props }) => {
+export const FormulaMenuFavorite: FC<Props> = (props) => {
   const addFavorite = useFavoritesStore(selectAddFavorite);
+  const map = useFormulasStore(selectMap);
+  const { formula } = useFormulaContext(FormulaType.EXPRESSION);
+
   const onAddFavorite = () => {
-    addFavorite(computable);
+    const slice = getFormulaSlice(formula.id, map) as FavoritesSlice;
+
+    if (slice) {
+      addFavorite(slice);
+    }
   };
 
   return (

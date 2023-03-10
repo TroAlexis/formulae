@@ -15,6 +15,7 @@ import { FavoritesActions, FavoritesState, FavoritesStore } from "./models";
 
 const initialState: FavoritesState = {
   favorites: [],
+  map: {},
   search: {
     text: "",
   },
@@ -40,12 +41,12 @@ const useFavoritesStoreHook = create<FavoritesStore>()(
       }),
       {
         name: "favorites",
+        version: 1,
       }
     )
   )
 );
 
-export const useFavoritesStore = createUseHydratedStore(
-  useFavoritesStoreHook,
-  initialState
-);
+export const useFavoritesStore = createUseHydratedStore(useFavoritesStoreHook, {
+  ...initialState,
+});

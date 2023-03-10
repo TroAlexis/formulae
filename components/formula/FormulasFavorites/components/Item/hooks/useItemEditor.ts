@@ -8,7 +8,7 @@ export const useItemEditor = (
   item: FormulaComputable,
   property: "name" | "description"
 ) => {
-  const itemValue = item[property];
+  const itemValue = item[property] || "";
   const [editing, setEditing] = useState(false);
   const [value, handleChange] = useInputState(itemValue);
   const editFavorite = useFavoritesStore(selectEditFavorite);

@@ -7,8 +7,4 @@ export const useStyles = createStyles(() => ({
     flexDirection: "column",
     flexGrow: 1,
   },
-  scroll: {
-    overflow: "auto",
-    flex: "1 1 0",
-  },
 }));

@@ -1,31 +1,25 @@
 import { Box, BoxProps, Center, Text } from "@mantine/core";
-import { FormulaFavoritesItem } from "components/formula/FormulasFavorites/components/Item";
+import {
+  FormulaFavoritesItems,
+  FormulasFavoritesItemsProps,
+} from "components/formula/FormulasFavorites/components/Items";
 import { useStyles } from "components/formula/FormulasFavorites/styles";
 import { useFavoritesStore } from "modules/favorites";
 import { selectFavoritesFilteredBySearchText } from "modules/favorites/selectors";
 import React, { FC } from "react";
 
-interface Props extends BoxProps {
-  onItemClick?: () => unknown;
-}
+interface Props
+  extends BoxProps,
+    Pick<FormulasFavoritesItemsProps, "onItemClick"> {}
 
 export const FormulasFavorites: FC<Props> = ({ onItemClick, ...props }) => {
   const favorites = useFavoritesStore(selectFavoritesFilteredBySearchText);
-  const styles = useStyles();
-  const { savedItem, ...classes } = styles.classes;
+  const { classes } = useStyles();
 
   return (
     <Box component={"ul"} className={classes.list} {...props}>
       {favorites.length ? (
-        favorites.map((item) => (
-          <li className={classes.item} key={item.id}>
-            <FormulaFavoritesItem
-              item={item}
-              className={savedItem}
-              onClick={onItemClick}
-            />
-          </li>
-        ))
+        <FormulaFavoritesItems ids={favorites} onItemClick={onItemClick} />
       ) : (
         <Center>
           <Text color={"dimmed"} size={"sm"}>

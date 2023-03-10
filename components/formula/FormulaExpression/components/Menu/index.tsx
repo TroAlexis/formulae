@@ -5,32 +5,23 @@ import { FormulaMenuPaste } from "components/formula/FormulaMenu/components/Past
 import { FormulaMenuSelect } from "components/formula/FormulaMenu/components/Select";
 import { FormulaMenuShare } from "components/formula/FormulaMenu/components/Share";
 import { FormulaMenuProps } from "components/formula/FormulaMenu/models";
-import { FormulaExpression } from "modules/formulas/models";
-import { FormulaIndex } from "modules/formulas/types";
 import React, { FC } from "react";
 
-interface Props extends FormulaMenuProps {
-  expression: FormulaExpression;
-  index: FormulaIndex;
-}
+type Props = FormulaMenuProps;
 
-export const FormulaExpressionMenu: FC<Props> = ({
-  expression,
-  index,
-  ...props
-}) => {
+export const FormulaExpressionMenu: FC<Props> = (props) => {
   return (
     <FormulaMenu {...props}>
       <Menu.Label>Actions</Menu.Label>
 
-      <FormulaMenuSelect expression={expression} />
-      <FormulaMenuFavorite computable={expression} />
+      <FormulaMenuSelect />
+      <FormulaMenuFavorite />
 
       <Menu.Label>Share & reuse</Menu.Label>
 
-      <FormulaMenuShare computable={expression} action={"link"} />
-      <FormulaMenuShare computable={expression} action={"formula"} />
-      <FormulaMenuPaste computable={expression} index={index} />
+      <FormulaMenuShare action={"link"} />
+      <FormulaMenuShare action={"formula"} />
+      <FormulaMenuPaste />
     </FormulaMenu>
   );
 };

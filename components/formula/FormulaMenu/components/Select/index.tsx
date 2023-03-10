@@ -1,25 +1,25 @@
 import { IconSelect } from "@tabler/icons-react";
 import { FormulaMenuItem } from "components/formula/FormulaMenu/components/Item";
 import { FormulaMenuItemProps } from "components/formula/FormulaMenu/components/Item/models";
+import { useFormulaContext } from "contexts/useFormulaContext";
 import { useFormulasStore } from "modules/formulas";
-import { FormulaExpression } from "modules/formulas/models";
+import { FormulaType } from "modules/formulas/enums";
 import {
   selectSelectedExpressionId,
-  selectSetSelectedExpression,
+  selectSetSelectedExpressionId,
 } from "modules/formulas/selectors";
 import React, { FC } from "react";
 
-interface Props extends FormulaMenuItemProps {
-  expression: FormulaExpression;
-}
+type Props = FormulaMenuItemProps;
 
-export const FormulaMenuSelect: FC<Props> = ({ expression, ...props }) => {
-  const selectExpression = useFormulasStore(selectSetSelectedExpression);
+export const FormulaMenuSelect: FC<Props> = (props) => {
+  const { formula: expression } = useFormulaContext(FormulaType.EXPRESSION);
+  const selectExpressionId = useFormulasStore(selectSetSelectedExpressionId);
   const selectedExpressionId = useFormulasStore(selectSelectedExpressionId);
   const isActive = expression.id === selectedExpressionId;
 
   const onSelect = () => {
-    selectExpression(expression.id);
+    selectExpressionId(expression.id);
   };
 
   return (

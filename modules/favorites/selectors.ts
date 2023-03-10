@@ -1,4 +1,6 @@
+import { createSelectById, createTypedSelectMap } from "modules/map/selectors";
 import { createSelector } from "reselect";
+import { getMapItem } from "utils/map";
 import { toLowerCaseTrim } from "utils/string";
 
 import { createStoreSelector } from "../utils/selectors";
@@ -8,12 +10,7 @@ const createFavoritesSelector = createStoreSelector<FavoritesStore>();
 
 export const selectFavorites = createFavoritesSelector("favorites");
 
-export const selectFavoriteById = createSelector(
-  [selectFavorites, (_, id: string) => id],
-  (favorites, id) => {
-    return favorites.find((favorite) => favorite.id === id);
-  }
-);
+export const selectFavoritesMap = createTypedSelectMap<FavoritesStore>();
 
 export const selectFavoritesSearch = createFavoritesSelector("search");
 
@@ -22,21 +19,39 @@ export const selectFavoritesSearchText = createSelector(
   createFavoritesSelector("text")
 );
 
+export const selectFavoriteSliceById = createSelectById<FavoritesStore>();
+
+export const selectFavoriteFormulaById = createSelector(
+  [selectFavoritesMap, (_, id: string) => id],
+  (map, id) => {
+    const slice = getMapItem(id, map);
+
+    if (!slice) {
+      return undefined;
+    }
+
+    return getMapItem(id, slice.map);
+  }
+);
+
 export const selectFavoritesFilteredBySearchText = createSelector(
-  [selectFavorites, selectFavoritesSearchText],
-  (favorites, searchText = "") => {
+  [selectFavorites, selectFavoritesMap, selectFavoritesSearchText],
+  (favorites, map, searchText = "") => {
     // Empty search - include all
     if (!searchText) {
       return favorites;
     }
 
-    return favorites.filter((item) => {
+    return favorites.filter((id) => {
+      const slice = getMapItem(id, map);
+      const favorite = getMapItem(id, slice.map);
+
       // No name - exclude
-      if (!item.name) {
+      if (!favorite?.name) {
         return false;
       }
 
-      const [name, text] = [item.name, searchText].map(toLowerCaseTrim);
+      const [name, text] = [favorite.name, searchText].map(toLowerCaseTrim);
 
       return name.includes(text);
     });

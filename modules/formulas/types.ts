@@ -1,7 +1,5 @@
-import { FormulaOperator } from "./models";
+import { FormulaOperator } from "modules/formulas/models";
 
 export type FormulaValueType = number;
-
-export type FormulaIndex = number | number[];
 
 export type OperatorOrderChecker = (operator: FormulaOperator) => boolean;

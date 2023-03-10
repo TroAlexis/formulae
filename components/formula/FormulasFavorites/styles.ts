@@ -6,11 +6,4 @@ export const useStyles = createStyles((theme) => ({
     flexDirection: "column",
     gap: theme.spacing.xs,
   },
-  item: {
-    display: "flex",
-  },
-  savedItem: {
-    flex: 1,
-    minWidth: 0,
-  },
 }));

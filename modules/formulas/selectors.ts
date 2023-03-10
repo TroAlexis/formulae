@@ -1,33 +1,42 @@
-import { createStoreSelector } from "modules/utils/selectors";
-import { createSelector } from "reselect";
-import { getLast } from "utils/array";
-import { TemporalState } from "zundo";
-
-import { FormulasStore } from "./models";
 import {
   checkIsFormulaComputable,
   checkIsFormulaExpression,
   checkIsFormulaOperator,
   checkIsFormulaValue,
-  getExpressionResult,
-  getFormulaById,
-} from "./utils";
+} from "modules/formulas/utils/check";
+import { getExpressionResult } from "modules/formulas/utils/compute";
+import { getFormulaSlice } from "modules/formulas/utils/slice";
+import { createSelectById, createTypedSelectMap } from "modules/map/selectors";
+import { createStoreSelector } from "modules/utils/selectors";
+import { createSelector } from "reselect";
+import { getLast } from "utils/array";
+import { getMapItem } from "utils/map";
+import { TemporalState } from "zundo";
+
+import { FormulaExpression, FormulasStore } from "./models";
 
 const createFormulasSelector = createStoreSelector<FormulasStore>();
 const createFormulasTemporalSelector =
   createStoreSelector<TemporalState<FormulasStore>>();
 
-/* Basic */
+export const selectRootExpressionId =
+  createFormulasSelector("rootExpressionId");
 
-export const selectRootExpression = createFormulasSelector("formulas");
+export const selectFormulaMap = createTypedSelectMap<FormulasStore>();
+
+export const selectRootExpression = createSelector(
+  [selectFormulaMap, selectRootExpressionId],
+  (formulasMap, rootExpressionId) =>
+    getMapItem(rootExpressionId, formulasMap) as FormulaExpression
+);
+
+export const selectRootExpressionFormulas = createSelector(
+  [selectRootExpression],
+  createFormulasSelector("value")
+);
 
 export const selectSelectedExpressionId = createFormulasSelector(
   "selectedExpressionId"
-);
-
-export const selectFormulas = createSelector(
-  [selectRootExpression],
-  createFormulasSelector("value")
 );
 
 /* Actions */
@@ -49,8 +58,8 @@ export const selectCloseExpression = createFormulasSelector("closeExpression");
 export const selectReplaceExpression =
   createFormulasSelector("replaceExpression");
 
-export const selectSetSelectedExpression = createFormulasSelector(
-  "setSelectedExpression"
+export const selectSetSelectedExpressionId = createFormulasSelector(
+  "setSelectedExpressionId"
 );
 
 export const selectFormulasUndo = createFormulasTemporalSelector("undo");
@@ -66,13 +75,13 @@ export const selectFormulasFutureStates =
 /* Computed */
 
 export const selectCurrentExpression = createSelector(
-  [selectFormulas, selectSelectedExpressionId],
-  (formulas, selectedExpressionId) => {
+  [selectFormulaMap, selectSelectedExpressionId],
+  (map, selectedExpressionId) => {
     const isDefinedId = selectedExpressionId !== undefined;
     if (isDefinedId) {
-      const formula = getFormulaById(formulas, selectedExpressionId);
+      const formula = getMapItem(selectedExpressionId, map);
 
-      if (formula && checkIsFormulaExpression(formula)) {
+      if (checkIsFormulaExpression(formula)) {
         return formula;
       }
     }
@@ -81,22 +90,37 @@ export const selectCurrentExpression = createSelector(
   }
 );
 
+export const selectFormulaById = createSelectById<FormulasStore>();
+
+export const selectFormulaSliceById = createSelector(
+  [selectFormulaMap, selectFormulaById],
+  (map, formula) => {
+    return getFormulaSlice(formula.id, map);
+  }
+);
+
 export const selectActiveExpression = (state: FormulasStore) => {
   return selectCurrentExpression(state) || selectRootExpression(state);
 };
 
 export const selectFormulasResult = createSelector(
-  [selectRootExpression],
-  (expression) => {
-    return getExpressionResult(expression);
+  [selectRootExpressionFormulas, selectFormulaMap],
+  (ids, formulasMap) => {
+    return getExpressionResult(ids, { formulasMap });
   }
 );
 
 export const selectLastFormula = createSelector(
-  [selectActiveExpression],
-  (activeExpression) => {
-    const { value: formulas } = activeExpression;
-    return getLast(formulas);
+  [selectFormulaMap, selectActiveExpression],
+  (map, activeExpression) => {
+    const { value } = activeExpression;
+    const lastFormulaId = getLast(value);
+
+    if (lastFormulaId) {
+      return getMapItem(lastFormulaId, map);
+    }
+
+    return undefined;
   }
 );
 
@@ -122,14 +146,21 @@ export const selectIsExpressionOpenable = createSelector(
 );
 
 export const selectIsExpressionCloseable = createSelector(
-  [selectCurrentExpression],
-  (expression) => {
+  [selectFormulaMap, selectCurrentExpression],
+  (map, expression) => {
     if (!expression) {
       return false;
     }
 
-    const lastValue = expression.value[expression.value.length - 1];
-    return checkIsFormulaComputable(lastValue);
+    const lastId = getLast(expression.value);
+
+    if (!lastId) {
+      return false;
+    }
+
+    const lastFormula = getMapItem(lastId, map);
+
+    return checkIsFormulaComputable(lastFormula);
   }
 );
 

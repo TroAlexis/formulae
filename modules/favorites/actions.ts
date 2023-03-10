@@ -1,5 +1,12 @@
-import { selectFavoriteById } from "modules/favorites/selectors";
-import { cloneFormula } from "modules/formulas/utils";
+import { selectFavorites } from "modules/favorites/selectors";
+import { cloneFormulaSlice } from "modules/formulas/utils/slice";
+import {
+  addToMap,
+  clearMap,
+  deleteFromMap,
+  editInMap,
+} from "modules/map/actions";
+import { spliceItem } from "utils/array";
 
 import { createStoreMutationFactory } from "../utils/actions";
 import { FavoritesActions, FavoritesStore } from "./models";
@@ -11,35 +18,41 @@ const createFavoritesMutation = createStoreMutationFactory<
 
 export const addFavorite = createFavoritesMutation("addFavorite")(
   (state, favorite) => {
-    const clonedFavorite = cloneFormula(favorite);
+    const clonedFavorite = cloneFormulaSlice(favorite);
 
-    state.favorites.push(clonedFavorite);
+    state.favorites.push(clonedFavorite.id);
+
+    addToMap(state, clonedFavorite.id, clonedFavorite);
+  }
+);
+
+export const editFavorite = createFavoritesMutation("editFavorite")(
+  (state, id, formula) => {
+    editInMap(state, id, (slice) => {
+      editInMap(slice, id, (value) => Object.assign(value, formula));
+    });
   }
 );
 
 export const setFavorites = createFavoritesMutation("setFavorites")(
   (state, favorites) => {
-    state.favorites = favorites.map((formula) => cloneFormula(formula));
-  }
-);
+    state.favorites = favorites.map((slice) => slice.id);
 
-export const editFavorite = createFavoritesMutation("editFavorite")(
-  (state, id, favorite) => {
-    const editedFavorite = selectFavoriteById(state, id);
+    clearMap(state);
 
-    if (!editedFavorite) {
-      return;
-    }
-
-    Object.assign(editedFavorite, favorite);
+    favorites.forEach((slice) => {
+      addToMap(state, slice.id, slice);
+    });
   }
 );
 
 export const removeFavorite = createFavoritesMutation("removeFavorite")(
   (state, id) => {
-    const indexOfItem = state.favorites.findIndex((item) => item.id === id);
+    const favorites = selectFavorites(state);
 
-    state.favorites.splice(indexOfItem, 1);
+    spliceItem(favorites, id);
+
+    deleteFromMap(state, id);
   }
 );
 
