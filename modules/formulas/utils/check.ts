@@ -31,6 +31,7 @@ export const checkIsFormulaOperator = createFormulaChecker<FormulaOperator>(
 export const checkIsFormulaExpression = createFormulaChecker<FormulaExpression>(
   FormulaType.EXPRESSION
 );
+
 export const checkIsFormulaComputable = (
   formula?: Formula
 ): formula is FormulaComputable =>
