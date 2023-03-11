@@ -13,6 +13,7 @@ export const getComputableShortId = (computable: FormulaComputable) => {
 
   return shortId;
 };
+
 export const getParentExpression = (
   id: string,
   map: FormulaMap
@@ -28,6 +29,7 @@ export const getParentExpression = (
 
   return undefined;
 };
+
 export const findExpressionChild = (
   formula: FormulaExpression,
   id: string,
@@ -53,6 +55,7 @@ export const findExpressionChild = (
 
   return childFound;
 };
+
 export const removeExpressionChildren = (
   expression: FormulaExpression,
   map: FormulaMap
