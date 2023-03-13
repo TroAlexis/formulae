@@ -2,6 +2,10 @@ import { useHydrated } from "hooks/useHydrated";
 import { TemporalState } from "zundo";
 import { create, StoreApi, useStore } from "zustand";
 
+/**
+ * Persisted store creates client-server mismatch,
+ * this hook allows to hydrate storage right after the render
+ */
 export const createUseHydratedStore = <
   UseStore extends ReturnType<typeof create>,
   InitialState
@@ -16,6 +20,9 @@ export const createUseHydratedStore = <
     return hydrated ? store : selector(initialState);
   }) as UseStore;
 
+/**
+ * https://github.com/charkour/zundo#convert-to-react-store
+ */
 export const createUseTemporalStore =
   <S>(store: StoreApi<TemporalState<S>>) =>
   <T>(
