@@ -5,6 +5,7 @@ import {
   createFormulaOperator,
   createFormulaValue,
 } from "modules/formulas/utils/create";
+import { getFormulaSlice } from "modules/formulas/utils/slice";
 import { keyBy, mapKeysToValues, mergeMaps } from "utils/map";
 
 export class ExpressionBuilder {
@@ -13,6 +14,10 @@ export class ExpressionBuilder {
 
   get formulas() {
     return mapKeysToValues(this.expression.value, this.map);
+  }
+
+  get slice() {
+    return getFormulaSlice(this.expression.id, this.map);
   }
 
   addToExpression(formula: Formula) {
