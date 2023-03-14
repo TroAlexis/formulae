@@ -1,24 +1,20 @@
 import { ExpressionBuilder } from "__utils__/expression";
 import { muteErrors } from "__utils__/jest";
+import { useFavoritesStore, useFormulasStore } from "__utils__/stores";
 import { render, RenderOptions, screen } from "@testing-library/react";
 import { FormulaProvider, useFormulaContext } from "contexts/useFormulaContext";
 import { NO_PROVIDER_ERROR_MESSAGE } from "contexts/useFormulaContext/consts";
 import { FormulaProviderProps } from "contexts/useFormulaContext/models";
-import { FavoritesSlice, FavoritesStore } from "modules/favorites/models";
+import { FavoritesSlice } from "modules/favorites/models";
 import {
   selectFavoriteFormulaById,
   selectFavoriteSliceById,
 } from "modules/favorites/selectors";
-import { createFavoritesSlice } from "modules/favorites/slice";
 import { FormulaType } from "modules/formulas/enums";
-import { FormulasStore } from "modules/formulas/models";
 import { selectFormulaSliceById } from "modules/formulas/selectors";
-import { createFormulasSlice } from "modules/formulas/slice";
 import { getFormulaSlice } from "modules/formulas/utils/slice";
 import { FC, ReactElement } from "react";
 import { keyBy } from "utils/map";
-import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
 
 interface TestingComponentProps {
   type?: FormulaType;
@@ -49,9 +45,10 @@ const renderWithProvider = (
   );
 };
 
-const useStore = create<FormulasStore>()(immer(createFormulasSlice));
-const useFavoritesStore = create<FavoritesStore>()(immer(createFavoritesSlice));
-const sharedProviderProps = { useStore, sliceSelector: selectFormulaSliceById };
+const sharedProviderProps = {
+  useStore: useFormulasStore,
+  sliceSelector: selectFormulaSliceById,
+};
 
 describe("useFormulaContext", () => {
   muteErrors();
@@ -69,7 +66,7 @@ describe("useFormulaContext", () => {
       ...sharedProviderProps,
     };
 
-    useStore.setState({ map });
+    useFormulasStore.setState({ map });
 
     return renderWithProvider(<ConsumerComponent type={type} />, {
       providerProps,
