@@ -1,10 +1,12 @@
+import { FormulaExpression } from "modules/formulas/models";
 import { createSelectById, createTypedSelectMap } from "modules/map/selectors";
 import { createSelector } from "reselect";
+import { Maybe } from "types/types";
 import { getMapItem } from "utils/map";
 import { toLowerCaseTrim } from "utils/string";
 
 import { createStoreSelector } from "../utils/selectors";
-import { FavoritesStore } from "./models";
+import { FavoritesMap, FavoritesStore } from "./models";
 
 const createFavoritesSelector = createStoreSelector<FavoritesStore>();
 
@@ -21,17 +23,22 @@ export const selectFavoritesSearchText = createSelector(
 
 export const selectFavoriteSliceById = createSelectById<FavoritesStore>();
 
+const getFavoriteFromSlice = (
+  map: FavoritesMap,
+  id: string
+): Maybe<FormulaExpression> => {
+  const slice = getMapItem(id, map);
+
+  if (!slice) {
+    return undefined;
+  }
+
+  return getMapItem(id, slice.map);
+};
+
 export const selectFavoriteFormulaById = createSelector(
   [selectFavoritesMap, (_, id: string) => id],
-  (map, id) => {
-    const slice = getMapItem(id, map);
-
-    if (!slice) {
-      return undefined;
-    }
-
-    return getMapItem(id, slice.map);
-  }
+  (...args) => getFavoriteFromSlice(...args)
 );
 
 export const selectFavoritesFilteredBySearchText = createSelector(
@@ -43,8 +50,7 @@ export const selectFavoritesFilteredBySearchText = createSelector(
     }
 
     return favorites.filter((id) => {
-      const slice = getMapItem(id, map);
-      const favorite = getMapItem(id, slice.map);
+      const favorite = getFavoriteFromSlice(map, id);
 
       // No name - exclude
       if (!favorite?.name) {
