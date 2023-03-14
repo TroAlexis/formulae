@@ -20,7 +20,7 @@ export const FormulaMenuPaste: FC<Props> = (props) => {
 
     const newFormula = parse<FormulaSlice>(data);
 
-    replaceExpression(formula, newFormula);
+    replaceExpression(formula.id, newFormula);
   };
 
   return (
