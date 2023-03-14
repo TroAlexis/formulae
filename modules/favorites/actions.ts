@@ -36,12 +36,11 @@ export const editFavorite = createFavoritesMutation("editFavorite")(
 
 export const setFavorites = createFavoritesMutation("setFavorites")(
   (state, favorites) => {
-    state.favorites = favorites.map((slice) => slice.id);
-
+    state.favorites = [];
     clearMap(state);
 
     favorites.forEach((slice) => {
-      addToMap(state, slice.id, slice);
+      addFavorite(state, slice);
     });
   }
 );
