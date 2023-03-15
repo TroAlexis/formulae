@@ -1,7 +1,7 @@
 import { StoreApi, UseBoundStore } from "zustand";
 
 export const createStoreSelector =
-  <Store>() =>
+  <Store>(_store?: Store) =>
   <Property extends keyof Part, Part = Store>(property: Property) =>
   (state: Part) => {
     return state[property];

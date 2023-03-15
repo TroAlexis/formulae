@@ -20,7 +20,7 @@ export interface FormulasActions {
   openExpression: () => void;
   closeExpression: () => void;
   replaceExpression: (
-    replaceExpression: Maybe<FormulaExpression>,
+    replaceExpression: Maybe<string>,
     replacerSlice: FormulaSlice
   ) => void;
   setSelectedExpressionId: (id: Maybe<string>) => void;

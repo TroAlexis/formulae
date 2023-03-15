@@ -200,7 +200,7 @@ export const closeExpression = createMutation("closeExpression")((state) => {
 });
 
 export const replaceExpression = createMutation("replaceExpression")(
-  (state, expression, replacer) => {
+  (state, id, replacer) => {
     const replacerSlice = cloneFormulaSlice(replacer);
     if (!replacerSlice) {
       return;
@@ -208,7 +208,9 @@ export const replaceExpression = createMutation("replaceExpression")(
 
     const map = selectMap(state);
     const rootExpression = selectRootExpression(state);
-    const replacedExpression = expression ?? rootExpression;
+    const replacedExpression = id
+      ? selectFormulaById(state, id)
+      : rootExpression;
     const replacedExpressionParent = getParentExpression(
       replacedExpression.id,
       map

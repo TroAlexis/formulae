@@ -15,13 +15,13 @@ export const getFormulaSlice = (
 ): FormulaSlice => {
   const formula = getMapItem(id, map);
 
+  newMap[id] = formula;
+
   if (checkIsFormulaExpression(formula)) {
     formula.value.forEach((childId) => {
       getFormulaSlice(childId, map, newMap);
     });
   }
-
-  newMap[id] = formula;
 
   return { id, map: newMap };
 };

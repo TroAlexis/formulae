@@ -1,6 +1,11 @@
+import {
+  FormulaContext,
+  FormulaContextProps,
+  FormulaProviderProps,
+} from "contexts/useFormulaContext/models";
+import { validateFormulaContext } from "contexts/useFormulaContext/utils";
 import { FormulaType } from "modules/formulas/enums";
-import { Formula, FormulaByType, FormulaSlice } from "modules/formulas/models";
-import { checkFormulaType } from "modules/formulas/utils/check";
+import { Formula, FormulaByType } from "modules/formulas/models";
 import { MapStore, RecordKey } from "modules/map/models";
 import { selectById } from "modules/map/selectors";
 import {
@@ -11,26 +16,8 @@ import {
   useMemo,
 } from "react";
 import { Maybe } from "types/types";
-import { StoreApi, UseBoundStore } from "zustand/esm";
 
-export interface FormulaContext<T extends Formula = Formula> {
-  formula: T;
-  useStore: BoundStore<RecordKey, unknown>;
-  selectSlice: (state: MapStore<any, any>) => Maybe<FormulaSlice<T>>;
-}
-
-type BoundStore<K extends RecordKey, V> = UseBoundStore<
-  StoreApi<MapStore<K, V>>
->;
-
-export interface FormulaProviderProps<K extends RecordKey, V> {
-  id: string;
-  useStore: BoundStore<K, V>;
-  formulaSelector?: (state: MapStore<K, V>, id: string) => Maybe<Formula>;
-  sliceSelector: (state: MapStore<K, V>, id: string) => Maybe<FormulaSlice>;
-}
-
-const FormulaContext = createContext<Maybe<FormulaContext>>(undefined);
+const FormulaContext = createContext<Maybe<FormulaContextProps>>(undefined);
 
 export const FormulaProvider = <K extends RecordKey, V>({
   children,
@@ -71,22 +58,9 @@ export const FormulaProvider = <K extends RecordKey, V>({
 export const useFormulaContext = <T extends FormulaType>(type?: T) => {
   const context = useContext(FormulaContext);
 
-  if (context === undefined) {
-    throw new Error("useFormulaContext must be used within a FormulaProvider");
-  }
+  validateFormulaContext(type, context);
+
   type TypeOfFormula = T extends FormulaType ? FormulaByType[T] : Formula;
-
-  const { formula } = context;
-
-  const isCorrectType = type
-    ? checkFormulaType<TypeOfFormula>(formula, type)
-    : true;
-
-  if (!isCorrectType) {
-    throw new Error(
-      `useFormulaContext with type ${type} can't be used within ${formula.type}`
-    );
-  }
 
   return context as FormulaContext<TypeOfFormula>;
 };

@@ -5,6 +5,8 @@ export type FavoritesSlice = FormulaSlice<FormulaExpression>;
 
 export type FavoritesMapState = MapState<string, FavoritesSlice>;
 
+export type FavoritesMap = FavoritesMapState["map"];
+
 export interface FavoritesState extends FavoritesMapState {
   favorites: string[];
   search: {
