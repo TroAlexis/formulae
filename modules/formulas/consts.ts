@@ -1,3 +1,4 @@
+import BigNumber from "bignumber.js";
 import {
   FormulaOperator,
   FormulaValue,
@@ -25,28 +26,36 @@ export const OPERATORS: Map<FormulaOperatorType, Operator> = new Map([
     FormulaOperatorType.MULTIPLICATION,
     {
       label: FormulaOperatorType.MULTIPLICATION,
-      computer: createOperatorComputer((a, b) => a * b),
+      computer: createOperatorComputer((a, b) =>
+        BigNumber(a).times(b).toNumber()
+      ),
     },
   ],
   [
     FormulaOperatorType.DIVISION,
     {
       label: FormulaOperatorType.DIVISION,
-      computer: createOperatorComputer((a, b) => a / b),
+      computer: createOperatorComputer((a, b) =>
+        BigNumber(a).div(b).toNumber()
+      ),
     },
   ],
   [
     FormulaOperatorType.ADDITION,
     {
       label: FormulaOperatorType.ADDITION,
-      computer: createOperatorComputer((a, b) => a + b),
+      computer: createOperatorComputer((a, b) =>
+        BigNumber.sum(a, b).toNumber()
+      ),
     },
   ],
   [
     FormulaOperatorType.SUBTRACTION,
     {
       label: FormulaOperatorType.SUBTRACTION,
-      computer: createOperatorComputer((a, b) => a - b),
+      computer: createOperatorComputer((a, b) =>
+        BigNumber(a).minus(b).toNumber()
+      ),
     },
   ],
 ]);

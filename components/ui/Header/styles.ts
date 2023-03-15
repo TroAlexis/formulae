@@ -18,8 +18,11 @@ export const useStyles = createStyles((theme) => ({
   burger: {
     marginLeft: theme.spacing.md,
   },
+  config: {
+    marginLeft: "auto",
+  },
   theme: {
     marginRight: theme.spacing.md,
-    marginLeft: "auto",
+    marginLeft: theme.spacing.xs,
   },
 }));
