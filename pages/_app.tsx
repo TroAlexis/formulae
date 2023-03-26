@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 
 import { MantineProvider, MantineThemeOverride } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 import { Meta } from "components/app/Meta";
 import { Viewport } from "components/app/Viewport";
 import { mantineThemeOverrides } from "config/mantine/theme";
@@ -31,6 +32,7 @@ function App({ Component, pageProps }: AppProps) {
       <Viewport />
 
       <MantineProvider withGlobalStyles withNormalizeCSS theme={themeOverrides}>
+        <Notifications />
         <Component {...pageProps} />
       </MantineProvider>
     </>

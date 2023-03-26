@@ -9,6 +9,7 @@ import { selectEditFormula } from "modules/formulas/selectors";
 import { selectMap } from "modules/map/selectors";
 import React, { FC } from "react";
 import { Maybe } from "types/types";
+import { notifyError } from "utils/notifications";
 
 interface Props extends FormulaMenuItemProps {}
 
@@ -27,14 +28,17 @@ export const FormulaMenuBind: FC<Props> = (props) => {
     if (refFormula && isDifferentFormula && isRefNotBoundToFormula) {
       editFormula(formula.id, { ref: refId });
     } else {
-      /* TODO: Notifications for errors */
+      let message: string;
+
       if (!isRefNotBoundToFormula) {
-        console.error("Referenced formula is already bound to this formula");
+        message = "Referenced formula is already bound to this formula";
       } else if (!isDifferentFormula) {
-        console.error("Can't bind to self");
+        message = "Can't bind to self";
       } else {
-        console.error("Referenced formula doesn't exist");
+        message = "Referenced formula doesn't exist";
       }
+
+      notifyError({ message });
     }
   };
 
