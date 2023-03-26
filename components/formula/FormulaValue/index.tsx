@@ -4,6 +4,7 @@ import {
   NumberInputProps,
 } from "@mantine/core";
 import { FormulaLayout } from "components/formula/FormulaLayout";
+import { FormulaValueMenu } from "components/formula/FormulaValue/components/Menu";
 import { useFormulaContext } from "contexts/useFormulaContext";
 import { useSelectorWithArguments } from "hooks/useSelectorWithArguments";
 import { useFormulasStore } from "modules/formulas";
@@ -36,7 +37,7 @@ const FormulaValue: FC = () => {
   };
 
   return (
-    <FormulaLayout>
+    <FormulaLayout menu={FormulaValueMenu}>
       <NumberInput
         size={"sm"}
         value={value}
