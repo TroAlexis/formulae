@@ -1,8 +1,9 @@
-import { IconLink } from "@tabler/icons-react";
+import { IconLink, IconUnlink } from "@tabler/icons-react";
 import { FormulaMenuItem } from "components/formula/FormulaMenu/components/Item";
 import { FormulaMenuItemProps } from "components/formula/FormulaMenu/components/Item/models";
 import { useFormulaContext } from "contexts/useFormulaContext";
 import { useFormulasStore } from "modules/formulas";
+import { FormulaType } from "modules/formulas/enums";
 import { FormulaComputable } from "modules/formulas/models";
 import { selectEditFormula } from "modules/formulas/selectors";
 import { selectMap } from "modules/map/selectors";
@@ -13,10 +14,10 @@ interface Props extends FormulaMenuItemProps {}
 
 export const FormulaMenuBind: FC<Props> = (props) => {
   const editFormula = useFormulasStore(selectEditFormula);
-  const { formula, useStore } = useFormulaContext();
+  const { formula, useStore } = useFormulaContext(FormulaType.VALUE);
   const formulas = useStore(selectMap);
 
-  const handleClick = async () => {
+  const handleBind = async () => {
     const refId = await navigator.clipboard.readText();
 
     const refFormula = formulas[refId] as Maybe<FormulaComputable>;
@@ -37,9 +38,24 @@ export const FormulaMenuBind: FC<Props> = (props) => {
     }
   };
 
+  const handleUnbind = () => {
+    editFormula(formula.id, { ref: undefined });
+  };
+
+  const handleClick = () => {
+    if (formula.ref) {
+      handleUnbind();
+    } else {
+      handleBind();
+    }
+  };
+
+  const text = formula.ref ? "Unbind" : "Bind to copied formula id";
+  const icon = formula.ref ? IconUnlink : IconLink;
+
   return (
-    <FormulaMenuItem onClick={handleClick} icon={IconLink} {...props}>
-      Bind to copied formula id
+    <FormulaMenuItem onClick={handleClick} icon={icon} {...props}>
+      {text}
     </FormulaMenuItem>
   );
 };

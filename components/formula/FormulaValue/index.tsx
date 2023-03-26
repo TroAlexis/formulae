@@ -5,9 +5,13 @@ import {
 } from "@mantine/core";
 import { FormulaLayout } from "components/formula/FormulaLayout";
 import { useFormulaContext } from "contexts/useFormulaContext";
+import { useSelectorWithArguments } from "hooks/useSelectorWithArguments";
 import { useFormulasStore } from "modules/formulas";
 import { FormulaType } from "modules/formulas/enums";
-import { selectEditFormula } from "modules/formulas/selectors";
+import {
+  selectEditFormula,
+  selectFormulaRef,
+} from "modules/formulas/selectors";
 import React, { FC, useRef } from "react";
 import { DEFAULT_FORMULA_VALUE, DEFAULT_PRECISION } from "types/consts";
 
@@ -18,9 +22,13 @@ const FormulaValue: FC = () => {
   const { classes } = useStyles();
   const handlers = useRef<NumberInputHandlers>();
 
-  const { formula } = useFormulaContext(FormulaType.VALUE);
+  const { formula, useStore } = useFormulaContext(FormulaType.VALUE);
+  const { ref = "" } = formula;
 
-  const { value, id } = formula;
+  const refSelector = useSelectorWithArguments(selectFormulaRef, ref);
+  const refFormula = useStore(refSelector);
+
+  const { value, id } = refFormula || formula;
 
   const handleNumberChange: NumberInputProps["onChange"] = (num) => {
     const value = num ?? DEFAULT_FORMULA_VALUE;
@@ -39,6 +47,7 @@ const FormulaValue: FC = () => {
         removeTrailingZeros
         startValue={DEFAULT_FORMULA_VALUE}
         autoFocus
+        disabled={!!ref}
         classNames={{ root: classes.root, input: classes.input }}
         hideControls
         type={"number"}

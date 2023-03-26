@@ -1,5 +1,6 @@
 import { ExpressionBuilder } from "__utils__/expression";
 import { FormulaOperatorType, FormulaType } from "modules/formulas/enums";
+import { FormulaComputable } from "modules/formulas/models";
 import {
   checkFormulaType,
   checkIsFormulaValue,
@@ -53,6 +54,25 @@ describe("getComputableValue", () => {
     });
 
     expect(computed.value).toBe(200);
+  });
+
+  it("returns calculated value for ref", () => {
+    const ref = "ref-id";
+    const expression = new ExpressionBuilder()
+      .addValue(100, { ref })
+      .addExpression(
+        new ExpressionBuilder({ id: ref })
+          .addValue(200)
+          .addOperator(FormulaOperatorType.DIVISION)
+          .addValue(100)
+      );
+    const [value] = expression.formulas;
+
+    const computed = getComputableValue(value as FormulaComputable, {
+      formulasMap: expression.map,
+    });
+
+    expect(computed.value).toBe(2);
   });
 });
 
