@@ -3,7 +3,7 @@ import { createStyles, MantineTheme } from "@mantine/core";
 const CONTROL_HEIGHT = 22;
 
 export const getRightSectionWidth = (theme: MantineTheme) => {
-  return theme.spacing.md * 2 + theme.spacing.xs;
+  return `${theme.spacing.md} * 2 + ${theme.spacing.xs}`;
 };
 
 export const useStyles = createStyles((theme) => ({
@@ -11,7 +11,7 @@ export const useStyles = createStyles((theme) => ({
     height: CONTROL_HEIGHT,
     minHeight: CONTROL_HEIGHT,
     lineHeight: `${CONTROL_HEIGHT}px`,
-    paddingRight: getRightSectionWidth(theme),
+    paddingRight: `calc(${getRightSectionWidth(theme)})`,
     paddingLeft: 0,
     paddingTop: 0,
     paddingBottom: 0,

@@ -31,8 +31,9 @@ const FormulaValue: FC = () => {
 
   const { value, id } = refFormula || formula;
 
-  const handleNumberChange: NumberInputProps["onChange"] = (num) => {
-    const value = num ?? DEFAULT_FORMULA_VALUE;
+  const handleNumberChange: NumberInputProps["onInput"] = (event) => {
+    const inputValue = event.currentTarget.valueAsNumber;
+    const value = Number.isNaN(inputValue) ? DEFAULT_FORMULA_VALUE : inputValue;
     return editFormula(id, { value });
   };
 
@@ -42,7 +43,7 @@ const FormulaValue: FC = () => {
         size={"sm"}
         value={value}
         handlersRef={handlers}
-        onChange={handleNumberChange}
+        onInput={handleNumberChange}
         precision={DEFAULT_PRECISION}
         placeholder={"Enter value"}
         removeTrailingZeros

@@ -18,8 +18,6 @@ export const FormulaResult: FC<Props> = ({ ...props }) => {
 
   const { fontSize } = theme.headings.sizes.h1;
 
-  const size = fontSize ? parseInt(fontSize as string) : "xl";
-
   return (
     <Flex align={"center"} justify={"center"}>
       <CopyButton value={`${result.value}`}>
@@ -32,7 +30,7 @@ export const FormulaResult: FC<Props> = ({ ...props }) => {
             <Text
               span
               align={"center"}
-              size={size}
+              size={fontSize}
               fw={700}
               onClick={copy}
               {...props}
