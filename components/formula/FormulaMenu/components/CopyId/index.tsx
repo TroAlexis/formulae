@@ -4,7 +4,6 @@ import { FormulaMenuItem } from "components/formula/FormulaMenu/components/Item"
 import { FormulaMenuItemProps } from "components/formula/FormulaMenu/components/Item/models";
 import { useFormulaContext } from "contexts/useFormulaContext";
 import React, { FC } from "react";
-import { notifySuccess } from "utils/notifications";
 
 interface Props extends FormulaMenuItemProps {}
 
@@ -14,8 +13,6 @@ export const FormulaMenuCopyId: FC<Props> = (props) => {
 
   const handleClick = () => {
     clipboard.copy(formula.id);
-
-    notifySuccess({ message: "Copied reference id.", autoClose: 1000 });
   };
 
   return (
