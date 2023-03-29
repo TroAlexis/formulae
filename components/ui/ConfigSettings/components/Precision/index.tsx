@@ -28,7 +28,8 @@ const ConfigSettingsPrecision: FC<Props> = ({ type, ...props }) => {
   const precision = useThemeStore(settings.selector);
   const editConfig = useThemeStore(selectEditConfig);
   const handleChange: NumberInputProps["onChange"] = (value) => {
-    editConfig(type, value ?? DEFAULT_PRECISION);
+    const num = typeof value === "string" ? undefined : value;
+    editConfig(type, num ?? DEFAULT_PRECISION);
   };
 
   return (
