@@ -32,9 +32,18 @@ export const getComputableValue = (
   computable: FormulaComputable,
   { formulasMap }: ComputeOptions
 ): FormulaValue => {
-  return checkIsFormulaValue(computable)
-    ? computable
-    : getExpressionResult(computable.value, { formulasMap });
+  const isValue = checkIsFormulaValue(computable);
+
+  if (isValue) {
+    if (computable.ref) {
+      const ref = formulasMap[computable.ref] as FormulaComputable;
+      return getComputableValue(ref, { formulasMap });
+    }
+
+    return computable;
+  } else {
+    return getExpressionResult(computable.value, { formulasMap });
+  }
 };
 
 export const getOperatorCalculated = (

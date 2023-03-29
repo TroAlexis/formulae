@@ -9,13 +9,13 @@ import {
   getFormulaName,
 } from "components/formula/FormulasFavorites/components/Item/utils";
 import { useFormulaContext } from "contexts/useFormulaContext";
+import { useSelectorWithArguments } from "hooks/useSelectorWithArguments";
 import { useFavoritesStore } from "modules/favorites";
-import { FavoritesStore } from "modules/favorites/models";
 import { selectFavoriteSliceById } from "modules/favorites/selectors";
 import { useFormulasStore } from "modules/formulas";
 import { FormulaType } from "modules/formulas/enums";
 import { selectReplaceExpression } from "modules/formulas/selectors";
-import React, { FC, useCallback } from "react";
+import React, { FC } from "react";
 
 interface Props extends FlexProps {
   onClick?: () => unknown;
@@ -28,9 +28,9 @@ export const FormulaFavoritesItem: FC<Props> = ({
 }) => {
   const replaceExpression = useFormulasStore(selectReplaceExpression);
   const { formula } = useFormulaContext(FormulaType.EXPRESSION);
-  const sliceSelector = useCallback(
-    (state: FavoritesStore) => selectFavoriteSliceById(state, formula.id),
-    [formula]
+  const sliceSelector = useSelectorWithArguments(
+    selectFavoriteSliceById,
+    formula.id
   );
   const slice = useFavoritesStore(sliceSelector);
   const { classes, cx } = useStyles();

@@ -22,8 +22,6 @@ export const FormulaResult: FC<Props> = ({ ...props }) => {
 
   const { fontSize } = theme.headings.sizes.h1;
 
-  const size = fontSize ? parseInt(fontSize as string) : "xl";
-
   const value = BigNumber(result.value)
     .decimalPlaces(resultPrecision)
     .toString();
@@ -40,7 +38,7 @@ export const FormulaResult: FC<Props> = ({ ...props }) => {
             <Text
               span
               align={"center"}
-              size={size}
+              size={fontSize}
               fw={700}
               onClick={copy}
               {...props}

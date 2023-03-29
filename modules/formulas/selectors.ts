@@ -4,7 +4,10 @@ import {
   checkIsFormulaOperator,
   checkIsFormulaValue,
 } from "modules/formulas/utils/check";
-import { getExpressionResult } from "modules/formulas/utils/compute";
+import {
+  getComputableValue,
+  getExpressionResult,
+} from "modules/formulas/utils/compute";
 import { getFormulaSlice } from "modules/formulas/utils/slice";
 import { createSelectById, createTypedSelectMap } from "modules/map/selectors";
 import { createStoreSelector } from "modules/utils/selectors";
@@ -13,7 +16,13 @@ import { getLast } from "utils/array";
 import { getMapItem } from "utils/map";
 import { TemporalState } from "zundo";
 
-import { FormulaExpression, FormulasStore } from "./models";
+import {
+  FormulaComputable,
+  FormulaExpression,
+  FormulaMap,
+  FormulasStore,
+  FormulaValue,
+} from "./models";
 
 const createFormulasSelector = createStoreSelector<FormulasStore>();
 const createFormulasTemporalSelector =
@@ -97,6 +106,28 @@ export const selectFormulaSliceById = createSelector(
   (map, formula) => {
     return getFormulaSlice(formula.id, map);
   }
+);
+
+const getReferencedFormula = (
+  formula: FormulaComputable,
+  map: FormulaMap
+): FormulaValue => {
+  if ("ref" in formula && formula.ref) {
+    const referencedFormula = map[formula.ref];
+    if (checkIsFormulaComputable(referencedFormula)) {
+      return getReferencedFormula(referencedFormula, map);
+    }
+  }
+
+  return getComputableValue(formula, { formulasMap: map });
+};
+
+export const selectFormulaRef = createSelector(
+  [selectFormulaMap, selectFormulaById],
+  (map, formula) =>
+    checkIsFormulaComputable(formula)
+      ? getReferencedFormula(formula, map)
+      : undefined
 );
 
 export const selectActiveExpression = (state: FormulasStore) => {

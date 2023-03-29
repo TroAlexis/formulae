@@ -1,8 +1,8 @@
-import { ReactNode } from "react";
+import { FC } from "react";
 
 export interface HoverableProps {
   hoverTargetClassName?: string;
-  children?: (props: HoverableRenderProps) => ReactNode | undefined;
+  children?: FC<HoverableRenderProps>;
 }
 
 export interface HoverableRenderProps {

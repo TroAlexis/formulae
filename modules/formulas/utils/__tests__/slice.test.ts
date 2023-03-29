@@ -1,6 +1,10 @@
 import { ExpressionBuilder } from "__utils__/expression";
 import { FormulaOperatorType } from "modules/formulas/enums";
-import { FormulaExpression, FormulaMap } from "modules/formulas/models";
+import {
+  FormulaExpression,
+  FormulaMap,
+  FormulaValue,
+} from "modules/formulas/models";
 import { createFormulaValue } from "modules/formulas/utils/create";
 import {
   cloneFormulaSlice,
@@ -56,14 +60,17 @@ describe("cloneFormulaSlice", () => {
   });
 
   describe("clones", () => {
+    const outerId = "outer-id";
     const childExpressionBuilder = new ExpressionBuilder()
-      .addValue(300)
+      .addValue(300, { ref: outerId })
       .addOperator(FormulaOperatorType.DIVISION)
       .addValue(100);
     const { expression: childExpression, map: childExpressionMap } =
       childExpressionBuilder;
+
+    const firstChildExpressionValueId = childExpression.value[0];
     const { expression, map } = new ExpressionBuilder()
-      .addValue(100)
+      .addValue(100, { ref: firstChildExpressionValueId })
       .addOperator(FormulaOperatorType.MULTIPLICATION)
       .addExpression(childExpressionBuilder);
     const slice = getFormulaSlice(expression.id, map);
@@ -81,6 +88,11 @@ describe("cloneFormulaSlice", () => {
       clonedSlice.map
     ) as FormulaExpression;
 
+    const getFirstValue = (expression: FormulaExpression, map: FormulaMap) => {
+      const [valueId] = expression.value;
+      return getMapItem(valueId, map);
+    };
+
     it("expression and children", () => {
       /* Setup */
       expect(clonedExpression.value).not.toEqual(expression.value);
@@ -95,30 +107,34 @@ describe("cloneFormulaSlice", () => {
       expect(clonedChildExpression.id).not.toBe(childExpression.id);
     });
 
+    const childExpressionValue = getFirstValue(
+      childExpression,
+      childExpressionMap
+    ) as FormulaValue;
+
+    const clonedChildExpressionValue = getFirstValue(
+      clonedChildExpression,
+      clonedSlice.map
+    ) as FormulaValue;
+
     it("child expression children", () => {
-      const getFirstValue = (
-        expression: FormulaExpression,
-        map: FormulaMap
-      ) => {
-        const [valueId] = expression.value;
-        return getMapItem(valueId, map);
-      };
-
-      const childExpressionValue = getFirstValue(
-        childExpression,
-        childExpressionMap
-      );
-
-      const clonedChildExpressionValue = getFirstValue(
-        clonedChildExpression,
-        clonedSlice.map
-      );
-
       expect(clonedChildExpressionValue.value).toBe(childExpressionValue.value);
       expect(clonedChildExpressionValue.id).not.toBe(childExpressionValue.id);
       expect(clonedChildExpressionValue.parentId).not.toBe(
         childExpressionValue.parentId
       );
+    });
+
+    it("leaves outer reference ids", () => {
+      expect(clonedChildExpressionValue.ref).toBe(childExpressionValue.ref);
+    });
+
+    it("clones inner reference ids", () => {
+      const clonedExpressionValue = getFirstValue(
+        clonedExpression,
+        clonedSlice.map
+      ) as FormulaValue;
+      expect(clonedExpressionValue.ref).toBe(clonedChildExpressionValue.id);
     });
   });
 });

@@ -1,7 +1,7 @@
-import { createStyles } from "@mantine/core";
+import { createStyles, rem } from "@mantine/core";
 
 export const useStyles = createStyles((theme) => {
-  const paddingX = theme.spacing.xs * 1.5;
+  const paddingX = `${theme.spacing.xs} * 1.5`;
 
   return {
     root: {
@@ -9,8 +9,8 @@ export const useStyles = createStyles((theme) => {
     },
     input: {
       textAlign: "center",
-      paddingLeft: paddingX + 4,
-      paddingRight: paddingX,
+      paddingLeft: `calc(${paddingX} + ${rem(4)})`,
+      paddingRight: `calc(${paddingX})`,
       border: "1px solid transparent",
     },
     rightSection: {

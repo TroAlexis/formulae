@@ -1,5 +1,6 @@
 import { AutocompleteProps, Select } from "@mantine/core";
 import { FormulaLayout } from "components/formula/FormulaLayout";
+import { FormulaOperatorMenu } from "components/formula/FormulaOperator/components/Menu";
 import { useStyles } from "components/formula/FormulaOperator/styles";
 import { useFormulaContext } from "contexts/useFormulaContext";
 import { useFormulasStore } from "modules/formulas";
@@ -31,7 +32,7 @@ const FormulaOperator: FC = () => {
   };
 
   return (
-    <FormulaLayout>
+    <FormulaLayout menu={FormulaOperatorMenu}>
       <Select
         searchable
         withinPortal
