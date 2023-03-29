@@ -1,14 +1,20 @@
 import { createUseHydratedStore } from "modules/utils/store";
+import { DEFAULT_PRECISION } from "types/consts";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 import { createStoreActionFactory, StoreSet } from "../utils/actions";
-import { toggleTheme } from "./actions";
+import { closeConfig, editConfig, toggleConfig, toggleTheme } from "./actions";
 import { ThemeActions, ThemeState, ThemeStore } from "./models";
 
 const initialState: ThemeState = {
   theme: "light",
+  isConfigOpen: false,
+  config: {
+    valuePrecision: DEFAULT_PRECISION,
+    resultPrecision: DEFAULT_PRECISION,
+  },
 };
 
 export const createThemeStore = (set: StoreSet<ThemeStore>) => {
@@ -20,6 +26,9 @@ export const createThemeStore = (set: StoreSet<ThemeStore>) => {
   return {
     ...initialState,
     toggleTheme: createShellAction(toggleTheme),
+    toggleConfig: createShellAction(toggleConfig),
+    closeConfig: createShellAction(closeConfig),
+    editConfig: createShellAction(editConfig),
   };
 };
 

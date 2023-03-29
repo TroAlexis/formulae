@@ -5,6 +5,7 @@ import {
   Title,
   useMantineTheme,
 } from "@mantine/core";
+import { ConfigToggle } from "components/ui/ConfigToggle";
 import { ACTION_COLOR } from "config/mantine/theme";
 import { useShellStore } from "modules/shell";
 import {
@@ -49,6 +50,7 @@ export const Header: FC<Props> = ({}) => {
         formulae
       </Title>
 
+      <ConfigToggle className={classes.config} />
       <ThemeToggle className={classes.theme} />
     </MantineHeader>
   );

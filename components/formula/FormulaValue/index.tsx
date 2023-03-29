@@ -13,13 +13,16 @@ import {
   selectEditFormula,
   selectFormulaRef,
 } from "modules/formulas/selectors";
+import { useThemeStore } from "modules/theme";
+import { selectValuePrecision } from "modules/theme/selectors";
 import React, { FC, useRef } from "react";
-import { DEFAULT_FORMULA_VALUE, DEFAULT_PRECISION } from "types/consts";
+import { DEFAULT_FORMULA_VALUE } from "types/consts";
 
 import { useStyles } from "./styles";
 
 const FormulaValue: FC = () => {
   const editFormula = useFormulasStore(selectEditFormula);
+  const valuePrecision = useThemeStore(selectValuePrecision);
   const { classes } = useStyles();
   const handlers = useRef<NumberInputHandlers>();
 
@@ -44,7 +47,7 @@ const FormulaValue: FC = () => {
         value={value}
         handlersRef={handlers}
         onInput={handleNumberChange}
-        precision={DEFAULT_PRECISION}
+        precision={valuePrecision}
         placeholder={"Enter value"}
         removeTrailingZeros
         startValue={DEFAULT_FORMULA_VALUE}

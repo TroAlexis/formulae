@@ -1,6 +1,7 @@
 import { AppShell, createStyles } from "@mantine/core";
 import { FormulaCreator } from "components/formula/FormulaCreator";
 import { FormulaParser } from "components/formula/FormulaParser";
+import { ConfigSettings } from "components/ui/ConfigSettings";
 import { Header } from "components/ui/Header";
 import { Navbar } from "components/ui/Navbar";
 import { CSSProperties } from "react";
@@ -38,6 +39,8 @@ export default function Home() {
       style={navbarReset}
     >
       <FormulaCreator />
+
+      <ConfigSettings />
 
       <FormulaParser />
     </AppShell>
