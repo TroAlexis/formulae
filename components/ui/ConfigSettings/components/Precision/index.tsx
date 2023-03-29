@@ -38,6 +38,7 @@ const ConfigSettingsPrecision: FC<Props> = ({ type, ...props }) => {
       value={precision}
       startValue={DEFAULT_PRECISION}
       precision={0}
+      min={0}
       description={"Amount of digits after decimal point"}
       placeholder={"Enter precision"}
       onChange={handleChange}
