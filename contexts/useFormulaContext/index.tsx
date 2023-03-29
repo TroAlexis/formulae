@@ -4,17 +4,12 @@ import {
   FormulaProviderProps,
 } from "contexts/useFormulaContext/models";
 import { validateFormulaContext } from "contexts/useFormulaContext/utils";
+import { useSelectorWithArguments } from "hooks/useSelectorWithArguments";
 import { FormulaType } from "modules/formulas/enums";
 import { Formula, FormulaByType } from "modules/formulas/models";
-import { MapStore, RecordKey } from "modules/map/models";
+import { RecordKey } from "modules/map/models";
 import { selectById } from "modules/map/selectors";
-import {
-  createContext,
-  PropsWithChildren,
-  useCallback,
-  useContext,
-  useMemo,
-} from "react";
+import { createContext, PropsWithChildren, useContext, useMemo } from "react";
 import { Maybe } from "types/types";
 
 const FormulaContext = createContext<Maybe<FormulaContextProps>>(undefined);
@@ -26,15 +21,9 @@ export const FormulaProvider = <K extends RecordKey, V>({
   formulaSelector = selectById,
   sliceSelector,
 }: PropsWithChildren<FormulaProviderProps<K, V>>) => {
-  const selectFormula = useCallback(
-    (state: MapStore<K, V>) => formulaSelector(state, id),
-    [formulaSelector, id]
-  );
+  const selectFormula = useSelectorWithArguments(formulaSelector, id);
 
-  const selectSlice = useCallback(
-    (state: MapStore<K, V>) => sliceSelector(state, id),
-    [sliceSelector, id]
-  );
+  const selectSlice = useSelectorWithArguments(sliceSelector, id);
 
   const formula = useStore(selectFormula);
 

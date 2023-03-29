@@ -1,15 +1,15 @@
-import { MantineThemeOverride } from "@mantine/core";
+import { MantineThemeOverride, rem } from "@mantine/core";
 import { montserrat, noto } from "config/fonts";
 
 export const ACTION_COLOR = "indigo";
 
 export const mantineThemeOverrides: MantineThemeOverride = {
   spacing: {
-    xs: 8,
-    sm: 16,
-    md: 24,
-    xl: 32,
-    lg: 40,
+    xs: rem(8),
+    sm: rem(16),
+    md: rem(24),
+    xl: rem(32),
+    lg: rem(40),
   },
   headings: {
     fontFamily: noto.style.fontFamily,

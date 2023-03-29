@@ -21,6 +21,7 @@ export const removeMapItem = <K extends RecordKey, V>(
   const item = map[key];
 
   map[key] = undefined;
+  delete map[key];
 
   return item;
 };

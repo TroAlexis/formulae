@@ -1,5 +1,9 @@
 import { FormulaOperatorType } from "modules/formulas/enums";
-import { Formula } from "modules/formulas/models";
+import {
+  Formula,
+  FormulaExpression,
+  FormulaValue,
+} from "modules/formulas/models";
 import {
   createFormulaExpression,
   createFormulaOperator,
@@ -9,8 +13,13 @@ import { getFormulaSlice } from "modules/formulas/utils/slice";
 import { keyBy, mapKeysToValues, mergeMaps } from "utils/map";
 
 export class ExpressionBuilder {
-  expression = createFormulaExpression({ value: [] });
-  map: Record<string, Formula> = keyBy([this.expression], "id");
+  expression: FormulaExpression;
+  map: Record<string, Formula>;
+
+  constructor(part: Partial<FormulaExpression> = {}) {
+    this.expression = createFormulaExpression({ value: [], ...part });
+    this.map = keyBy([this.expression], "id");
+  }
 
   get formulas() {
     return mapKeysToValues(this.expression.value, this.map);
@@ -32,8 +41,9 @@ export class ExpressionBuilder {
     return this;
   }
 
-  addValue(value: number) {
-    const newValue = createFormulaValue({ value });
+  addValue(value: number, formula?: Partial<FormulaValue>) {
+    const rest = formula || {};
+    const newValue = createFormulaValue({ value, ...rest });
     this.addToExpression(newValue);
 
     return this;

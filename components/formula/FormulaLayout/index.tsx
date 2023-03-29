@@ -1,7 +1,6 @@
 import { Flex } from "@mantine/core";
 import { FormulaDelete } from "components/formula/FormulaDelete";
 import { FormulaLayoutProps } from "components/formula/FormulaLayout/models";
-import { FormulaMenu } from "components/formula/FormulaMenu";
 import { Hoverable } from "components/ui/Hoverable";
 import { FC } from "react";
 
@@ -9,6 +8,7 @@ import styles from "./index.module.css";
 
 export const FormulaLayout: FC<FormulaLayoutProps> = ({
   children,
+  menu: MenuComponent,
   ...props
 }) => {
   return (
@@ -20,11 +20,11 @@ export const FormulaLayout: FC<FormulaLayoutProps> = ({
 
         {children}
 
-        <Hoverable hoverTargetClassName={styles.wrapper}>
-          {({ className }) => (
-            <FormulaMenu classNames={{ target: className }} />
-          )}
-        </Hoverable>
+        {MenuComponent && (
+          <Hoverable hoverTargetClassName={styles.wrapper}>
+            {(hoverableProps) => <MenuComponent {...hoverableProps} />}
+          </Hoverable>
+        )}
       </Flex>
     </Flex>
   );

@@ -10,6 +10,7 @@ import { FormulaType } from "modules/formulas/enums";
 import { getFormulaSlice } from "modules/formulas/utils/slice";
 import { selectMap } from "modules/map/selectors";
 import React, { FC } from "react";
+import { notifySuccess } from "utils/notifications";
 
 type Props = FormulaMenuItemProps;
 
@@ -23,6 +24,10 @@ export const FormulaMenuFavorite: FC<Props> = (props) => {
 
     if (slice) {
       addFavorite(slice);
+
+      notifySuccess({
+        message: "Successfully saved formula!",
+      });
     }
   };
 
