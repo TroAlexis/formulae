@@ -25,8 +25,7 @@ export const FormulaDelete: FC<Props> = (props) => {
   return (
     <ActionIcon
       size={"lg"}
-      color={"red"}
-      variant={isDisabled ? "transparent" : "subtle"}
+      variant={"transparent"}
       onClick={handleRemove}
       disabled={isDisabled}
       {...props}
