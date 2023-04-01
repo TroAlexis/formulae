@@ -62,6 +62,9 @@ export const selectToggleCollapseExpression = createFormulasSelector(
 
 export const selectOpenExpression = createFormulasSelector("openExpression");
 
+export const selectWrapWithExpression =
+  createFormulasSelector("wrapWithExpression");
+
 export const selectCloseExpression = createFormulasSelector("closeExpression");
 
 export const selectReplaceExpression =
