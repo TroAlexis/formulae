@@ -3,6 +3,8 @@ import { ACTION_COLOR } from "config/mantine/theme";
 
 export const useStyles = createStyles((theme) => ({
   selected: {
-    borderColor: theme.colors[ACTION_COLOR][6],
+    [`&[data-with-border]`]: {
+      borderColor: theme.colors[ACTION_COLOR][6],
+    },
   },
 }));
