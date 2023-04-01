@@ -1,6 +1,8 @@
 import {
   ActionIcon,
   ActionIconProps,
+  Flex,
+  Kbd,
   Text,
   Tooltip,
   useMantineTheme,
@@ -28,9 +30,16 @@ export const ConfigToggle: FC<Props> = (props) => {
   return (
     <Tooltip
       label={
-        <Text span size={"xs"}>
-          Customisation settings
-        </Text>
+        <Flex align={"center"} gap={"xs"}>
+          <Text size={"xs"} span>
+            Customisation settings
+          </Text>
+          <Kbd lh={1}>
+            <Text size={"xs"} span weight={700} lh={"inherit"}>
+              ⌘ + ,
+            </Text>
+          </Kbd>
+        </Flex>
       }
       withArrow
       position={"left"}

@@ -18,11 +18,13 @@ export interface FormulasActions {
   removeFormula: (id: string) => void;
   toggleCollapseExpression: (id: string, value?: boolean) => void;
   openExpression: () => void;
+  wrapWithExpression: (id: string) => void;
   closeExpression: () => void;
   replaceExpression: (
     replaceExpression: Maybe<string>,
     replacerSlice: FormulaSlice
   ) => void;
+  setRootId: (id: string) => void;
   setSelectedExpressionId: (id: Maybe<string>) => void;
 }
 

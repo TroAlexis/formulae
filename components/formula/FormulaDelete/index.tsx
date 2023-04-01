@@ -2,10 +2,7 @@ import { ActionIcon, ActionIconProps, useMantineTheme } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 import { useFormulaContext } from "contexts/useFormulaContext";
 import { useFormulasStore } from "modules/formulas";
-import {
-  selectRemoveFormula,
-  selectRootExpressionId,
-} from "modules/formulas/selectors";
+import { selectRemoveFormula } from "modules/formulas/selectors";
 import React, { FC } from "react";
 
 type Props = ActionIconProps;
@@ -14,9 +11,6 @@ export const FormulaDelete: FC<Props> = (props) => {
   const theme = useMantineTheme();
   const { formula } = useFormulaContext();
   const removeFormula = useFormulasStore(selectRemoveFormula);
-  const rootExpressionId = useFormulasStore(selectRootExpressionId);
-
-  const isDisabled = rootExpressionId === formula.id;
 
   const handleRemove = () => {
     removeFormula(formula.id);
@@ -25,10 +19,8 @@ export const FormulaDelete: FC<Props> = (props) => {
   return (
     <ActionIcon
       size={"lg"}
-      color={"red"}
-      variant={isDisabled ? "transparent" : "subtle"}
+      variant={"transparent"}
       onClick={handleRemove}
-      disabled={isDisabled}
       {...props}
     >
       <IconTrash size={theme.spacing.sm} />

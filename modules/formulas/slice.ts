@@ -5,8 +5,10 @@ import {
   openExpression,
   removeFormula,
   replaceExpression,
+  setRootId,
   setSelectedExpressionId,
   toggleCollapseExpression,
+  wrapWithExpression,
 } from "modules/formulas/actions";
 import {
   FormulasActions,
@@ -44,8 +46,10 @@ export const createFormulasSlice = (set: StoreSet<FormulasStore>) => {
     removeFormula: createFormulasAction(removeFormula),
     toggleCollapseExpression: createFormulasAction(toggleCollapseExpression),
     openExpression: createFormulasAction(openExpression),
+    wrapWithExpression: createFormulasAction(wrapWithExpression),
     closeExpression: createFormulasAction(closeExpression),
     replaceExpression: createFormulasAction(replaceExpression),
     setSelectedExpressionId: createFormulasAction(setSelectedExpressionId),
+    setRootId: createFormulasAction(setRootId),
   };
 };

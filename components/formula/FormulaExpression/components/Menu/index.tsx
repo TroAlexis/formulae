@@ -5,6 +5,7 @@ import { FormulaMenuFavorite } from "components/formula/FormulaMenu/components/F
 import { FormulaMenuPaste } from "components/formula/FormulaMenu/components/Paste";
 import { FormulaMenuSelect } from "components/formula/FormulaMenu/components/Select";
 import { FormulaMenuShare } from "components/formula/FormulaMenu/components/Share";
+import { FormulaMenuWrapWithExpression } from "components/formula/FormulaMenu/components/WrapWithExpression";
 import { FormulaMenuProps } from "components/formula/FormulaMenu/models";
 import React, { FC } from "react";
 
@@ -17,6 +18,7 @@ export const FormulaExpressionMenu: FC<Props> = (props) => {
 
       <FormulaMenuSelect />
       <FormulaMenuFavorite />
+      <FormulaMenuWrapWithExpression />
 
       <Menu.Label>Share & reuse</Menu.Label>
 
